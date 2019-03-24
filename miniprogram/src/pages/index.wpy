@@ -80,7 +80,7 @@
 
 <script>
 // eslint-disable-next-line no-undef
-import Page from '../page'
+import Page from '../common/page'
 
 export default class Index extends Page {
   config = {

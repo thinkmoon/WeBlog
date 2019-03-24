@@ -124,8 +124,8 @@ export default class extends wepy.app {
 }
 </script>
 <style lang="less">
-@import "icon.wxss";
-@import "colorui.wxss";
+@import "common/icon.wxss";
+@import "common/colorui.wxss";
 
 .cu-modal.show {
   z-index: 99999;
