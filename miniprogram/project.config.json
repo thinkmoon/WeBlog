@@ -1,0 +1,15 @@
+{
+	"description": "一个typecho博客的微信小程序版",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx53f9b5912c0f0cf6",
+	"projectname": "miniprogram",
+	"miniprogramRoot": "dist/",
+	"condition": {}
+}

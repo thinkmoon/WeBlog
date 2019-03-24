@@ -1,0 +1,277 @@
+<!--  -->
+<template>
+  <block>
+    <view class="DrawerPage {{modalName=='viewModal'?'show':''}}">
+      <view
+        class="cu-custom"
+        style="height:{{CustomBar}}px;"
+      >
+        <view
+          class="cu-bar fixed bg-gradual-black"
+          style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;"
+        >
+        <view class="cu-avatar round" style="background-image:url('https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg')" bindtap="showModal" data-target="viewModal"></view>
+          <view
+            class='content'
+            style='top:{{StatusBar}}px;'
+          ></view>
+        </view>
+      </view>
+      <view class="cu-card case {{isCard?'no-card':''}}">
+  <view wx:for="{{1}}" wx:key class="cu-item shadow">
+    <view class='image'>
+      <image src="https://image.weilanwl.com/img/4x3-1.jpg" mode="widthFix"></image>
+      <view class="cu-tag bg-blue">置顶</view>
+      <view class='cu-bar bg-shadeBottom'>我和制服不得不说的那些事！</view>
+    </view>
+    <view class="cu-list menu menu-avatar">
+      <view class="cu-item">
+        <view class="cu-avatar round lg" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+        <view class='content flex-sub'>
+          <view class='text-grey'>猪皮蛋</view>
+          <view class='text-gray text-sm flex justify-between'>
+            十天前
+            <view class="text-gray text-sm">
+              <text class="icon-attentionfill"></text> 10
+              <text class="icon-appreciatefill"></text> 20
+              <text class="icon-messagefill"></text> 30
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+    </view>
+    <view
+      class="DrawerClose {{modalName=='viewModal'?'show':''}}"
+      bindtap='hideModal'
+    >
+      <text class='icon-pullright'></text>
+    </view>
+    <view class="DrawerWindow bg-gradual-black {{modalName=='viewModal'?'show':''}}">
+      <view class="about shadow-lg radius">
+        <view class="bg-img">
+          <image
+            mode="aspectFill"
+            src="https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png"
+          ></image>
+        </view>
+        <view class="avatar-view">
+          <image
+            class="avatar"
+            src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"
+          ></image>
+        </view>
+        <view class="intro shadow grid col-4 padding-sm solid-bottom">
+          <view class="solid-left">文章<view>42</view>
+          </view>
+          <view class="solid-left">留言<view>42</view>
+          </view>
+          <view class="solid-left">分类<view>42</view>
+          </view>
+          <view>标签<view>42</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</template>
+
+<script>
+// eslint-disable-next-line no-undef
+import Page from '../page'
+
+export default class Index extends Page {
+  config = {
+    navigationBarTitleText: '主页',
+    usingComponents: {}
+  };
+
+  data = {
+    userInfo: null,
+    StatusBar: 0,
+    CustomBar: 0,
+    Custom: 0,
+    hasUserInfo: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    TabCur: 1,
+    scrollLeft: 0
+  };
+
+  methods = {
+    getUserInfo: function(e) {
+      console.log(e)
+      this.$parent.globalData.userInfo = e.detail.userInfo
+      this.userInfo = e.detail.userInfo
+      this.hasUserInfo = true
+    },
+    showModal(e) {
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    },
+    hideModal(e) {
+      this.setData({
+        modalName: null
+      })
+    },
+    tabSelect(e) {
+      console.log(e)
+      this.TabCur = e.currentTarget.dataset.id
+      this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
+    }
+  };
+
+  onLoad() {
+    const app = this.$parent
+    this.StatusBar = app.globalData.StatusBar
+    this.CustomBar = app.globalData.CustomBar
+    this.Custom = app.globalData.Custom
+    console.log(this.StatusBar)
+  }
+}
+</script>
+<style lang='less'>
+// 博客内容的统计
+.intro {
+  width: 506rpx;
+  height: 112rpx;
+  position: relative;
+  color: #888;
+  background-color: #656565;
+}
+// avatar的view容器
+.avatar-view {
+  height: 110rpx;
+}
+// 头像
+.avatar {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  top: -100rpx;
+  margin: auto;
+  border: 5rpx #eee solid;
+}
+.bg-img image {
+  width: 506rpx;
+  height: 200rpx;
+  //background-image:url('https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png') ;
+}
+.about {
+  text-align: center;
+  width: 506rpx;
+  background-color: #545454;
+}
+page {
+  background-color: #2e3131;
+  background-size: 100%;
+}
+.bg {
+  background-color: #545454;
+}
+.DrawerPage {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  left: 0vw;
+  background-color: #f1f1f1;
+  transition: all 0.6s;
+}
+
+.DrawerPage.show {
+  transform: scale(0.9, 0.9);
+  left: 85vw;
+  box-shadow: 0 0 60rpx rgba(0, 0, 0, 0.2);
+  transform-origin: 0;
+}
+
+.DrawerWindow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 85vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  transform: scale(0.9, 0.9) translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.6s;
+}
+
+.DrawerWindow.show {
+  transform: scale(1, 1) translateX(0%);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.DrawerClose {
+  position: absolute;
+  width: 40vw;
+  height: 100vh;
+  right: 0;
+  top: 0;
+  color: transparent;
+  padding-bottom: 30rpx;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.01),
+    rgba(0, 0, 0, 0.6)
+  );
+  letter-spacing: 5px;
+  font-size: 50rpx;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.6s;
+}
+.DrawerClose.show {
+  opacity: 1;
+  pointer-events: all;
+  width: 15vw;
+  color: #fff;
+}
+
+.DrawerPage .cu-bar.tabbar .action button.icon {
+  width: 64rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  margin: 0;
+  display: inline-block;
+}
+
+.DrawerPage .cu-bar.tabbar .action .cu-avatar {
+  margin: 0;
+}
+
+.DrawerPage .nav {
+  flex: 1;
+}
+
+.DrawerPage .nav .cu-item.cur {
+  border-bottom: 0;
+  position: relative;
+}
+
+.DrawerPage .nav .cu-item.cur::after {
+  content: '';
+  width: 10rpx;
+  height: 10rpx;
+  background-color: currentColor;
+  position: absolute;
+  bottom: 10rpx;
+  border-radius: 10rpx;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.DrawerPage .cu-bar.tabbar .action {
+  flex: initial;
+}
+</style>
