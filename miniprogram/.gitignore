@@ -1,3 +1,5 @@
 node_modules
 dist
+.wepycache
+.editorconfig
 .DS_Store
