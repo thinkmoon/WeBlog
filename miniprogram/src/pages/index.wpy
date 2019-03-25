@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <block>
-    <view class="DrawerPage {{modalName=='viewModal'?'show':''}}">
+    <view class="DrawerPage {{drawerHidden?'':'show'}}">
       <view
         class="cu-custom"
         style="height:{{CustomBar}}px;"
@@ -10,46 +10,62 @@
           class="cu-bar fixed bg-gradual-black"
           style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;"
         >
-        <view class="cu-avatar round" style="background-image:url('https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg')" bindtap="showModal" data-target="viewModal"></view>
+          <view
+            class="cu-avatar round animation-{{rotate}} animation-reverse"
+            style="background-image:url('{{authorInfo.avatarUrl}}');"
+            bindtap="showDrawer"
+          ></view>
           <view
             class='content'
             style='top:{{StatusBar}}px;'
           ></view>
         </view>
       </view>
-      <view class="cu-card case {{isCard?'no-card':''}}">
-  <view wx:for="{{1}}" wx:key class="cu-item shadow">
-    <view class='image'>
-      <image src="https://image.weilanwl.com/img/4x3-1.jpg" mode="widthFix"></image>
-      <view class="cu-tag bg-blue">置顶</view>
-      <view class='cu-bar bg-shadeBottom'>我和制服不得不说的那些事！</view>
-    </view>
-    <view class="cu-list menu menu-avatar">
-      <view class="cu-item">
-        <view class="cu-avatar round lg" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
-        <view class='content flex-sub'>
-          <view class='text-grey'>猪皮蛋</view>
-          <view class='text-gray text-sm flex justify-between'>
-            十天前
-            <view class="text-gray text-sm">
-              <text class="icon-attentionfill"></text> 10
-              <text class="icon-appreciatefill"></text> 20
-              <text class="icon-messagefill"></text> 30
+      <view class="cu-card case">
+        <view
+          wx:for="{{postData}}"
+          wx:key
+          class="cu-item shadow animation-{{animation}} {{!drawerHidden?'animation-reverse':''}}"
+        >
+          <view hidden="{{postHidden}}">
+            <view class='image'>
+              <image
+                src="{{item.thumb[0].str_value}}"
+                mode="widthFix"
+              ></image>
+              <view class="cu-tag bg-blue">置顶</view>
+              <view class='cu-bar bg-shadeBottom'>{{item.title}}</view>
+            </view>
+            <view class="cu-list menu menu-avatar">
+              <view class="cu-item">
+                <view
+                  class="cu-avatar round lg"
+                  style="background-image:url('{{authorInfo.avatarUrl}}');"
+                ></view>
+                <view class='content flex-sub'>
+                  <view class='text-grey'>{{authorInfo.screenName}}</view>
+                  <view class='text-gray text-sm flex justify-between'>
+                    {{item.created}}
+                    <view class="text-gray text-sm">
+                      <text class="icon-attentionfill"></text>{{item.views}}
+                      <text class="icon-appreciatefill"></text>{{item.likes}}
+                      <text class="icon-messagefill"></text>{{item.commentsNum}}
+                    </view>
+                  </view>
+                </view>
+              </view>
             </view>
           </view>
         </view>
       </view>
     </view>
-  </view>
-</view>
-    </view>
     <view
-      class="DrawerClose {{modalName=='viewModal'?'show':''}}"
-      bindtap='hideModal'
+      class="DrawerClose {{!drawerHidden?'show':''}}"
+      bindtap='hideDrawer'
     >
       <text class='icon-pullright'></text>
     </view>
-    <view class="DrawerWindow bg-gradual-black {{modalName=='viewModal'?'show':''}}">
+    <view class="DrawerWindow bg-gradual-black {{!drawerHidden?'show':''}}">
       <view class="about shadow-lg radius">
         <view class="bg-img">
           <image
@@ -57,10 +73,10 @@
             src="https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png"
           ></image>
         </view>
-        <view class="avatar-view">
+        <view class="avatar-view animation-{{rotate}}">
           <image
             class="avatar"
-            src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"
+            src="{{authorInfo.avatarUrl}}"
           ></image>
         </view>
         <view class="intro shadow grid col-4 padding-sm solid-bottom">
@@ -79,8 +95,8 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-undef
 import Page from '../common/page'
+import { GET } from '../utils/http_Util'
 
 export default class Index extends Page {
   config = {
@@ -89,50 +105,127 @@ export default class Index extends Page {
   };
 
   data = {
-    userInfo: null,
+    postHidden: false,
+    rotate: '',
+    animation: '',
+    drawerHidden: true,
+    authorInfo: {},
+    postData: [],
     StatusBar: 0,
     CustomBar: 0,
-    Custom: 0,
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    TabCur: 1,
-    scrollLeft: 0
+    Custom: 0
   };
 
   methods = {
-    getUserInfo: function(e) {
-      console.log(e)
-      this.$parent.globalData.userInfo = e.detail.userInfo
-      this.userInfo = e.detail.userInfo
-      this.hasUserInfo = true
+    showDrawer(e) {
+      const _this = this
+      this.drawerHidden = false
+      this.animation = 'slide-top'
+      this.rotate = 'rotate'
+      setTimeout(() => {
+        _this.postHidden = true
+        _this.$apply()
+      }, 500)
     },
-    showModal(e) {
-      this.setData({
-        modalName: e.currentTarget.dataset.target
-      })
-    },
-    hideModal(e) {
-      this.setData({
-        modalName: null
-      })
-    },
-    tabSelect(e) {
-      console.log(e)
-      this.TabCur = e.currentTarget.dataset.id
-      this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
+    hideDrawer(e) {
+      this.postHidden = false
+      this.drawerHidden = true
+      this.animation = 'slide-bottom'
+      this.rotate = 'rotate-reverse'
     }
   };
-
+  async initPost() {
+    let res = await GET('post', { pageSize: 7 })
+    console.log(res.data.data)
+    this.postData = res.data.data
+    this.$apply()
+  }
   onLoad() {
+    const _this = this
+    this.initPost()
     const app = this.$parent
+    var refreshId = setInterval(() => {
+      if (app.globalData.authorInfo.avatarUrl) {
+        _this.authorInfo = app.globalData.authorInfo
+        _this.$apply()
+        clearInterval(refreshId)
+      }
+      console.log('run')
+    }, 200)
+
     this.StatusBar = app.globalData.StatusBar
     this.CustomBar = app.globalData.CustomBar
     this.Custom = app.globalData.Custom
-    console.log(this.StatusBar)
   }
 }
 </script>
 <style lang='less'>
+// CSS动画
+[class*=animation-] {
+    animation-duration: .5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both
+}
+.animation-rotate {
+    animation-name: slide-rotate
+}
+@keyframes slide-rotate {
+  0% {
+        opacity: 0;
+        transform: rotate(180deg)
+    }
+}
+.animation-rotate-reserve {
+    animation-name: slide-rotate-reserve
+}
+@keyframes slide-rotate-reserve {
+  0% {
+        opacity: 0;
+        transform: rotate(180deg)
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+.animation-slide-top {
+    animation-name: slide-top
+}
+
+.animation-slide-bottom {
+    animation-name: slide-bottom
+}
+
+.animation-reverse {
+    animation-direction: reverse
+}
+
+@keyframes slide-top {
+    0% {
+        opacity: 0;
+        transform: translate(100%,100%)
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+@keyframes slide-bottom {
+    0% {
+        opacity: 0;
+        transform: translate(100%,100%)
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
 // 博客内容的统计
 .intro {
   width: 506rpx;
@@ -174,9 +267,7 @@ page {
 .DrawerPage {
   position: absolute;
   width: 100vw;
-  height: 100vh;
   left: 0vw;
-  background-color: #f1f1f1;
   transition: all 0.6s;
 }
 
@@ -188,6 +279,7 @@ page {
 }
 
 .DrawerWindow {
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,7 +351,7 @@ page {
 }
 
 .DrawerPage .nav .cu-item.cur::after {
-  content: '';
+  content: "";
   width: 10rpx;
   height: 10rpx;
   background-color: currentColor;

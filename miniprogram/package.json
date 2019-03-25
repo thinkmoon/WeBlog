@@ -17,6 +17,7 @@
   "author": "醉月思 <lqs@dgut.edu.cn>",
   "license": "MIT",
   "dependencies": {
+    "moment": "^2.24.0",
     "wepy": "^1.7.2",
     "wepy-async-function": "^1.4.4",
     "wepy-com-toast": "^1.0.2"
