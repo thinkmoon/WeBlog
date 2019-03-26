@@ -16,24 +16,40 @@ class TmWeBlog_Action extends Typecho_Widget implements Widget_Interface_Do {
             $this->defaults();
         }
     }
-  private function author(){
+  private function getAuthorInfo(){
     $select   = $this->db->select('*')->from('table.users');
     $lists = $this->db->fetchAll($select);
     $lists[0]['avatarUrl'] = "https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg";
 	$this->export($lists);
   }
-  private function post(){
+  private function getRecentPost(){
     $pageSize = (int) self::GET('pageSize', 1000);
     $page     = (int) self::GET('page', 1);
     $offset   = $pageSize * ($page - 1);
     $select   = $this->db->select('cid', 'title','authorId ', 'created', 'slug','commentsNum', 'views', 'likes')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('created < ?', time())->order('table.contents.created', Typecho_Db::SORT_DESC)->offset($offset)->limit($pageSize);
     $posts  = $this->db->fetchAll($select);
     foreach ($posts as $post) {
+        $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
+      	$thumb = "https://www.thinkmoon.cn/usr/themes/armx/img/sj/".mt_rand (1, 8).".jpg";
+        $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid']))?$this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])):array(array("str_value"=>$thumb));
+        $result[]    = $post;
+    }
+    $this->export($result);
+  }
+  private function getPostBycid(){
+    if (isset($_GET['cid'])) {
+        $cid = self::GET('cid');
+        $select = $this->db->select('cid', 'title', 'created', 'type', 'slug', 'text','commentsNum')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('created < ?', time())->where('cid = ?', $cid);
+        //更新点击量数据库
+        $row = $this->db->fetchRow($this->db->select('views')->from('table.contents')->where('cid = ?', $cid));
+        $this->db->query($this->db->update('table.contents')->rows(array('views' => (int)$row['views']+1))->where('cid = ?', $cid));
+        $posts  = $this->db->fetchAll($select);
+        foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
-            $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid']))?$this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])):array(array("str_value"=>"https://api.isoyu.com/bing_images.php"));
             $result[]    = $post;
         }
         $this->export($result);
+    }
   }
   private function post1(){
         $pageSize = (int) self::GET('pageSize', 1000);

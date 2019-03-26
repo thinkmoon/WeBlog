@@ -12,7 +12,7 @@
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
-import { GET } from './utils/http_Util'
+import { getAuthorInfo } from './utils/api'
 
 export default class extends wepy.app {
   config = {
@@ -24,7 +24,13 @@ export default class extends wepy.app {
       'navigationBarTitleText': '指尖魔法屋',
       'navigationStyle': 'custom',
       'navigationBarTextStyle': 'white'
-    }
+    },
+    subPackages: [
+      {
+        root: 'towxml',
+        pages: ['post']
+      }
+    ]
   }
 
   globalData = {
@@ -38,7 +44,7 @@ export default class extends wepy.app {
     this.use('promisify')
   }
   async fetchAuthor() {
-    const res = await GET('author')
+    const res = await getAuthorInfo()
     this.globalData.authorInfo = res.data.data[0]
   }
   onLaunch() {

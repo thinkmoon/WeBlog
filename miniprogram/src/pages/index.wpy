@@ -27,7 +27,7 @@
           wx:key
           class="cu-item shadow animation-{{animation}} {{!drawerHidden?'animation-reverse':''}}"
         >
-          <view hidden="{{postHidden}}">
+          <view hidden="{{postHidden}}" @tap="seePost" data-cid="{{item.cid}}">
             <view class='image'>
               <image
                 src="{{item.thumb[0].str_value}}"
@@ -96,13 +96,10 @@
 
 <script>
 import Page from '../common/page'
-import { GET } from '../utils/http_Util'
+import { getRecentPost } from '../utils/api'
 
 export default class Index extends Page {
-  config = {
-    navigationBarTitleText: '主页',
-    usingComponents: {}
-  };
+  config = {};
 
   data = {
     postHidden: false,
@@ -117,6 +114,11 @@ export default class Index extends Page {
   };
 
   methods = {
+    seePost(e) {
+      wx.navigateTo({
+        url: '../towxml/post?cid=' + e.currentTarget.dataset.cid
+      })
+    },
     showDrawer(e) {
       const _this = this
       this.drawerHidden = false
@@ -125,7 +127,7 @@ export default class Index extends Page {
       setTimeout(() => {
         _this.postHidden = true
         _this.$apply()
-      }, 500)
+      }, 1200)
     },
     hideDrawer(e) {
       this.postHidden = false
@@ -135,7 +137,7 @@ export default class Index extends Page {
     }
   };
   async initPost() {
-    let res = await GET('post', { pageSize: 7 })
+    let res = await getRecentPost({ pageSize: 7 })
     console.log(res.data.data)
     this.postData = res.data.data
     this.$apply()
@@ -144,25 +146,25 @@ export default class Index extends Page {
     const _this = this
     this.initPost()
     const app = this.$parent
+    this.StatusBar = app.globalData.StatusBar
+    this.CustomBar = app.globalData.CustomBar
+    this.Custom = app.globalData.Custom
+    var time = 0
     var refreshId = setInterval(() => {
-      if (app.globalData.authorInfo.avatarUrl) {
+      if (time > 20 || app.globalData.authorInfo.avatarUrl) {
         _this.authorInfo = app.globalData.authorInfo
         _this.$apply()
         clearInterval(refreshId)
       }
-      console.log('run')
+      console.log('run', time++)
     }, 200)
-
-    this.StatusBar = app.globalData.StatusBar
-    this.CustomBar = app.globalData.CustomBar
-    this.Custom = app.globalData.Custom
   }
 }
 </script>
 <style lang='less'>
 // CSS动画
 [class*=animation-] {
-    animation-duration: .5s;
+    animation-duration: 1s;
     animation-timing-function: ease-out;
     animation-fill-mode: both
 }
@@ -172,7 +174,6 @@ export default class Index extends Page {
 @keyframes slide-rotate {
   0% {
         opacity: 0;
-        transform: rotate(180deg)
     }
 }
 .animation-rotate-reserve {
@@ -205,7 +206,7 @@ export default class Index extends Page {
 @keyframes slide-top {
     0% {
         opacity: 0;
-        transform: translate(100%,100%)
+        transform: translateY(-100%)
     }
 
     100% {
@@ -217,7 +218,7 @@ export default class Index extends Page {
 @keyframes slide-bottom {
     0% {
         opacity: 0;
-        transform: translate(100%,100%)
+        transform: translateY(-100%)
     }
 
     100% {

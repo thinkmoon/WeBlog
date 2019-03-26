@@ -1,0 +1,153 @@
+<!-- post -->
+<template>
+  <view class='page'>
+    <view
+      class="cu-custom"
+      style="height:{{CustomBar}}px;"
+    >
+      <view
+        class="cu-bar fixed bg-gradual-black"
+        style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;"
+      >
+        <navigator
+          class='action border-custom'
+          open-type="navigateBack"
+          delta="1"
+          hover-class="none"
+          style='width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)'
+        >
+          <text class='icon-back'></text>
+          <text class='icon-homefill'></text>
+        </navigator>
+        <view
+          class='content'
+          style='top:{{StatusBar}}px;'
+        >{{postData.title}}</view>
+      </view>
+    </view>
+
+    <view class="cu-bar bg-white solid-bottom padding-top padding-bottom">
+      <view class='action'>
+        <text class='icon-titles text-green'></text>
+        <text class='text-xl text-bold'>{{postData.title}}</text>
+      </view>
+    </view>
+    <!--loading-->
+    <view
+      class="loading"
+      wx:if="{{isloading}}"
+    >
+      <image
+        class="loading__icon"
+        src="demo/images/loading.svg"
+      ></image>
+    </view>
+
+    <!--引入wxml模版-->
+    <view class="padding-bottom bg-white">
+      <import src="entry.wxml" />
+      <template
+        is="entry"
+        data="{{...article}}"
+      />
+    </view>
+    <view style="height:100rpx"></view>
+    <view class="tm-bar cu-bar shadow input">
+      <view
+        class="cu-avatar round"
+        style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"
+      ></view>
+      <view class='action'>
+        <text class='icon-roundaddfill text-grey'></text>
+      </view>
+      <input
+        class='solid-bottom'
+        maxlength="300"
+        cursor-spacing="10"
+      />
+      <view class='action'>
+        <text class='icon-emojifill text-grey'></text>
+      </view>
+      <button class='cu-btn bg-green shadow-blur'>发送</button>
+    </view>
+  </view>
+</template>
+
+<script>
+import Page from '../common/page';
+import { getPostBycid } from '../utils/api';
+const Towxml = require('./main.js')
+
+export default class extends Page {
+  config = {};
+
+  data = {
+    postData: {},
+    article: '',
+    isloading: true,
+    StatusBar: 20,
+    CustomBar: 64,
+    Custom: {
+      bottom: 58.00000762939453,
+      height: 32,
+      left: 278.0000190734863,
+      right: 365.0000190734863,
+      top: 26.00000762939453,
+      width: 87
+    }
+  };
+
+  methods = {};
+
+  async initPost(cid) {
+    const towxml = new Towxml()
+    const res = await getPostBycid({ cid: cid })
+    console.log(res.data.data[0].text)
+    let content = res.data.data[0].text
+    let data = towxml.toJson(content.slice(15), 'markdown')
+    // 设置主题
+    data.theme = 'light';
+    // 更新数据并隐藏loading...
+    this.isloading = false
+    this.article = data
+    this.postData = res.data.data[0]
+    this.$apply()
+  }
+
+  onLoad(options) {
+    const app = this.$parent
+    this.StatusBar = app.globalData.StatusBar
+    this.CustomBar = app.globalData.CustomBar
+    this.Custom = app.globalData.Custom
+    console.log(app.globalData.Custom)
+    this.initPost(options.cid)
+  }
+}
+</script>
+<style>
+/**引入主题样式**/
+@import "style/main.wxss";
+@import "style/theme/light.wxss";
+.tm-bar {
+  width: 750rpx;
+  position: fixed;
+  bottom: 0;
+}
+/**app.wxss**/
+.loading {
+  width: 100%;
+  height: 100rpx;
+  position: absolute;
+  top: 50%;
+  color: #666;
+  font-size: 32rpx;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: -200rpx;
+  text-align: center;
+}
+
+.loading__icon {
+  width: 80rpx;
+  height: 80rpx;
+}
+</style>
