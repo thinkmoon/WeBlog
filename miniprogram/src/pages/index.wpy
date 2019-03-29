@@ -1,8 +1,8 @@
 <!--  -->
 <template>
   <block>
-    <view class="DrawerPage {{drawerHidden?'':'show'}}">
-      <view
+    		<scroll-view scroll-y class="DrawerPage {{!drawerHidden?'show':''}}">
+			 <view
         class="cu-custom"
         style="height:{{CustomBar}}px;"
       >
@@ -11,23 +11,23 @@
           style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;"
         >
           <view
-            class="cu-avatar round animation-{{rotate}} animation-reverse"
+            class="cu-avatar round"
             style="background-image:url('{{authorInfo.avatarUrl}}');"
             bindtap="showDrawer"
           ></view>
           <view
-            class='content'
+            class='content text-green'
             style='top:{{StatusBar}}px;'
-          ></view>
+          >指尖魔法屋</view>
         </view>
       </view>
       <view class="cu-card case">
         <view
           wx:for="{{postData}}"
           wx:key
-          class="cu-item shadow animation-{{animation}} {{!drawerHidden?'animation-reverse':''}}"
+          class="cu-item shadow animation-{{drawerHidden?'slide-bottom':'slide-top animation-reverse'}}"
         >
-          <view hidden="{{postHidden}}" @tap="seePost" data-cid="{{item.cid}}">
+          <view @tap="seePost" data-cid="{{item.cid}}">
             <view class='image'>
               <image
                 src="{{item.thumb[0].str_value}}"
@@ -43,9 +43,9 @@
                   style="background-image:url('{{authorInfo.avatarUrl}}');"
                 ></view>
                 <view class='content flex-sub'>
-                  <view class='text-grey'>{{authorInfo.screenName}}</view>
+                  <view class='text-green'>{{authorInfo.screenName}}</view>
                   <view class='text-gray text-sm flex justify-between'>
-                    {{item.created}}
+                    {{item.createdTime}}
                     <view class="text-gray text-sm">
                       <text class="icon-attentionfill"></text>{{item.views}}
                       <text class="icon-appreciatefill"></text>{{item.likes}}
@@ -58,22 +58,28 @@
           </view>
         </view>
       </view>
-    </view>
-    <view
-      class="DrawerClose {{!drawerHidden?'show':''}}"
-      bindtap='hideDrawer'
-    >
-      <text class='icon-pullright'></text>
-    </view>
-    <view class="DrawerWindow bg-gradual-black {{!drawerHidden?'show':''}}">
-      <view class="about shadow-lg radius">
+      <!-- 分页栏 -->
+  <view class="padding text-center">
+    <button class="cu-btn sm bg-white margin-xs">上一页</button>
+    <button class="cu-btn sm bg-white margin-xs" wx:for="{{2}}">{{item}}</button>
+    <button class="cu-btn sm bg-white margin-xs">...</button>
+    <button class="cu-btn sm bg-white margin-xs" wx:for="{{1}}">{{item+5}}</button>
+    <button class="cu-btn sm bg-white margin-xs">下一页</button>
+  </view>
+  <view class="bg-black" style="height:300rpx;"></view>
+		</scroll-view>
+		<view class="DrawerClose {{!drawerHidden?'show':''}}" bindtap="hideDrawer">
+			<text class="icon-pullright"></text>
+		</view>
+		<scroll-view scroll-y class="DrawerWindow {{!drawerHidden?'show':''}}">
+			<view class="about shadow-lg radius animation-{{!drawerHidden?'slide-left':''}}">
         <view class="bg-img">
           <image
             mode="aspectFill"
             src="https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png"
           ></image>
         </view>
-        <view class="avatar-view animation-{{rotate}}">
+        <view class="avatar-view">
           <image
             class="avatar"
             src="{{authorInfo.avatarUrl}}"
@@ -90,21 +96,22 @@
           </view>
         </view>
       </view>
-    </view>
+		</scroll-view>
   </block>
 </template>
 
 <script>
 import Page from '../common/page'
 import { getRecentPost } from '../utils/api'
+import moment from 'moment'
+import 'moment/locale/zh-cn'
+moment.locale('zh-cn')
 
 export default class Index extends Page {
   config = {};
 
   data = {
-    postHidden: false,
     rotate: '',
-    animation: '',
     drawerHidden: true,
     authorInfo: {},
     postData: [],
@@ -120,26 +127,20 @@ export default class Index extends Page {
       })
     },
     showDrawer(e) {
-      const _this = this
       this.drawerHidden = false
-      this.animation = 'slide-top'
-      this.rotate = 'rotate'
-      setTimeout(() => {
-        _this.postHidden = true
-        _this.$apply()
-      }, 1200)
     },
     hideDrawer(e) {
-      this.postHidden = false
       this.drawerHidden = true
-      this.animation = 'slide-bottom'
-      this.rotate = 'rotate-reverse'
     }
   };
   async initPost() {
     let res = await getRecentPost({ pageSize: 7 })
-    console.log(res.data.data)
-    this.postData = res.data.data
+    console.log(res.data.data[0].created)
+    let data = res.data.data
+    for(let i = 0; i < data.length; i++){
+      data[i].createdTime = moment.unix(data[i].created).fromNow()
+    }
+    this.postData = data
     this.$apply()
   }
   onLoad() {
@@ -162,71 +163,6 @@ export default class Index extends Page {
 }
 </script>
 <style lang='less'>
-// CSS动画
-[class*=animation-] {
-    animation-duration: 1s;
-    animation-timing-function: ease-out;
-    animation-fill-mode: both
-}
-.animation-rotate {
-    animation-name: slide-rotate
-}
-@keyframes slide-rotate {
-  0% {
-        opacity: 0;
-    }
-}
-.animation-rotate-reserve {
-    animation-name: slide-rotate-reserve
-}
-@keyframes slide-rotate-reserve {
-  0% {
-        opacity: 0;
-        transform: rotate(180deg)
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0)
-    }
-}
-
-.animation-slide-top {
-    animation-name: slide-top
-}
-
-.animation-slide-bottom {
-    animation-name: slide-bottom
-}
-
-.animation-reverse {
-    animation-direction: reverse
-}
-
-@keyframes slide-top {
-    0% {
-        opacity: 0;
-        transform: translateY(-100%)
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0)
-    }
-}
-
-@keyframes slide-bottom {
-    0% {
-        opacity: 0;
-        transform: translateY(-100%)
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0)
-    }
-}
-
 // 博客内容的统计
 .intro {
   width: 506rpx;
@@ -254,22 +190,25 @@ export default class Index extends Page {
   //background-image:url('https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png') ;
 }
 .about {
+  margin: auto;
   text-align: center;
   width: 506rpx;
   background-color: #545454;
+  margin-top:80%;
 }
 page {
-  background-color: #2e3131;
-  background-size: 100%;
-}
-.bg {
-  background-color: #545454;
-}
-.DrawerPage {
-  position: absolute;
+  background-image: var(--gradualBlack);
   width: 100vw;
+  overflow: hidden;
+}
+
+.DrawerPage {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
   left: 0vw;
-  transition: all 0.6s;
+  background-color: #f1f1f1;
+  transition: all .6s;
 }
 
 .DrawerPage.show {
@@ -280,7 +219,6 @@ page {
 }
 
 .DrawerWindow {
-  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -292,7 +230,7 @@ page {
   transform: scale(0.9, 0.9) translateX(-100%);
   opacity: 0;
   pointer-events: none;
-  transition: all 0.6s;
+  transition: all .6s;
 }
 
 .DrawerWindow.show {
@@ -312,17 +250,14 @@ page {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  background-image: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.01),
-    rgba(0, 0, 0, 0.6)
-  );
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.6));
   letter-spacing: 5px;
   font-size: 50rpx;
   opacity: 0;
   pointer-events: none;
-  transition: all 0.6s;
+  transition: all .6s;
 }
+
 .DrawerClose.show {
   opacity: 1;
   pointer-events: all;

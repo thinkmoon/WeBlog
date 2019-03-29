@@ -74,8 +74,8 @@
 </template>
 
 <script>
-import Page from '../common/page';
-import { getPostBycid } from '../utils/api';
+import Page from '../common/page'
+import { getPostBycid } from '../utils/api'
 const Towxml = require('./main.js')
 
 export default class extends Page {
@@ -106,7 +106,7 @@ export default class extends Page {
     let content = res.data.data[0].text
     let data = towxml.toJson(content.slice(15), 'markdown')
     // 设置主题
-    data.theme = 'light';
+    data.theme = 'light'
     // 更新数据并隐藏loading...
     this.isloading = false
     this.article = data
