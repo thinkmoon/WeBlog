@@ -26,6 +26,15 @@
       </view>
       <view class="cu-card case">
         <view
+          class="loading text-center bg-white margin"
+          wx:if="{{isloading}}"
+        >
+          <image
+            class="loading__icon"
+            src="https://image.weilanwl.com/gif/loading-2.gif"
+          ></image>
+        </view>
+        <view
           wx:for="{{postData}}"
           wx:key
           class="cu-item shadow animation-{{drawerHidden?'slide-bottom':'slide-top animation-reverse'}}"
@@ -76,12 +85,12 @@
         >首页</button>
         <button
           @tap="navPage"
-          data-page="{{curPage-1}}"
+          data-page="{{ curPage*1 - 1*1}}"
           class="cu-btn sm bg-white margin-xs"
         >上一页</button>
         <button
           @tap="navPage"
-          data-page="{{curPage + 1}}"
+          data-page="{{curPage*1 + 1*1}}"
           class="cu-btn sm bg-white margin-xs"
         >下一页</button>
         <button
@@ -150,6 +159,7 @@ export default class Index extends Page {
   config = {};
 
   data = {
+    toView: 'topdf',
     pageNum: 0,
     curPage: 1,
     drawerHidden: true,
@@ -157,7 +167,8 @@ export default class Index extends Page {
     postData: [],
     StatusBar: 0,
     CustomBar: 0,
-    Custom: 0
+    Custom: 0,
+    isloading: true
   };
 
   methods = {
@@ -176,9 +187,10 @@ export default class Index extends Page {
   navPage(e) {
     let data = e.currentTarget.dataset.page
     console.log('navTo', data)
-    if (data <= 0) return
+    if (data <= 0 || data > this.data.pageNum) return
+    this.isloading = true
     this.curPage = data
-    this.initPost(data)
+    this.drawerHidden = this.initPost(data)
   }
   async initPost(pageOffset) {
     let res = await getRecentPost({ page: pageOffset })
@@ -193,6 +205,9 @@ export default class Index extends Page {
       data[i].createdTime = moment.unix(data[i].created).fromNow()
     }
     console.log(data)
+    this.postData = false
+    this.$apply()
+    this.isloading = false
     this.postData = data
     console.log(this.postData)
     this.$apply()
