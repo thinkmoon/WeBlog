@@ -1,8 +1,11 @@
 <!--  -->
 <template>
   <block>
-    		<scroll-view scroll-y class="DrawerPage {{!drawerHidden?'show':''}}">
-			 <view
+    <scroll-view
+      scroll-y
+      class="DrawerPage {{!drawerHidden?'show':''}}"
+    >
+      <view
         class="cu-custom"
         style="height:{{CustomBar}}px;"
       >
@@ -16,8 +19,8 @@
             bindtap="showDrawer"
           ></view>
           <view
-            class='content text-green'
-            style='top:{{StatusBar}}px;'
+            class="content text-green"
+            style="top:{{StatusBar}}px;"
           >指尖魔法屋</view>
         </view>
       </view>
@@ -27,14 +30,17 @@
           wx:key
           class="cu-item shadow animation-{{drawerHidden?'slide-bottom':'slide-top animation-reverse'}}"
         >
-          <view @tap="seePost" data-cid="{{item.cid}}">
-            <view class='image'>
+          <view
+            @tap="seePost"
+            data-cid="{{item.cid}}"
+          >
+            <view class="image">
               <image
                 src="{{item.thumb[0].str_value}}"
                 mode="widthFix"
               ></image>
               <view class="cu-tag bg-blue">置顶</view>
-              <view class='cu-bar bg-shadeBottom'>{{item.title}}</view>
+              <view class="cu-bar bg-shadeBottom">{{ item.title }}</view>
             </view>
             <view class="cu-list menu menu-avatar">
               <view class="cu-item">
@@ -42,14 +48,17 @@
                   class="cu-avatar round lg"
                   style="background-image:url('{{authorInfo.avatarUrl}}');"
                 ></view>
-                <view class='content flex-sub'>
-                  <view class='text-green'>{{authorInfo.screenName}}</view>
-                  <view class='text-gray text-sm flex justify-between'>
-                    {{item.createdTime}}
+                <view class="content flex-sub">
+                  <view class="text-green">{{ authorInfo.screenName }}</view>
+                  <view class="text-gray text-sm flex justify-between">
+                    {{ item.createdTime }}
                     <view class="text-gray text-sm">
-                      <text class="icon-attentionfill"></text>{{item.views}}
-                      <text class="icon-appreciatefill"></text>{{item.likes}}
-                      <text class="icon-messagefill"></text>{{item.commentsNum}}
+                      <text class="icon-attentionfill"></text>
+                      {{ item.views }}
+                      <text class="icon-appreciatefill"></text>
+                      {{ item.likes }}
+                      <text class="icon-messagefill"></text>
+                      {{ item.commentsNum }}
                     </view>
                   </view>
                 </view>
@@ -59,20 +68,42 @@
         </view>
       </view>
       <!-- 分页栏 -->
-  <view class="padding text-center">
-    <button class="cu-btn sm bg-white margin-xs">上一页</button>
-    <button class="cu-btn sm bg-white margin-xs" wx:for="{{2}}">{{item}}</button>
-    <button class="cu-btn sm bg-white margin-xs">...</button>
-    <button class="cu-btn sm bg-white margin-xs" wx:for="{{1}}">{{item+5}}</button>
-    <button class="cu-btn sm bg-white margin-xs">下一页</button>
-  </view>
-  <view class="bg-black" style="height:300rpx;"></view>
-		</scroll-view>
-		<view class="DrawerClose {{!drawerHidden?'show':''}}" bindtap="hideDrawer">
-			<text class="icon-pullright"></text>
-		</view>
-		<scroll-view scroll-y class="DrawerWindow {{!drawerHidden?'show':''}}">
-			<view class="about shadow-lg radius animation-{{!drawerHidden?'slide-left':''}}">
+      <view class="padding text-center">
+        <button
+          class="cu-btn sm bg-white margin-xs"
+          @tap="navPage"
+          data-page="1"
+        >首页</button>
+        <button
+          @tap="navPage"
+          data-page="{{curPage-1}}"
+          class="cu-btn sm bg-white margin-xs"
+        >上一页</button>
+        <button
+          @tap="navPage"
+          data-page="{{curPage + 1}}"
+          class="cu-btn sm bg-white margin-xs"
+        >下一页</button>
+        <button
+          class="cu-btn sm bg-white margin-xs"
+          @tap="navPage"
+          data-page="{{pageNum}}"
+        >末页</button>
+      </view>
+      <view
+        class="bg-black"
+        style="height:300rpx;"
+      ></view>
+    </scroll-view>
+    <view
+      class="DrawerClose {{!drawerHidden?'show':''}}"
+      bindtap="hideDrawer"
+    ><text class="icon-pullright"></text></view>
+    <scroll-view
+      scroll-y
+      class="DrawerWindow {{!drawerHidden?'show':''}}"
+    >
+      <view class="about shadow-lg radius animation-{{!drawerHidden?'slide-left':''}}">
         <view class="bg-img">
           <image
             mode="aspectFill"
@@ -86,23 +117,31 @@
           ></image>
         </view>
         <view class="intro shadow grid col-4 padding-sm solid-bottom">
-          <view class="solid-left">文章<view>42</view>
+          <view class="solid-left">
+            文章
+            <view>42</view>
           </view>
-          <view class="solid-left">留言<view>42</view>
+          <view class="solid-left">
+            留言
+            <view>42</view>
           </view>
-          <view class="solid-left">分类<view>42</view>
+          <view class="solid-left">
+            分类
+            <view>42</view>
           </view>
-          <view>标签<view>42</view>
+          <view>
+            标签
+            <view>42</view>
           </view>
         </view>
       </view>
-		</scroll-view>
+    </scroll-view>
   </block>
 </template>
 
 <script>
 import Page from '../common/page'
-import { getRecentPost } from '../utils/api'
+import { getRecentPost, getPageNum } from '../utils/api'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
@@ -111,7 +150,8 @@ export default class Index extends Page {
   config = {};
 
   data = {
-    rotate: '',
+    pageNum: 0,
+    curPage: 1,
     drawerHidden: true,
     authorInfo: {},
     postData: [],
@@ -133,19 +173,37 @@ export default class Index extends Page {
       this.drawerHidden = true
     }
   };
-  async initPost() {
-    let res = await getRecentPost({ pageSize: 7 })
-    console.log(res.data.data[0].created)
+  navPage(e) {
+    let data = e.currentTarget.dataset.page
+    console.log('navTo', data)
+    if (data <= 0) return
+    this.curPage = data
+    this.initPost(data)
+  }
+  async initPost(pageOffset) {
+    let res = await getRecentPost({ page: pageOffset })
+    let resNum = await getPageNum()
+    this.pageNum = resNum.data.data
+    wx.setStorage({
+      key: 'pageNum',
+      data: resNum.data.data
+    })
     let data = res.data.data
-    for(let i = 0; i < data.length; i++){
+    for (let i = 0; i < data.length; i++) {
       data[i].createdTime = moment.unix(data[i].created).fromNow()
     }
+    console.log(data)
     this.postData = data
+    console.log(this.postData)
     this.$apply()
   }
-  onLoad() {
+  onLoad(options) {
     const _this = this
-    this.initPost()
+    if (options.curPage) {
+      this.initPost(options.curPage)
+    } else {
+      this.initPost(1)
+    }
     const app = this.$parent
     this.StatusBar = app.globalData.StatusBar
     this.CustomBar = app.globalData.CustomBar
@@ -162,7 +220,7 @@ export default class Index extends Page {
   }
 }
 </script>
-<style lang='less'>
+<style lang="less">
 // 博客内容的统计
 .intro {
   width: 506rpx;
@@ -194,7 +252,7 @@ export default class Index extends Page {
   text-align: center;
   width: 506rpx;
   background-color: #545454;
-  margin-top:80%;
+  margin-top: 80%;
 }
 page {
   background-image: var(--gradualBlack);
@@ -208,7 +266,7 @@ page {
   height: 100vh;
   left: 0vw;
   background-color: #f1f1f1;
-  transition: all .6s;
+  transition: all 0.6s;
 }
 
 .DrawerPage.show {
@@ -230,7 +288,7 @@ page {
   transform: scale(0.9, 0.9) translateX(-100%);
   opacity: 0;
   pointer-events: none;
-  transition: all .6s;
+  transition: all 0.6s;
 }
 
 .DrawerWindow.show {
@@ -250,12 +308,16 @@ page {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.6));
+  background-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.01),
+    rgba(0, 0, 0, 0.6)
+  );
   letter-spacing: 5px;
   font-size: 50rpx;
   opacity: 0;
   pointer-events: none;
-  transition: all .6s;
+  transition: all 0.6s;
 }
 
 .DrawerClose.show {
