@@ -4,4 +4,4 @@
 ## 开发中...
 
 ## 预览地址
-![index](./index.png)
+![index](./index.PNG)
