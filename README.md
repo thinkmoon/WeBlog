@@ -4,4 +4,4 @@
 ## 开发中...
 
 ## 预览地址
-![index](https://raw.githubusercontent.com/thinkmoon/blob/TmWeBlog/master/index.png)
+![index](./index.png)
