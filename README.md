@@ -7,4 +7,4 @@
 ## 开发中...
 
 ## 预览地址
-![index](./index.PNG)
+![index](./png/preview.PNG)
