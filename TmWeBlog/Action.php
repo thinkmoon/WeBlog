@@ -56,7 +56,7 @@ class TmWeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     {
         $page     = (int)self::GET('page', 1);
         $offset   = $this->pageSize * ($page - 1);
-        $select   = $this->db->select('*')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('created < ?', time())->order('table.contents.created', Typecho_Db::SORT_DESC)->offset($offset)->limit($this->pageSize);
+        $select   = $this->db->select('cid', 'title', 'authorId ', 'created', 'slug', 'commentsNum')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('created < ?', time())->order('table.contents.created', Typecho_Db::SORT_DESC)->offset($offset)->limit($this->pageSize);
         $posts  = $this->db->fetchAll($select);
         foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
