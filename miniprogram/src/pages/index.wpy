@@ -128,19 +128,19 @@
         <view class="intro shadow grid col-4 padding-sm solid-bottom">
           <view class="solid-left">
             文章
-            <view>42</view>
+            <view>{{Overview.posts[0].Num}}</view>
           </view>
           <view class="solid-left">
             留言
-            <view>42</view>
+            <view>{{Overview.comments[0].Num}}</view>
           </view>
           <view class="solid-left">
             分类
-            <view>42</view>
+            <view>{{Overview.categorys[0].Num}}</view>
           </view>
           <view>
             标签
-            <view>42</view>
+            <view>{{Overview.tags[0].Num}}</view>
           </view>
         </view>
       </view>
@@ -150,7 +150,7 @@
 
 <script>
 import Page from '../common/page'
-import { getRecentPost, getPageNum } from '../utils/api'
+import { getRecentPost, getPageNum, getOverview } from '../utils/api'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
@@ -159,7 +159,7 @@ export default class Index extends Page {
   config = {};
 
   data = {
-    toView: 'topdf',
+    Overview: {},
     pageNum: 0,
     curPage: 1,
     drawerHidden: true,
@@ -212,7 +212,7 @@ export default class Index extends Page {
     console.log(this.postData)
     this.$apply()
   }
-  onLoad(options) {
+  async onLoad(options) {
     const _this = this
     if (options.curPage) {
       this.initPost(options.curPage)
@@ -224,6 +224,7 @@ export default class Index extends Page {
     this.CustomBar = app.globalData.CustomBar
     this.Custom = app.globalData.Custom
     var time = 0
+    _this.Overview = (await getOverview()).data.data
     var refreshId = setInterval(() => {
       if (time > 20 || app.globalData.authorInfo.avatarUrl) {
         _this.authorInfo = app.globalData.authorInfo

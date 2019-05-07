@@ -17,3 +17,8 @@ export const getPostBycid = (params) => {
 export const getPageNum = (params) => {
 	return GET('getPageNum', params)
 }
+
+// 获取总览
+export const getOverview = (params) => {
+	return GET('getOverview', params)
+}

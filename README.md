@@ -6,5 +6,7 @@
 
 ## 开发中...
 
+## 使用方法
+详见各子文件夹的readme.md
 ## 预览地址
 ![index](./png/preview.PNG)
