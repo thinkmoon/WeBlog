@@ -1,0 +1,11 @@
+{
+	"pages": [
+		{
+			"path": "pages/index"
+		}
+	],
+	"globalStyle": {
+		"navigationStyle": "custom"
+	},
+	"usingComponts":true
+}

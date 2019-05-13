@@ -1,0 +1,11 @@
+{
+  "name": "miniprogram",
+  "version": "0.0.3",
+  "description": "一个typecho博客的微信小程序版",
+  "author": "醉月思 <lqs@dgut.edu.cn>",
+  "license": "MIT",
+  "dependencies": {
+    "flyio": "^0.6.14",
+    "moment": "^2.24.0"
+  }
+}
