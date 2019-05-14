@@ -3,7 +3,7 @@
 		<scroll-view scroll-y class="DrawerPage" :class="!drawerHidden ? 'show' : ''">
 			<view class="cu-custom" :style="'height:' + CustomBar + 'px;'">
 				<view class="cu-bar fixed bg-gradual-black" :style="'height:' + CustomBar + 'px;padding-top:' + StatusBar + 'px;'">
-					<view class="cu-avatar round" @click="showDrawer" :style="'background-image:url(' + authorInfo.avatarUrl + ');'"></view>
+					<view class="cu-avatar round" @click="showDrawer" :style="'background-image:url(' + authorInfo.avatarUrl + ');'"  v-if="authorInfo.avatarUrl"></view>
 					<view class="content text-green" :style="'top:' + StatusBar + 'px;'">指尖魔法屋</view>
 				</view>
 			</view>
@@ -13,12 +13,12 @@
 					<view @tap="seePost(item.cid)">
 						<view class="image">
 							<image :src="item.thumb[0].str_value" mode="widthFix"></image>
-							<view class="cu-tag bg-blue">置顶</view>
+							<!-- <view class="cu-tag bg-blue">置顶</view> -->
 							<view class="cu-bar bg-shadeBottom">{{ item.title }}</view>
 						</view>
 						<view class="cu-list menu menu-avatar">
 							<view class="cu-item">
-								<view class="cu-avatar round lg" :style="'background-image:url(' + authorInfo.avatarUrl + ');'"></view>
+								<view class="cu-avatar round lg" :style="'background-image:url(' + authorInfo.avatarUrl + ');'"  v-if="authorInfo.avatarUrl"></view>
 								<view class="content flex-sub">
 									<view class="text-green">{{ authorInfo.screenName }}</view>
 									<view class="text-gray text-sm flex justify-between">
@@ -51,7 +51,7 @@
 		<scroll-view scroll-y class="DrawerWindow" :class="!drawerHidden ? 'show' : ''">
 			<view class="about shadow-lg radius animation-" :class="!drawerHidden ? 'animation-slide-left' : ''">
 				<view class="bg-img"><image mode="aspectFill" src="https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png"></image></view>
-				<view class="avatar-view"><image class="avatar" :src="authorInfo.avatarUrl"></image></view>
+				<view class="avatar-view" :style="'background-image:url(' + authorInfo.avatarUrl + ');'" v-if="authorInfo.avatarUrl"></view>
 				<view class="intro shadow grid col-4 padding-sm solid-bottom">
 					<view class="solid-left">
 						文章
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import {mapState,mapActions} from 'vuex'
+import {mapState} from 'vuex'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
@@ -103,10 +103,9 @@ export default {
 		...mapState(['authorInfo'])
 	},
 	methods: {
-		...mapActions(['getAuthorInfo']),
-		seePost(e) {
+		seePost(cid) {
 			wx.navigateTo({
-				url: '../towxml/post?cid=' + e.currentTarget.dataset.cid
+				url: './post?cid=' + cid
 			})
 		},
 		showDrawer(e) {
@@ -123,7 +122,6 @@ export default {
 	async onShow() {
 		const _this = this
 		this.initPost(1)
-		this.getAuthorInfo()
 		_this.Overview = await this.$api.getOverview()
 	},
 	onLoad(options) {
@@ -155,7 +153,6 @@ export default {
 .bg-img image {
 	width: 506rpx;
 	height: 200rpx;
-	//background-image:url('https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png') ;
 }
 .about {
 	margin: auto;

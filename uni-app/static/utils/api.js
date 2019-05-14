@@ -1,5 +1,5 @@
 var Fly = require("flyio/dist/npm/wx")
-var fly = new Fly();
+var fly = new Fly;
 fly.config.baseURL="https://www.thinkmoon.cn/TmWeBlog/api/"
 
 fly.interceptors.response.use(

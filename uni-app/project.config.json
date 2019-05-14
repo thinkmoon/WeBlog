@@ -2,13 +2,14 @@
 	"description": "一个typecho博客的微信小程序版",
 	"setting": {
 		"urlCheck": true,
-		"es6": false,
-		"postcss": false,
-		"minified": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
 		"newFeature": true,
 		"nodeModules": false,
 		"autoAudits": false,
-		"uglifyFileName": false
+		"uglifyFileName": true,
+		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
 	"appid": "wx53f9b5912c0f0cf6",
@@ -16,5 +17,33 @@
 	"miniprogramRoot": "unpackage/dist/dev/mp-weixin/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
-	"condition": {}
+	"libVersion": "2.7.0",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "post",
+					"pathName": "pages/post",
+					"scene": null
+				}
+			]
+		}
+	}
 }

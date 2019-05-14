@@ -1,31 +1,6 @@
 <!-- post -->
 <template>
-  <view class='page'>
-    <view
-      class="cu-custom"
-      style="height:{{CustomBar}}px;"
-    >
-      <view
-        class="cu-bar fixed bg-gradual-black"
-        style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;"
-      >
-        <navigator
-          class='action border-custom'
-          open-type="navigateBack"
-          delta="1"
-          hover-class="none"
-          style='width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)'
-        >
-          <text class='icon-back'></text>
-          <text class='icon-homefill'></text>
-        </navigator>
-        <view
-          class='content'
-          style='top:{{StatusBar}}px;'
-        >{{postData.title}}</view>
-      </view>
-    </view>
-
+  <block>
     <view class="cu-bar bg-white solid-bottom padding-top padding-bottom">
       <view class='action'>
         <text class='icon-titles text-green'></text>
@@ -35,7 +10,7 @@
     <!--loading-->
     <view
       class="loading"
-      wx:if="{{isloading}}"
+      v-if="isloading"
     >
       <image
         class="loading__icon"
@@ -70,20 +45,20 @@
       </view>
       <button class='cu-btn bg-green shadow-blur'>发送</button>
     </view>
-  </view>
+  </block>
 </template>
 
 <script>
-import Page from '../common/page'
-import { getPostBycid } from '../utils/api'
-const Towxml = require('./main.js')
+import Page from "../common/page";
+import { getPostBycid } from "../utils/api";
+const Towxml = require("./main.js");
 
 export default class extends Page {
   config = {};
 
   data = {
     postData: {},
-    article: '',
+    article: "",
     isloading: true,
     StatusBar: 20,
     CustomBar: 64,
@@ -100,27 +75,27 @@ export default class extends Page {
   methods = {};
 
   async initPost(cid) {
-    const towxml = new Towxml()
-    const res = await getPostBycid({ cid: cid })
-    console.log(res.data.data[0].text)
-    let content = res.data.data[0].text
-    let data = towxml.toJson(content.slice(15), 'markdown')
+    const towxml = new Towxml();
+    const res = await getPostBycid({ cid: cid });
+    console.log(res.data.data[0].text);
+    let content = res.data.data[0].text;
+    let data = towxml.toJson(content.slice(15), "markdown");
     // 设置主题
-    data.theme = 'light'
+    data.theme = "light";
     // 更新数据并隐藏loading...
-    this.isloading = false
-    this.article = data
-    this.postData = res.data.data[0]
-    this.$apply()
+    this.isloading = false;
+    this.article = data;
+    this.postData = res.data.data[0];
+    this.$apply();
   }
 
   onLoad(options) {
-    const app = this.$parent
-    this.StatusBar = app.globalData.StatusBar
-    this.CustomBar = app.globalData.CustomBar
-    this.Custom = app.globalData.Custom
-    console.log(app.globalData.Custom)
-    this.initPost(options.cid)
+    const app = this.$parent;
+    this.StatusBar = app.globalData.StatusBar;
+    this.CustomBar = app.globalData.CustomBar;
+    this.Custom = app.globalData.Custom;
+    console.log(app.globalData.Custom);
+    this.initPost(options.cid);
   }
 }
 </script>

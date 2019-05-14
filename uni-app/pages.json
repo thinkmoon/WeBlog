@@ -2,10 +2,17 @@
 	"pages": [
 		{
 			"path": "pages/index"
+		},
+		{
+			"path": "pages/post",
+			"style":{
+				"usingComponents": {
+					"wemark": "../static/extensions/wemark/wemark"
+				}
+			}
 		}
 	],
 	"globalStyle": {
 		"navigationStyle": "custom"
-	},
-	"usingComponts":true
+	}
 }
