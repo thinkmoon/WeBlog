@@ -7,7 +7,7 @@
 			"path": "pages/post",
 			"style":{
 				"usingComponents": {
-					"wemark": "../static/extensions/wemark/wemark"
+					"towxml": "../static/extensions/towxml/index"
 				}
 			}
 		}

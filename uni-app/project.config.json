@@ -1,14 +1,14 @@
 {
 	"description": "一个typecho博客的微信小程序版",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"nodeModules": false,
+		"nodeModules": true,
 		"autoAudits": false,
-		"uglifyFileName": true,
+		"uglifyFileName": false,
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
@@ -38,9 +38,10 @@
 			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "post",
 					"pathName": "pages/post",
+					"query": "cid=297",
 					"scene": null
 				}
 			]

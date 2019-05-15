@@ -3,22 +3,24 @@
 		<scroll-view scroll-y class="DrawerPage" :class="!drawerHidden ? 'show' : ''">
 			<view class="cu-custom" :style="'height:' + CustomBar + 'px;'">
 				<view class="cu-bar fixed bg-gradual-black" :style="'height:' + CustomBar + 'px;padding-top:' + StatusBar + 'px;'">
-					<view class="cu-avatar round" @click="showDrawer" :style="'background-image:url(' + authorInfo.avatarUrl + ');'"  v-if="authorInfo.avatarUrl"></view>
+					<view class="cu-avatar round" @click="showDrawer" :style="'background-image:url(' + authorInfo.avatarUrl + ');'" v-if="authorInfo.avatarUrl"></view>
 					<view class="content text-green" :style="'top:' + StatusBar + 'px;'">指尖魔法屋</view>
 				</view>
 			</view>
 			<view class="cu-card case">
-				<view class="loading text-center bg-white margin" v-if="postData.length == 0"><image class="loading__icon" src="https://image.weilanwl.com/gif/loading-2.gif"></image></view>
-				<view v-for="(item, index) in postData" :key="index" class="cu-item shadow animation-slide-bottom">
+				<view class="bg-white flex-sub radius shadow-lg" v-if="isloading">
+					<image src="https://image.weilanwl.com/gif/loading-white.gif" mode="aspectFit" class="gif-white response" style="height:240upx"></image>
+				</view>
+				<view v-for="(item, index) in postData" :key="index" class="cu-item shadow animation-slide-bottom" v-else="">
 					<view @tap="seePost(item.cid)">
 						<view class="image">
-							<image :src="item.thumb[0].str_value" mode="widthFix"></image>
+							<image :src="item.thumb[0].str_value" mode="widthFix" :lazy-load="true"></image>
 							<!-- <view class="cu-tag bg-blue">置顶</view> -->
 							<view class="cu-bar bg-shadeBottom">{{ item.title }}</view>
 						</view>
 						<view class="cu-list menu menu-avatar">
 							<view class="cu-item">
-								<view class="cu-avatar round lg" :style="'background-image:url(' + authorInfo.avatarUrl + ');'"  v-if="authorInfo.avatarUrl"></view>
+								<view class="cu-avatar round lg" :style="'background-image:url(' + authorInfo.avatarUrl + ');'" v-if="authorInfo.avatarUrl"></view>
 								<view class="content flex-sub">
 									<view class="text-green">{{ authorInfo.screenName }}</view>
 									<view class="text-gray text-sm flex justify-between">
@@ -51,7 +53,7 @@
 		<scroll-view scroll-y class="DrawerWindow" :class="!drawerHidden ? 'show' : ''">
 			<view class="about shadow-lg radius animation-" :class="!drawerHidden ? 'animation-slide-left' : ''">
 				<view class="bg-img"><image mode="aspectFill" src="https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png"></image></view>
-				<view class="avatar-view" :style="'background-image:url(' + authorInfo.avatarUrl + ');'" v-if="authorInfo.avatarUrl"></view>
+				<view class="avatar-view"><image class="avatar" :src="authorInfo.avatarUrl"></image></view>
 				<view class="intro shadow grid col-4 padding-sm solid-bottom">
 					<view class="solid-left">
 						文章
@@ -76,11 +78,10 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
-
 
 export default {
 	data() {
@@ -91,15 +92,16 @@ export default {
 			drawerHidden: true,
 			postData: [],
 			StatusBar: this.StatusBar,
-			CustomBar: this.CustomBar
+			CustomBar: this.CustomBar,
+			isloading: true
 		}
 	},
-	filters:{
-		formatTime(value){
+	filters: {
+		formatTime(value) {
 			return moment.unix(value).fromNow()
 		}
 	},
-	computed:{
+	computed: {
 		...mapState(['authorInfo'])
 	},
 	methods: {
@@ -116,7 +118,13 @@ export default {
 		},
 		async initPost(pageOffset) {
 			this.postData = await this.$api.getRecentPost({ page: pageOffset })
-			this.pageNum = await this.$api.getPageNum()
+			this.isloading = false
+		},
+		navPage(page) {
+			if (page <= 0 || page > this.pageNum) return
+			this.isloading = true
+			this.curPage = page
+			this.drawerHidden = this.initPost(page)
 		}
 	},
 	async onShow() {
@@ -124,7 +132,8 @@ export default {
 		this.initPost(1)
 		_this.Overview = await this.$api.getOverview()
 	},
-	onLoad(options) {
+	async onLoad(options) {
+		this.pageNum = await this.$api.getPageNum()
 	}
 }
 </script>

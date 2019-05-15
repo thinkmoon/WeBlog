@@ -1,4 +1,4 @@
-var Fly = require("flyio/dist/npm/wx")
+var Fly = require("./lib/wx.umd.min.js")
 var fly = new Fly;
 fly.config.baseURL="https://www.thinkmoon.cn/TmWeBlog/api/"
 
