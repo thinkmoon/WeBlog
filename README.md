@@ -2,12 +2,7 @@
 
 一个typecho博客的微信小程序版
 
-| 主页  |      关于页      |  文章页 |
-|:-------------:|:-------------:|:-------------:|
-| ![index](./img/index.jpg) |  ![index](./img/about.jpg) | ![index](./img/article.jpg) |
-
-
-![index](./img/preview.png)
+![index](./img/code.png)
 
 <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 
@@ -44,3 +39,6 @@
 
 [ ] 评论功能
 
+| 主页  |      关于页      |  文章页 |
+|:-------------:|:-------------:|:-------------:|
+| ![index](./img/index.jpg) |  ![index](./img/about.jpg) | ![index](./img/article.jpg) |
