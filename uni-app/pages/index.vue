@@ -4,7 +4,7 @@
 			<view class="cu-custom" :style="'height:' + CustomBar + 'px;'">
 				<view class="cu-bar fixed bg-gradual-black" :style="'height:' + CustomBar + 'px;padding-top:' + StatusBar + 'px;'">
 					<view class="cu-avatar round" @click="showDrawer" :style="'background-image:url(' + authorInfo.avatarUrl + ');'" v-if="authorInfo.avatarUrl"></view>
-					<view class="content text-green" :style="'top:' + StatusBar + 'px;'">指尖魔法屋</view>
+					<view class="content text-shadow text-white" :style="'top:' + StatusBar + 'px;'">指尖魔法屋</view>
 				</view>
 			</view>
 			<view class="cu-card case">
@@ -16,7 +16,7 @@
 						<view class="image">
 							<image :src="item.thumb[0].str_value" mode="widthFix" :lazy-load="true"></image>
 							<!-- <view class="cu-tag bg-blue">置顶</view> -->
-							<view class="cu-bar bg-shadeBottom">{{ item.title }}</view>
+							<view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view>
 						</view>
 						<view class="cu-list menu menu-avatar">
 							<view class="cu-item">

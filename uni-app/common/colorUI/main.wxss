@@ -3387,7 +3387,8 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-shadeBottom {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 1));
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(187,187,187,0.30) 0%, rgba(0,0,0,0.30) 120%) #989898; 
+	background-blend-mode: multiply,multiply;
   color: #fff;
 }
 

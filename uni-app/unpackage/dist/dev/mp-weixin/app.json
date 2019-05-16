@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/index",
+    "pages/post"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationStyle": "custom"
+  },
+  "usingComponents": {
+    "cu-custom": "/common/componets/cu-custom"
+  }
+}
