@@ -1,1 +1,18 @@
-/* pages/post.wxss */
+
+.like-area {
+	height: 300rpx;
+}
+.like-btn {
+	height: 130rpx;
+	width: 130rpx;
+	border-radius: 50%;
+	border: 1rpx solid #42b983;
+}
+.comment-area {
+	height: 400rpx;
+}
+.comment-area textarea {
+	width: 650rpx;
+	height: 250rpx;
+}
+

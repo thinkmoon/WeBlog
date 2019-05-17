@@ -1,10 +1,5 @@
 <script>
 import Vue from 'vue'
-
-// 引入API
-import * as API from './static/utils/api'
-Vue.prototype.$api = API
-
 import { mapActions } from 'vuex'
 
 export default {

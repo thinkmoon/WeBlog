@@ -8,6 +8,8 @@
     "navigationStyle": "custom"
   },
   "usingComponents": {
-    "cu-custom": "/common/componets/cu-custom"
-  }
+    "cu-custom": "/common/componets/cu-custom",
+    "tm-footer": "/common/componets/tm-footer"
+  },
+  "sitemapLocation": "sitemap.json"
 }

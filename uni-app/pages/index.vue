@@ -47,7 +47,7 @@
 				<button @tap="navPage(curPage * 1 + 1 * 1)" class="cu-btn sm bg-white margin-xs">下一页</button>
 				<button class="cu-btn sm bg-white margin-xs" @tap="navPage(pageNum)">末页</button>
 			</view>
-			<view class="bg-black" style="height:300rpx;"></view>
+			<tm-footer></tm-footer>
 		</scroll-view>
 		<view class="DrawerClose" :class="!drawerHidden ? 'show' : ''" @click="hideDrawer"><text class="icon-pullright"></text></view>
 		<scroll-view scroll-y class="DrawerWindow" :class="!drawerHidden ? 'show' : ''">
@@ -275,5 +275,9 @@ page {
 
 .DrawerPage .cu-bar.tabbar .action {
 	flex: initial;
+}
+
+.image{
+	max-height: 500upx;
 }
 </style>

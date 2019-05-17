@@ -13,3 +13,14 @@
     font-size: 28rpx;
     height: 56rpx;
 }
+
+/* 水平垂直居中 */
+.tm-every-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.line-sub{
+	color:#A9A9A9;
+}

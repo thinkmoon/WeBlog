@@ -162,4 +162,7 @@ page {
       -ms-flex: initial;
           flex: initial;
 }
+.image {
+  max-height: 500rpx;
+}
 

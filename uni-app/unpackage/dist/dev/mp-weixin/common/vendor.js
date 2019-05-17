@@ -8908,10 +8908,16 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "D:\\Project\
 
 
 
-var _store = _interopRequireDefault(__webpack_require__(/*! ./common/store */ "D:\\Project\\TmWeBlog\\uni-app\\common\\store\\index.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | common/componets/cu-custom */ "common/componets/cu-custom").then(__webpack_require__.bind(null, /*! ./common/componets/cu-custom.vue */ "D:\\Project\\TmWeBlog\\uni-app\\common\\componets\\cu-custom.vue"));};_vue.default.component('cu-custom', cuCustom);
-_vue.default.prototype.$store = _store.default;
 
-_vue.default.config.productionTip = false;
+
+
+var _store = _interopRequireDefault(__webpack_require__(/*! ./common/store */ "D:\\Project\\TmWeBlog\\uni-app\\common\\store\\index.js"));
+
+
+var API = _interopRequireWildcard(__webpack_require__(/*! ./static/utils/api */ "D:\\Project\\TmWeBlog\\uni-app\\static\\utils\\api.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | common/componets/cu-custom */ "common/componets/cu-custom").then(__webpack_require__.bind(null, /*! ./common/componets/cu-custom.vue */ "D:\\Project\\TmWeBlog\\uni-app\\common\\componets\\cu-custom.vue"));};_vue.default.component('cu-custom', cuCustom); // 引入footer
+var tmFooter = function tmFooter() {return Promise.all(/*! import() | common/componets/tm-footer */[__webpack_require__.e("common/vendor"), __webpack_require__.e("common/componets/tm-footer")]).then(__webpack_require__.bind(null, /*! ./common/componets/tm-footer.vue */ "D:\\Project\\TmWeBlog\\uni-app\\common\\componets\\tm-footer.vue"));};_vue.default.component('tm-footer', tmFooter); // 引入vuex
+_vue.default.prototype.$store = _store.default; // 引入API
+_vue.default.prototype.$api = API;_vue.default.config.productionTip = false;
 
 _App.default.mpType = 'app';
 
