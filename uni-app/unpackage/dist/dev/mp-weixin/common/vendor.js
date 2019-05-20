@@ -9724,7 +9724,7 @@ module.exports = function(module) {
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js"));
 
-var API = _interopRequireWildcard(__webpack_require__(/*! ../../static/utils/api */ "D:\\Project\\TmWeBlog\\uni-app\\static\\utils\\api.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+var API = _interopRequireWildcard(__webpack_require__(/*! ../../common/utils/api */ "D:\\Project\\TmWeBlog\\uni-app\\common\\utils\\api.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 
 _vue.default.use(_vuex.default);
 
@@ -9759,6 +9759,53 @@ store;exports.default = _default;
 
 /***/ }),
 
+/***/ "D:\\Project\\TmWeBlog\\uni-app\\common\\utils\\api.js":
+/*!*******************************************************!*\
+  !*** D:/Project/TmWeBlog/uni-app/common/utils/api.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.getOverview = exports.getPageNum = exports.getPostBycid = exports.getAuthorInfo = exports.getRecentPost = void 0;var Fly = __webpack_require__(/*! flyio/dist/npm/wx */ "./node_modules/flyio/dist/npm/wx.js");
+var fly = new Fly();
+
+fly.config.baseURL = "https://www.thinkmoon.cn/TmWeBlog/api/";
+
+fly.interceptors.response.use(
+function (response) {
+  //只将请求结果的data字段返回
+  return response.data.data;
+},
+function (err) {
+  //发生网络错误后会走到这里
+  return Promise.resolve("ERROR");
+});
+
+
+// 获取最近文章
+var getRecentPost = function getRecentPost(params) {
+  return fly.get('getRecentPost', params);
+};
+// 获取作者信息
+exports.getRecentPost = getRecentPost;var getAuthorInfo = function getAuthorInfo(params) {
+  return fly.get('getAuthorInfo', params);
+};
+// 通过cid获取文章
+exports.getAuthorInfo = getAuthorInfo;var getPostBycid = function getPostBycid(params) {
+  return fly.get('getPostBycid', params);
+};
+// 获取总页数
+exports.getPostBycid = getPostBycid;var getPageNum = function getPageNum(params) {
+  return fly.get('getPageNum', params);
+};
+// 获取总览
+exports.getPageNum = getPageNum;var getOverview = function getOverview(params) {
+  return fly.get('getOverview', params);
+};exports.getOverview = getOverview;
+
+/***/ }),
+
 /***/ "D:\\Project\\TmWeBlog\\uni-app\\main.js":
 /*!*******************************************!*\
   !*** D:/Project/TmWeBlog/uni-app/main.js ***!
@@ -9781,7 +9828,7 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "D:\\Project\
 var _store = _interopRequireDefault(__webpack_require__(/*! ./common/store */ "D:\\Project\\TmWeBlog\\uni-app\\common\\store\\index.js"));
 
 
-var API = _interopRequireWildcard(__webpack_require__(/*! ./static/utils/api */ "D:\\Project\\TmWeBlog\\uni-app\\static\\utils\\api.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | common/componets/cu-custom */ "common/componets/cu-custom").then(__webpack_require__.bind(null, /*! ./common/componets/cu-custom.vue */ "D:\\Project\\TmWeBlog\\uni-app\\common\\componets\\cu-custom.vue"));};_vue.default.component('cu-custom', cuCustom); // 引入footer
+var API = _interopRequireWildcard(__webpack_require__(/*! ./common/utils/api */ "D:\\Project\\TmWeBlog\\uni-app\\common\\utils\\api.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {return __webpack_require__.e(/*! import() | common/componets/cu-custom */ "common/componets/cu-custom").then(__webpack_require__.bind(null, /*! ./common/componets/cu-custom.vue */ "D:\\Project\\TmWeBlog\\uni-app\\common\\componets\\cu-custom.vue"));};_vue.default.component('cu-custom', cuCustom); // 引入footer
 var tmFooter = function tmFooter() {return Promise.all(/*! import() | common/componets/tm-footer */[__webpack_require__.e("common/vendor"), __webpack_require__.e("common/componets/tm-footer")]).then(__webpack_require__.bind(null, /*! ./common/componets/tm-footer.vue */ "D:\\Project\\TmWeBlog\\uni-app\\common\\componets\\tm-footer.vue"));};_vue.default.component('tm-footer', tmFooter); // 引入vuex
 _vue.default.prototype.$store = _store.default; // 引入API
 _vue.default.prototype.$api = API;_vue.default.config.productionTip = false;
@@ -27446,53 +27493,6 @@ webpackContext.id = "D:\\Project\\TmWeBlog\\uni-app\\node_modules\\moment\\local
 
 "use strict";
 
-
-/***/ }),
-
-/***/ "D:\\Project\\TmWeBlog\\uni-app\\static\\utils\\api.js":
-/*!*******************************************************!*\
-  !*** D:/Project/TmWeBlog/uni-app/static/utils/api.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getOverview = exports.getPageNum = exports.getPostBycid = exports.getAuthorInfo = exports.getRecentPost = void 0;var Fly = __webpack_require__(/*! flyio/dist/npm/wx */ "./node_modules/flyio/dist/npm/wx.js");
-var fly = new Fly();
-
-fly.config.baseURL = "https://www.thinkmoon.cn/TmWeBlog/api/";
-
-fly.interceptors.response.use(
-function (response) {
-  //只将请求结果的data字段返回
-  return response.data.data;
-},
-function (err) {
-  //发生网络错误后会走到这里
-  return Promise.resolve("ERROR");
-});
-
-
-// 获取最近文章
-var getRecentPost = function getRecentPost(params) {
-  return fly.get('getRecentPost', params);
-};
-// 获取作者信息
-exports.getRecentPost = getRecentPost;var getAuthorInfo = function getAuthorInfo(params) {
-  return fly.get('getAuthorInfo', params);
-};
-// 通过cid获取文章
-exports.getAuthorInfo = getAuthorInfo;var getPostBycid = function getPostBycid(params) {
-  return fly.get('getPostBycid', params);
-};
-// 获取总页数
-exports.getPostBycid = getPostBycid;var getPageNum = function getPageNum(params) {
-  return fly.get('getPageNum', params);
-};
-// 获取总览
-exports.getPageNum = getPageNum;var getOverview = function getOverview(params) {
-  return fly.get('getOverview', params);
-};exports.getOverview = getOverview;
 
 /***/ })
 
