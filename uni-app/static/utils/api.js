@@ -1,5 +1,6 @@
-var Fly = require("./lib/wx.umd.min.js")
-var fly = new Fly;
+var Fly=require("flyio/dist/npm/wx") 
+var fly=new Fly
+
 fly.config.baseURL="https://www.thinkmoon.cn/TmWeBlog/api/"
 
 fly.interceptors.response.use(
@@ -29,7 +30,6 @@ export const getPostBycid = (params) => {
 export const getPageNum = (params) => {
 	return fly.get('getPageNum', params)
 }
-
 // 获取总览
 export const getOverview = (params) => {
 	return fly.get('getOverview', params)

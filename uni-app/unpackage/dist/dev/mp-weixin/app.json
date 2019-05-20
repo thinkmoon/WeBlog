@@ -1,15 +1,15 @@
 {
-  "pages": [
-    "pages/index",
-    "pages/post"
-  ],
-  "subPackages": [],
-  "window": {
-    "navigationStyle": "custom"
-  },
-  "usingComponents": {
-    "cu-custom": "/common/componets/cu-custom",
-    "tm-footer": "/common/componets/tm-footer"
-  },
-  "sitemapLocation": "sitemap.json"
+	"pages": [
+		"pages/index",
+		"pages/post"
+	],
+	"subPackages": [],
+	"window": {
+		"navigationStyle": "custom"
+	},
+	"usingComponents": {
+		"cu-custom": "/common/componets/cu-custom",
+		"tm-footer": "/common/componets/tm-footer"
+	},
+	"sitemapLocation": "sitemap.json"
 }

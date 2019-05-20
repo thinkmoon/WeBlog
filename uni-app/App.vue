@@ -39,10 +39,10 @@ export default {
 
 <style>
 /* 引入color UI wxss 库 */
-@import 'common/colorui/main.wxss';
-@import 'common/colorui/icon.wxss';
-@import 'common/colorui/animation.wxss';
+@import './static/css/main.wxss';
+@import './static/css/icon.wxss';
+@import './static/css/animation.wxss';
 /* ------------------ */
 /* 引入自定义 wxss 库 */
-@import 'common/tmui.wxss';
+@import './static/css/tmui.wxss';
 </style>

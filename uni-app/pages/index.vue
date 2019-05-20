@@ -1,5 +1,29 @@
 <template>
 	<block>
+		<scroll-view class="DrawerWindow" :class="!drawerHidden ? 'show' : ''">
+			<view class="about shadow-lg radius animation-" :class="!drawerHidden ? 'animation-slide-left' : ''">
+				<view class="bg-img"><image mode="aspectFill" src="https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png"></image></view>
+				<view class="avatar-view"><image class="avatar" :src="authorInfo.avatarUrl"></image></view>
+				<view class="intro shadow grid col-4 padding-sm solid-bottom">
+					<view class="solid-left">
+						文章
+						<view>{{ Overview.posts[0].Num }}</view>
+					</view>
+					<view class="solid-left">
+						留言
+						<view>{{ Overview.comments[0].Num }}</view>
+					</view>
+					<view class="solid-left">
+						分类
+						<view>{{ Overview.categorys[0].Num }}</view>
+					</view>
+					<view>
+						标签
+						<view>{{ Overview.tags[0].Num }}</view>
+					</view>
+				</view>
+			</view>
+		</scroll-view>
 		<scroll-view scroll-y class="DrawerPage" :class="!drawerHidden ? 'show' : ''">
 			<view class="cu-custom" :style="'height:' + CustomBar + 'px;'">
 				<view class="cu-bar fixed bg-gradual-black" :style="'height:' + CustomBar + 'px;padding-top:' + StatusBar + 'px;'">
@@ -50,30 +74,6 @@
 			<tm-footer></tm-footer>
 		</scroll-view>
 		<view class="DrawerClose" :class="!drawerHidden ? 'show' : ''" @click="hideDrawer"><text class="icon-pullright"></text></view>
-		<scroll-view scroll-y class="DrawerWindow" :class="!drawerHidden ? 'show' : ''">
-			<view class="about shadow-lg radius animation-" :class="!drawerHidden ? 'animation-slide-left' : ''">
-				<view class="bg-img"><image mode="aspectFill" src="https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png"></image></view>
-				<view class="avatar-view"><image class="avatar" :src="authorInfo.avatarUrl"></image></view>
-				<view class="intro shadow grid col-4 padding-sm solid-bottom">
-					<view class="solid-left">
-						文章
-						<view>{{ Overview.posts[0].Num }}</view>
-					</view>
-					<view class="solid-left">
-						留言
-						<view>{{ Overview.comments[0].Num }}</view>
-					</view>
-					<view class="solid-left">
-						分类
-						<view>{{ Overview.categorys[0].Num }}</view>
-					</view>
-					<view>
-						标签
-						<view>{{ Overview.tags[0].Num }}</view>
-					</view>
-				</view>
-			</view>
-		</scroll-view>
 	</block>
 </template>
 
