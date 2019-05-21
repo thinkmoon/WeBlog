@@ -26,12 +26,46 @@ __webpack_require__(/*! moment/locale/zh-cn */ "D:\\Project\\TmWeBlog\\uni-app\\
 //
 //
 //
-_moment.default.locale('zh-cn');var _default = { data: function data() {return {};}, name: 'tm-footer', computed: {}, props: {},
-  methods: {},
+_moment.default.locale('zh-cn');var _default = { data: function data() {return { time: [0, 0, 0, 0, 0] };},
+  name: 'tm-footer',
+  computed: {},
+  props: {},
+  methods: {
+    secondToDate: function secondToDate(second) {
+      if (!second) {
+        return 0;
+      }
+      var time = new Array(0, 0, 0, 0, 0);
+      if (second >= 365 * 24 * 3600) {
+        time[0] = parseInt(second / (365 * 24 * 3600));
+        second %= 365 * 24 * 3600;
+      }
+      if (second >= 24 * 3600) {
+        time[1] = parseInt(second / (24 * 3600));
+        second %= 24 * 3600;
+      }
+      if (second >= 3600) {
+        time[2] = parseInt(second / 3600);
+        second %= 3600;
+      }
+      if (second >= 60) {
+        time[3] = parseInt(second / 60);
+        second %= 60;
+      }
+      if (second > 0) {
+        time[4] = second;
+      }
+      this.time = time;
+    } },
+
   onReady: function onReady() {
+    var _this = this;
     var a = (0, _moment.default)([2017, 4, 12]);
-    a.from(new Date());
-    console.log(a.format('dddd, MMMM Do YYYY, h:mm:ss a'));
+    var b = (0, _moment.default)();
+    var seconds = b.diff(a, 'seconds');
+    setInterval(function () {
+      _this.secondToDate(seconds++);
+    }, 1000);
   } };exports.default = _default;
 
 /***/ }),

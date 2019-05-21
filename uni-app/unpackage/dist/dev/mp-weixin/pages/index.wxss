@@ -163,6 +163,6 @@ page {
           flex: initial;
 }
 .image {
-  max-height: 500rpx;
+  max-height: 400rpx;
 }
 

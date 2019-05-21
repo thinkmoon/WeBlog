@@ -50,11 +50,11 @@
 									<view class="text-gray text-sm flex justify-between">
 										{{ item.created | formatTime }}
 										<view class="text-gray text-sm">
-											<text class="icon-attentionfill"></text>
+											<text class="icon-attentionfill margin-xs"></text>
 											{{ item.views }}
-											<text class="icon-appreciatefill"></text>
+											<text class="icon-appreciatefill margin-xs"></text>
 											{{ item.likes }}
-											<text class="icon-messagefill"></text>
+											<text class="icon-messagefill margin-xs"></text>
 											{{ item.commentsNum }}
 										</view>
 									</view>
@@ -278,6 +278,6 @@ page {
 }
 
 .image{
-	max-height: 500upx;
+	max-height: 400upx;
 }
 </style>

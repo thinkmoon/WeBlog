@@ -4,14 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
-		"es6": false,
-		"postcss": false,
-		"minified": true,
-		"newFeature": true,
-		"autoAudits": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true
+		"urlCheck": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
