@@ -48,8 +48,7 @@
 		</view>
 		<tm-footer></tm-footer>
 		<view class="cu-load load-modal" v-if="isLoading">
-			<!-- <view class="icon-emojifill text-orange"></view> -->
-			<image src="/static/icon/logo.jpg" mode="aspectFit" style="border-radius: 50%;"></image>
+			<view class="icon-emojifill text-orange"></view>
 			<view class="gray-text">加载中...</view>
 		</view>
 	</block>

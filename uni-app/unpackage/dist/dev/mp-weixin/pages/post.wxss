@@ -5,7 +5,8 @@
 .like-btn {
 	height: 130rpx;
 	width: 130rpx;
-	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 	border: 1rpx solid #42b983;
 }
 .comment-area {

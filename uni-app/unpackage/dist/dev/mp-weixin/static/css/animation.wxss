@@ -14,14 +14,14 @@
 
 /* Animation css */
 [class*=animation-] {
-    animation-duration: .8s;
+    animation-duration: .6s;
     animation-timing-function: ease-out;
     animation-fill-mode: both
 }
 
 .animation-fade {
     animation-name: fade;
-    animation-duration: .8s;
+    animation-duration: .6s;
     animation-timing-function: linear
 }
 
