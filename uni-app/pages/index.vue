@@ -152,13 +152,11 @@
 				this.drawerHidden = this.initPost(page)
 			}
 		},
-		async onShow() {
+		async onLoad(options) {
 			const _this = this
+			this.pageNum = await this.$api.getPageNum()
 			this.initPost(1)
 			_this.Overview = await this.$api.getOverview()
-		},
-		async onLoad(options) {
-			this.pageNum = await this.$api.getPageNum()
 		}
 	}
 </script>

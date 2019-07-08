@@ -12,29 +12,71 @@
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 
+
+
 {
   methods: _objectSpread({},
-  (0, _vuex.mapActions)(['getAuthorInfo'])),
+  (0, _vuex.mapActions)(['getAuthorInfo']), {
+    // 更新提示
+    update: function update() {
+      var updateManager = wx.getUpdateManager();
+      updateManager.onCheckForUpdate(function (res) {
+        // 请求完新版本信息的回调
+        console.log(res.hasUpdate);
+      });
+      updateManager.onUpdateReady(function () {
+        wx.showModal({
+          title: '发现新版本',
+          content: '新版本已经准备好，是否重启应用？',
+          success: function success(res) {
+            if (res.confirm) {
+              // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+              updateManager.applyUpdate();
+            }
+          } });
+
+      });
+    },
+    // 初始化
+    init: function init() {
+      uni.getSystemInfo({
+        success: function success(e) {
+
+
+
+
+
+
+
+
+
+          _vue.default.prototype.StatusBar = e.statusBarHeight;
+          var custom = wx.getMenuButtonBoundingClientRect();
+          _vue.default.prototype.Custom = custom;
+          _vue.default.prototype.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
+
+        } });
+
+    },
+    login: function login() {
+      var _this = this;
+      wx.login({
+        success: function success(res) {
+          if (res.code) {
+            //发起网络请求
+            _this.$api.login({ code: res.code });
+          } else {
+            console.log('登录失败！' + res.errMsg);
+          }
+        } });
+
+    } }),
 
   onLaunch: function onLaunch() {
     console.log('APP onLaunch');
-    uni.getSystemInfo({
-      success: function success(e) {
-
-
-
-
-
-
-
-
-
-        _vue.default.prototype.StatusBar = e.statusBarHeight;
-        var custom = wx.getMenuButtonBoundingClientRect();
-        _vue.default.prototype.Custom = custom;
-        _vue.default.prototype.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
-
-      } });
+    this.update();
+    this.init();
+    this.login();
 
     this.getAuthorInfo();
   },

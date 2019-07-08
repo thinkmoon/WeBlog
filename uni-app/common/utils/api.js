@@ -15,6 +15,10 @@ fly.interceptors.response.use(
 )
 
 // 获取最近文章
+export const login = (params) => {
+	return fly.get('login', params)
+}
+// 获取最近文章
 export const getRecentPost = (params) => {
 	return fly.get('getRecentPost', params)
 }
