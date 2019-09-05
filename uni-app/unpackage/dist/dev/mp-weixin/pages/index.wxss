@@ -11,8 +11,7 @@
 .avatar {
   width: 200rpx;
   height: 200rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   top: -100rpx;
   margin: auto;
   border: 5rpx #eee solid;
@@ -109,7 +108,6 @@ page {
       -ms-flex-pack: center;
           justify-content: center;
   background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.01)), to(rgba(0, 0, 0, 0.6)));
-  background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.6));
   background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.6));
   background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.6));
   letter-spacing: 5px;
@@ -153,8 +151,7 @@ page {
   background-color: currentColor;
   position: absolute;
   bottom: 10rpx;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   left: 0;
   right: 0;
   margin: auto;
