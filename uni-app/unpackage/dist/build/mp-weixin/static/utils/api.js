@@ -1,6 +1,10 @@
-var Fly = require("./lib/wx.umd.min.js")
-var fly = new Fly;
-fly.config.baseURL="https://www.thinkmoon.cn/TmWeBlog/api/"
+var Fly=require("flyio/dist/npm/wx") 
+var fly=new Fly
+
+fly.config.baseURL="https://www.thinkmoon.cn/WeBlog/api/"
+fly.config.headers={
+	"openid":uni.getStorageSync("openid")
+}
 
 fly.interceptors.response.use(
     (response) => {
@@ -13,6 +17,10 @@ fly.interceptors.response.use(
     }
 )
 
+// 登录
+export const login = (params) => {
+	return fly.get('login', params)
+}
 // 获取最近文章
 export const getRecentPost = (params) => {
 	return fly.get('getRecentPost', params)
@@ -29,8 +37,16 @@ export const getPostBycid = (params) => {
 export const getPageNum = (params) => {
 	return fly.get('getPageNum', params)
 }
-
 // 获取总览
 export const getOverview = (params) => {
 	return fly.get('getOverview', params)
 }
+// 获取用户点赞信息
+export const getPostLikeStatus = (params) => {
+	return fly.get('getPostLikeStatus', params)
+}
+// 为文章点赞
+export const likePost = (params) => {
+	return fly.get('likePost', params)
+}
+

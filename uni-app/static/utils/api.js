@@ -1,7 +1,7 @@
 var Fly=require("flyio/dist/npm/wx") 
 var fly=new Fly
 
-fly.config.baseURL="http://172.24.93.1/WeBlog/api/"
+fly.config.baseURL="https://www.thinkmoon.cn/WeBlog/api/"
 fly.config.headers={
 	"openid":uni.getStorageSync("openid")
 }
@@ -45,3 +45,8 @@ export const getOverview = (params) => {
 export const getPostLikeStatus = (params) => {
 	return fly.get('getPostLikeStatus', params)
 }
+// 为文章点赞
+export const likePost = (params) => {
+	return fly.get('likePost', params)
+}
+

@@ -27,7 +27,8 @@
 		</view>
 		<towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
 		<view class="like-area solid-top bg-white tm-every-center flex-direction">
-			<view class="like-btn text-xxl line-green tm-every-center padding" @click="like" v-if="!isLike">赞</view>
+			<view class="like-btn text-xxl line-green tm-every-center padding border" @click="like" v-if="!isLike">赞</view>
+			<view class="like-btn text-xxl line-red tm-every-center padding border" v-else @click="reward">赏</view>
 			<view class="margin-top">您的支持是对我最大的鼓励</view>
 		</view>
 		<view class="margin-sm" v-if="!isLoading">
@@ -45,7 +46,7 @@
 					<view class="text-bold" v-else>
 						<open-data type="userNickName" class="line-green"></open-data>
 					</view>
-					<view><button class="cu-btn line-green">发表</button></view>
+					<view><button class="cu-btn line-green" @click="comment">发表</button></view>
 				</view>
 			</view>
 		</view>
@@ -78,10 +79,27 @@ export default {
 		}
 	},
 	methods:{
-		loadUserInfo(){
-			this.isLogin = true
-			let app = getApp()
-			app.login()
+		comment(){
+			uni.showToast({
+				icon:"none",
+				title:"该功能未开放"
+			})
+		},
+		loadUserInfo(res){
+			console.log("授权登录",res.detail.errMsg)
+			if(res.detail.errMsg != "getUserInfo:fail auth deny"){
+				this.isLogin = true
+			}
+		},
+		like(){
+			this.$api.likePost({cid:this.cid})
+			this.isLike = true
+		},
+		reward(){
+			wx.previewImage({
+			  current: 'https://www.thinkmoon.cn/usr/themes/armx/img/weixinpay.png', // 当前显示图片的http链接
+			  urls: ['https://www.thinkmoon.cn/usr/themes/armx/img/weixinpay.png'] // 需要预览的图片http链接列表
+			})
 		}
 	},
 	async onLoad(query) {
@@ -102,6 +120,7 @@ export default {
 		   let data = await this.$api.getPostLikeStatus({
 		   			   cid:this.cid
 		   })
+		   console.log("获取点赞状态",data)
 		   this.isLike = JSON.parse(data)
 	}
 }
@@ -114,7 +133,6 @@ export default {
 	height: 130upx;
 	width: 130upx;
 	border-radius: 50%;
-	border: 1upx solid #42b983;
 }
 .comment-area {
 	height: 400upx;
@@ -123,5 +141,9 @@ export default {
 .comment-area textarea {
 	width: 650upx;
 	height: 250upx;
+}
+
+.border {
+	border: 1px solid;
 }
 </style>
