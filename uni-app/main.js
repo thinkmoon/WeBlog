@@ -11,7 +11,7 @@ Vue.component('tm-footer', tmFooter)
 import store from './common/store'
 Vue.prototype.$store = store
 // 引入API
-import * as API from './common/utils/api'
+import * as API from './static/utils/api'
 Vue.prototype.$api = API
 
 Vue.config.productionTip = false

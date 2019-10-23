@@ -8,7 +8,7 @@
 		methods: {
 			...mapActions(['getAuthorInfo']),
 			// 更新提示
-			update(){
+			update() {
 				const updateManager = wx.getUpdateManager()
 				updateManager.onCheckForUpdate(function(res) {
 					// 请求完新版本信息的回调
@@ -28,7 +28,7 @@
 				})
 			},
 			// 初始化
-			init(){
+			init() {
 				uni.getSystemInfo({
 					success: function(e) {
 						// #ifndef MP
@@ -48,13 +48,34 @@
 					}
 				})
 			},
-			login(){
-				const _this = this
+			login() {
 				wx.login({
-					success(res) {
+					success: async res => {
+						console.log("尝试登录",res)
 						if (res.code) {
 							//发起网络请求
-							_this.$api.login({code: res.code})
+							wx.getSetting({
+								success: async setting => {
+									if (setting.authSetting['scope.userInfo']) {
+										// 已经授权，可以直接调用 getUserInfo 获取头像昵称、
+										console.log("用户已授权", setting)
+										wx.getUserInfo({
+											success: async Info => {
+												console.log("尝试获取用户信息", Info)
+												let data = {code: res.code}
+												Object.assign(data, Info.userInfo);
+												let openid = await this.$api.login(data)
+												uni.setStorageSync('openid', openid)
+											}
+										})
+									} else {
+										let openid = await this.$api.login({
+											code: res.code
+										})
+										uni.setStorageSync('openid', openid)
+									}
+								}
+							})
 						} else {
 							console.log('登录失败！' + res.errMsg)
 						}
@@ -67,7 +88,7 @@
 			this.update()
 			this.init()
 			this.login()
-			
+
 			this.getAuthorInfo()
 		},
 		onShow: function() {

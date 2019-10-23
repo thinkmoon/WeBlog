@@ -29,13 +29,13 @@
 			</view>
 		</scroll-view>
 		<scroll-view scroll-y class="DrawerPage" :class="!drawerHidden ? 'show' : ''">
-			<view class="cu-custom" :style="'height:' + CustomBar + 'px;'">
+			<!-- <view class="cu-custom" :style="'height:' + CustomBar + 'px;'">
 				<view class="cu-bar fixed bg-gradual-black" :style="'height:' + CustomBar + 'px;padding-top:' + StatusBar + 'px;'">
 					<view class="cu-avatar round" @click="showDrawer" :style="'background-image:url(' + authorInfo.avatarUrl + ');'"
 					 v-if="authorInfo.avatarUrl"></view>
 					<view class="content text-shadow text-white text-sm" :style="'top:' + StatusBar + 'px;'">指尖魔法屋</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="cu-card case">
 				<view class="load-progress" :class="loadProgress!=0?'show':'hide'" :style="[{top:CustomBar+'px'}]">
 					<view class="load-progress-bar bg-green" :style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
