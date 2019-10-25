@@ -47,6 +47,10 @@
 						// #endif
 					}
 				})
+				// uni.setTabBarStyle({
+				//   backgroundColor: '#333',
+				//   borderStyle: 'black'
+				// })
 			},
 			login() {
 				wx.login({

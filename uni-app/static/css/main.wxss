@@ -868,7 +868,7 @@ button.icon.lg {
 .cu-avatar-group {
   direction: rtl;
   unicode-bidi: bidi-override;
-  padding: 0 10rpx 0 40rpx;
+  padding: 0 10rpx 0 20rpx;
   display: inline-block;
 }
 
@@ -1015,7 +1015,7 @@ button.icon.lg {
   height: 260rpx;
   background-color: #fff;
   border-radius: 10rpx;
-  box-shadow: 0 0 0rpx 2000rpx rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0rpx 2000rpx #fff;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -1045,7 +1045,7 @@ button.icon.lg {
   border-top: 6rpx solid rgba(0, 0, 0, 0.05);
   border-right: 6rpx solid rgba(0, 0, 0, 0.05);
   border-bottom: 6rpx solid rgba(0, 0, 0, 0.05);
-  border-left: 6rpx solid var(--orange);
+  border-left: 6rpx solid var(--green);
   animation: icon-spin 1s infinite linear;
   z-index: -1;
 }

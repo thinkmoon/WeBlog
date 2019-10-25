@@ -1,7 +1,7 @@
 var Fly=require("flyio/dist/npm/wx") 
 var fly=new Fly
 
-fly.config.baseURL="https://www.thinkmoon.cn/WeBlog/api/"
+fly.config.baseURL= process.env.NODE_ENV === 'production' ? "https://www.thinkmoon.cn/WeBlog/api/" : "http://127.0.0.1/WeBlog/api/"
 fly.config.headers={
 	"openid":uni.getStorageSync("openid")
 }
@@ -49,4 +49,23 @@ export const getPostLikeStatus = (params) => {
 export const likePost = (params) => {
 	return fly.get('likePost', params)
 }
+// 获取文章点赞用户列表
+export const getLikeUsers = (params) => {
+	return fly.get('getLikeUsers', params)
+}
+// 获取关于页cid
+export const getAboutcid = (params) => {
+	return fly.get('getAboutcid', params)
+}
+// 发表评论
+export const addComment = (params) => {
+	return fly.get('addComment', params)
+}
+// 获取文章评论
+export const getComment = (params) => {
+	return fly.get('getComment', params)
+}
+
+
+
 
