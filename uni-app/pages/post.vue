@@ -68,7 +68,7 @@
 				<view v-for="(item,index) in commentList" class="margin-bottom">
 					<view  class="flex align-center">
 						<view class="cu-avatar sm round" :style="'background-image:url('+ item.avatarUrl +')'">
-							<view class="cu-tag badge" :class="item.gender==0?'icon-female bg-pink':'icon-male bg-blue'" style="font-size: 18rpx;width:24rpx;height:24rpx;"></view>
+							<view class="cu-tag badge" :class="item.gender==2?'icon-female bg-pink':'icon-male bg-blue'" style="font-size: 18rpx;width:24rpx;height:24rpx;"></view>
 						</view>
 						<view class="solid-bottom padding-bottom-xs margin-left-xs">
 							<text class="text-grey text-sm">{{ item.nickName }}</text>
@@ -116,6 +116,9 @@
 		},
 		methods: {
 			async comment() {
+				if(this.commentText == null){
+					return
+				}
 				let coid = await this.$api.addComment({
 					cid: this.cid,
 					text: this.commentText
