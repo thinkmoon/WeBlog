@@ -18,20 +18,17 @@
 						<view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view>
 					</view>
 					<view class="cu-list menu menu-avatar">
-						<view class="cu-item">
-							<view class="cu-avatar round lg" :style="'background-image:url(' + authorInfo.avatarUrl + ');'" v-if="authorInfo.avatarUrl"></view>
-							<view class="content flex-sub">
-								<view class="text-green">{{ authorInfo.screenName }}</view>
-								<view class="text-gray text-sm flex justify-between">
-									{{ item.created | formatTime }}
-									<view class="text-gray text-sm">
-										<text class="icon-attentionfill margin-xs"></text>
-										{{ item.views }}
-										<text class="icon-appreciatefill margin-xs"></text>
-										{{ item.likes }}
-										<text class="icon-messagefill margin-xs"></text>
-										{{ item.commentsNum }}
-									</view>
+						<view class="cu-item" style="height: 70upx;min-height: 70upx;">
+							<view class="text-gray text-sm flex justify-between align-center" style=" width: 100%;">
+								<view><text class="text-green margin-right-sm">{{ item.screenName }}</text>
+									{{ item.created | formatTime }}</view>
+								<view class="text-gray">
+									<text class="icon-attentionfill margin-xs"></text>
+									{{ item.views }}
+									<text class="icon-appreciatefill margin-xs"></text>
+									{{ item.likes }}
+									<text class="icon-messagefill margin-xs"></text>
+									{{ item.commentsNum }}
 								</view>
 							</view>
 						</view>
@@ -52,9 +49,6 @@
 </template>
 
 <script>
-	import {
-		mapState
-	} from 'vuex'
 	import moment from 'moment'
 	import 'moment/locale/zh-cn'
 	moment.locale('zh-cn')
@@ -76,9 +70,6 @@
 			formatTime(value) {
 				return moment.unix(value).fromNow()
 			}
-		},
-		computed: {
-			...mapState(['authorInfo'])
 		},
 		methods: {
 			seePost(cid) {

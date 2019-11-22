@@ -92,7 +92,7 @@ $userpage = $db->fetchAll($db->select()->from('table.WeBlog_users')
                             <tbody>
                                 <?php foreach ($userpage as $user) : ?>
                                     <tr>
-                                        <td><?php echo $user['nickname']; ?></td>
+                                        <td><?php echo $user['nickName']; ?></td>
                                         <td><?php echo sprintf("<img width=48 height=48 src='%s'>", $user['avatarUrl']); ?></td>
                                         <td><?php echo date('Y-m-d H:i:s', $user['createtime']); ?></td>
                                         <td><?php echo date('Y-m-d H:i:s', $user['lastlogin']); ?></td>

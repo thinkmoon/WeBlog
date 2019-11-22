@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: https://servicewechat.com/wx53f9b5912c0f0cf6');
+header('Access-Control-Allow-Origin: https://servicewechat.com');
 class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
 {
     private $db;
@@ -30,7 +30,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     {
         $code = self::GET('code', 'null');
         if ($code != 'null') {
-            $nickname = self::GET('nickName', 'null');
+            $nickName = self::GET('nickName', 'null');
             $avatarUrl = self::GET('avatarUrl', 'null');
             $city = self::GET('city', 'null');
             $country = self::GET('country', 'null');
@@ -45,17 +45,24 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
                 $row = $this->db->fetchRow($this->db->select('openid', 'lastlogin')->from('table.WeBlog_users')->where('openid = ?', $openid));
                 //已存在的用户,更新上次登录时间
                 if (sizeof($row) > 0) {
-                    $this->db->query($this->db->update('table.WeBlog_users')->rows(array(
-                        'openid' => $openid, 'lastlogin' => time(),
-                        'nickname' => $nickname, 'avatarUrl' => $avatarUrl, 'city' => $city, 'country' => $country,
-                        'gender' => $gender, 'province' => $province
-                    ))->where('openid = ?', $openid));
+                    // 更新用户信息
+                    if ($avatarUrl != 'null') {
+                        $this->db->query($this->db->update('table.WeBlog_users')->rows(array(
+                            'lastlogin' => time(),
+                            'nickName' => $nickName, 'avatarUrl' => $avatarUrl, 'city' => $city, 'country' => $country,
+                            'gender' => $gender, 'province' => $province
+                        ))->where('openid = ?', $openid));
+                    } else {
+                        $this->db->query($this->db->update('table.WeBlog_users')->rows(array(
+                            'lastlogin' => time()
+                        ))->where('openid = ?', $openid));
+                    }
                     $this->export($openid);
                 } else {
                     //新用户
                     $this->db->query($this->db->insert('table.WeBlog_users')->rows(array(
                         'openid' => $openid, 'createtime' => time(), 'lastlogin' => time(),
-                        'nickname' => $nickname, 'avatarUrl' => $avatarUrl, 'city' => $city, 'country' => $country,
+                        'nickName' => $nickName, 'avatarUrl' => $avatarUrl, 'city' => $city, 'country' => $country,
                         'gender' => $gender, 'province' => $province
                     )));
                     $this->export($openid);
@@ -65,6 +72,23 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
             }
         } else {
             $this->export("error code");
+        }
+    }
+    // 获取文章点赞用户列表
+    function getLikeUsers()
+    {
+        $cid = self::GET('cid', 'null');
+        if ($cid != 'null') {
+            $openids = $this->db->fetchAll($this->db->select('openid')->from('table.WeBlog_like')->where('cid = ?', $cid));
+            foreach ($openids as $openid) {
+                $temp = $this->db->fetchAll($this->db->select('nickName', 'avatarUrl')->from('table.WeBlog_users')->where('openid = ?', $openid));
+                if (sizeof($temp) > 0) {
+                    $likeinfo[] = $temp[0];
+                }
+            }
+            $this->export($likeinfo);
+        } else {
+            $this->export("No one like");
         }
     }
     // 获取文章页数
@@ -101,7 +125,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     {
         $page     = (int) self::GET('page', 1);
         $offset   = $this->pageSize * ($page - 1);
-        $select   = $this->db->select('cid', 'title', 'authorId ', 'created', 'slug', 'commentsNum', 'views', 'likes')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('created < ?', time())->order('table.contents.created', Typecho_Db::SORT_DESC)->offset($offset)->limit($this->pageSize);
+        $select   = $this->db->select('cid', 'title', 'authorId ', 'table.contents.created', 'slug', 'commentsNum', 'views', 'likes', 'screenName', 'url')->from('table.contents')->join('table.users', 'table.contents.authorId = table.users.uid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->where('table.contents.created < ?', time())->order('table.contents.created', Typecho_Db::SORT_DESC)->offset($offset)->limit($this->pageSize);
         $posts  = $this->db->fetchAll($select);
         foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
@@ -111,12 +135,79 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         }
         $this->export($result);
     }
+    // 新增评论
+    function addComment()
+    {
+        $cid = self::GET('cid', -1);
+        $openid = self::getOpenId();
+        $text = self::GET('text', "None");
+        $parent = self::GET('parent', 0);
+
+        $select = $this->db->select('nickName')->from('table.WeBlog_users')->where('openid = ?', $openid);
+        $data = $this->db->fetchAll($select);
+
+        $coid = $this->db->query($this->db->insert('table.comments')->rows(array(
+            'cid' => $cid, 'created' => time(), 'openid' => $openid, 'authorId' => '0', 'author' => $data[0]["nickName"],
+            'ownerId' => '1', 'text' => $text, 'type' => 'comment',
+            'status' => 'waiting', 'parent' => $parent
+        )));
+        
+        if ($coid > 0) {
+            $row = $this->db->fetchRow($this->db->select('commentsNum')->from('table.contents')->where('cid = ?', $cid));
+            $this->db->query($this->db->update('table.contents')->rows(array('commentsNum' => (int) $row['commentsNum'] + 1))->where('cid = ?', $cid));
+        }
+        $this->export($coid);
+    }
+    // 获取评论
+    function getComment()
+    {
+        $cid = self::GET('cid', -1);
+        $comments = $this->db->fetchAll($this->db->select('cid', 'coid', 'created', 'text', 'parent', 'table.comments.openid AS openid', 'table.WeBlog_users.nickName AS nickName', 'table.WeBlog_users.avatarUrl AS avatarUrl', 'table.WeBlog_users.gender AS gender')->from('table.comments')->join('table.WeBlog_users', 'table.comments.openid = table.WeBlog_users.openid')->where('cid = ?', $cid)->where('status = ?', 'approved')->order('table.comments.created', Typecho_Db::SORT_DESC));
+        $result = array();
+        //获取根评论
+        foreach ($comments as $comment) {
+            if ($comment['parent'] == 0) {
+                $result[] = $comment;
+            }
+        }
+        // //获取子评论
+        // foreach($comments as $comment) {
+        //     if($comment['parent'] != 0) {
+        //         $parent = $comment['parent'];
+        //         $temp = $this->db->fetchAll($this->db->select('cid','coid','created', 'author', 'text', 'parent', 'authorImg')->from('table.comments')->where('cid = ?', $cid)->where('coid = ?', $parent)->where('status = ?', 'approved')->order('table.comments.created', Typecho_Db::SORT_DESC));                
+        //         if(sizeof($temp)>0)
+        //         {
+        //             while($temp[0]['parent']!=0)
+        //             {
+        //                 $parent = $temp[0]['parent'];
+        //                 $temp = $this->db->fetchAll($this->db->select('cid','coid','created', 'author', 'text', 'parent', 'authorImg')->from('table.comments')->where('cid = ?', $cid)->where('coid = ?', $parent)->where('status = ?', 'approved')->order('table.comments.created', Typecho_Db::SORT_DESC));
+        //             }
+        //             for($i=0; $i<sizeof($result);$i++)
+        //             {
+        //                 if($result[$i]['coid'] == $temp[0]['coid']) {
+        //                     $comment['parentitem'] = $this->db->fetchAll($this->db->select('cid','coid','created', 'author', 'text', 'parent', 'authorImg')->from('table.comments')->where('cid = ?', $cid)->where('coid = ?', $comment['parent'])->where('status = ?', 'approved')->order('table.comments.created', Typecho_Db::SORT_DESC));
+        //                     $result[$i]['replays'][] = $comment;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        $this->export($result);
+    }
+    // 获取关于页cid
+    function getAboutcid()
+    {
+        $cid = 'none';
+        $cid = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->aboutCid;
+
+        $this->export($cid);
+    }
     // 通过cid获取post
     function getPostBycid()
     {
         if (isset($_GET['cid'])) {
             $cid = self::GET('cid');
-            $select = $this->db->select('cid', 'title', 'created', 'type', 'slug', 'text', 'commentsNum')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('created < ?', time())->where('cid = ?', $cid);
+            $select = $this->db->select('cid', 'title', 'created', 'type', 'slug', 'likes', 'text', 'commentsNum')->from('table.contents')->where('status = ?', 'publish')->where('created < ?', time())->where('cid = ?', $cid);
             //更新点击量数据库
             $row = $this->db->fetchRow($this->db->select('views')->from('table.contents')->where('cid = ?', $cid));
             $this->db->query($this->db->update('table.contents')->rows(array('views' => (int) $row['views'] + 1))->where('cid = ?', $cid));
@@ -145,9 +236,9 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         $openid = self::getOpenId();
         $cid = self::GET('cid', 'null');
         $row = $this->db->fetchRow($this->db->select('openid', 'cid')->from('table.WeBlog_like')->where('cid = ?', $cid)->where('openid = ?', $openid));
-        if(count($row) == 0){
+        if (count($row) == 0) {
             $this->export(false);
-        }else{
+        } else {
             $this->export(true);
         }
     }

@@ -1,7 +1,8 @@
 var Fly=require("flyio/dist/npm/wx") 
 var fly=new Fly
 
-fly.config.baseURL= process.env.NODE_ENV === 'production' ? "https://www.thinkmoon.cn/WeBlog/api/" : "http://127.0.0.1/WeBlog/api/"
+fly.config.baseURL= process.env.NODE_ENV === 'production' ? "https://www.thinkmoon.cn/WeBlog/api/" : "http://127.0.0.1/WeBlog/api/",
+
 fly.config.headers={
 	"openid":uni.getStorageSync("openid")
 }

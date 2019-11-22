@@ -71,11 +71,11 @@ class WeBlog_Plugin implements Typecho_Plugin_Interface
                     . 'contents` ADD `likes` INT DEFAULT 0;'
                 );
             }
-            if (!array_key_exists('authorImg', $db->fetchRow($db->select()->from('table.comments'))))
+            if (!array_key_exists('openid', $db->fetchRow($db->select()->from('table.comments'))))
             {
                 $db->query(
                     'ALTER TABLE `' . $prefix
-                    . 'comments` ADD `authorImg` varchar(500) DEFAULT NULL;'
+                    . 'comments` ADD `openid` varchar(500) DEFAULT NULL;'
                 );
             }
         } catch (Exception $e) {
@@ -105,6 +105,8 @@ class WeBlog_Plugin implements Typecho_Plugin_Interface
         $form->addInput($avatarUrl);
         $pageSize = new Typecho_Widget_Helper_Form_Element_Text('pageSize', NULL, '7', _t('每页文章数'),  _t('请不要留空'));
         $form->addInput($pageSize);
+        $aboutCid = new Typecho_Widget_Helper_Form_Element_Text('aboutCid', NULL, '2', _t('关于页面CID'),  _t('小程序关于页面显示内容'));
+        $form->addInput($aboutCid);
     }
 
     /* 个人用户的配置方法 */

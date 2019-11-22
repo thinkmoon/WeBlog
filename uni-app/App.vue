@@ -6,7 +6,6 @@
 
 	export default {
 		methods: {
-			...mapActions(['getAuthorInfo']),
 			// 更新提示
 			update() {
 				const updateManager = wx.getUpdateManager()
@@ -47,10 +46,6 @@
 						// #endif
 					}
 				})
-				// uni.setTabBarStyle({
-				//   backgroundColor: '#333',
-				//   borderStyle: 'black'
-				// })
 			},
 			login() {
 				wx.login({
@@ -92,8 +87,6 @@
 			this.update()
 			this.init()
 			this.login()
-
-			this.getAuthorInfo()
 		},
 		onShow: function() {
 			console.log('App Show')

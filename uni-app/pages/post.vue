@@ -65,7 +65,7 @@
 				<text class="text-bold">精彩评论</text>
 			</view>
 			<view class="comment-area bg-white margin-top padding">
-				<view v-for="(item,index) in commentList" class="margin-bottom">
+				<view v-for="(item,index) in commentList" :key="index" class="margin-bottom">
 					<view  class="flex align-center">
 						<view class="cu-avatar sm round" :style="'background-image:url('+ item.avatarUrl +')'">
 							<view class="cu-tag badge" :class="item.gender==2?'icon-female bg-pink':'icon-male bg-blue'" style="font-size: 18rpx;width:24rpx;height:24rpx;"></view>
