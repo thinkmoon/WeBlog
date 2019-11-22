@@ -22,14 +22,14 @@
 
 #### 不编译直接使用
 
-1. 自行编译或者打开`unpackage/dist/build/mp-weixin`目录导入小程序开发者工具
+1. 自行编译或者打开[uni-app/unpackage/dist/build/mp-weixin](https://github.com/thinkmoon/WeBlog/tree/master/uni-app/unpackage/dist/build/mp-weixin)目录导入小程序开发者工具
 2. 激活插件后， 修改请求链接文件 `@/static/utils/api.js` 中的baseUrl, 将域名更换为你的域名。 
 
 > 请确保插件已成功安装并且访问正常
 
 ### Typecho插件端
 
-复制`WeBlog`到插件目录， 在后台激活设置
+复制`WeBlog`到插件目录， 在后台激活并设置
 
 ## 开发计划
 
