@@ -2,7 +2,7 @@
 
 一个typecho博客的微信小程序版
 
-![index](./img/code.png)
+![小程序二维码][1]
 
 <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 
@@ -14,13 +14,13 @@
 
 本项目采用[uni-app](https://uniapp.dcloud.io/component/README)+[colorUI](https://github.com/weilanwl/ColorUI)开发
 
-## 编译方式
+#### 自行编译
 
 1. 下载Hbuilderx
 2. 将文件夹 `uni-app` 导入项目
 3. 发行至微信小程序
 
-## 使用方法
+#### 不编译直接使用
 
 1. 自行编译或者打开`unpackage/dist/build/mp-weixin`目录导入小程序开发者工具
 2. 激活插件后， 修改请求链接文件 `@/static/utils/api.js` 中的baseUrl, 将域名更换为你的域名。 
@@ -29,9 +29,7 @@
 
 ### Typecho插件端
 
-## 使用方法
-
-复制该目录到插件目录， 在后台激活设置
+复制`WeBlog`到插件目录， 在后台激活设置
 
 ## 开发计划
 
@@ -53,6 +51,5 @@
 2. 弃用Vuex
 3. 支持博客多作者显示
 
-| 主页  |      关于页      |  文章页 |
-|:-------------:|:-------------:|:-------------:|
-| ![index](./img/index.jpg) |  ![index](./img/about.jpg) | ![index](./img/article.jpg) |
+
+  [1]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-11-22T07:58:08.png
