@@ -20,6 +20,8 @@
 2. 将文件夹 `uni-app` 导入项目
 3. 发行至微信小程序
 
+> tips: 由于项目中引入了一些第三方库，首先在项目根目录下执行`npm install`自行安装依赖。[不懂npm](https://www.runoob.com/nodejs/nodejs-npm.html)
+
 #### 不编译直接使用
 
 1. 自行编译或者打开[uni-app/unpackage/dist/build/mp-weixin](https://github.com/thinkmoon/WeBlog/tree/master/uni-app/unpackage/dist/build/mp-weixin)目录导入小程序开发者工具
