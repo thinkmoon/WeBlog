@@ -57,7 +57,6 @@
 		data() {
 			return {
 				loadProgress: 0,
-				Overview: {},
 				pageNum: 0,
 				curPage: 1,
 				drawerHidden: true,
@@ -103,7 +102,6 @@
 			const _this = this
 			this.pageNum = await this.$api.getPageNum()
 			this.initPost(1)
-			_this.Overview = await this.$api.getOverview()
 		}
 	}
 </script>

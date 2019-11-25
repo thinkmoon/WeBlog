@@ -102,7 +102,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     // 获取博客总览
     function getOverview()
     {
-        $select   = $this->db->select('COUNT(cid) AS Num')->from('table.contents');
+        $select   = $this->db->select('COUNT(cid) AS Num')->from('table.contents')->where('type = ?', 'post');
         $data['posts'] = $this->db->fetchAll($select);
         $select   = $this->db->select('COUNT(coid) AS Num')->from('table.comments');
         $data['comments'] = $this->db->fetchAll($select);

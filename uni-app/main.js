@@ -19,3 +19,10 @@ const app = new Vue({
 	...App
 })
 app.$mount()
+
+Vue.mixin({
+	onShareAppMessage() {
+		console.log('分享路径', this.$mp.page.route + '&' + qs.stringify(this.$mp.query))
+		return {};
+	}
+})

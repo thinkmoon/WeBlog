@@ -145,7 +145,7 @@ radio::before, checkbox::before {
   color: #fff !important;
   top: 50%;
   margin-top: -8px;
-  right: 5px;
+  left: 5px;
   font-size: 32rpx;
   line-height: 16px;
   pointer-events: none;

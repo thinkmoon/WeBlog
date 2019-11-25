@@ -1,6 +1,6 @@
 {
   "name": "miniprogram",
-  "version": "0.0.3",
+  "version": "0.1.2",
   "description": "一个typecho博客的微信小程序版",
   "author": "醉月思 <lqs@dgut.edu.cn>",
   "license": "MIT",
