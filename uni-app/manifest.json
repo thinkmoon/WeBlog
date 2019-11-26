@@ -69,6 +69,11 @@
         "usingComponents" : true
     },
     "mp-qq" : {
-        "appid" : "1110063950"
+        "appid" : "1109992579",
+        "setting" : {
+            "es6" : true,
+            "urlCheck" : false,
+            "postcss" : true
+        }
     }
 }
