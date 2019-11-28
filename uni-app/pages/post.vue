@@ -214,6 +214,11 @@
 				cid: this.cid
 			})
 			this.commentList = data
+		},
+		onShareAppMessage() {
+			return {
+				title: this.postData[0].title
+			};
 		}
 	}
 </script>

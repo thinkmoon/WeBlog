@@ -21,7 +21,7 @@
 						<view class="cu-item" style="height: 70upx;min-height: 70upx;">
 							<view class="text-gray text-sm flex justify-between align-center" style=" width: 100%;">
 								<view><text class="text-green margin-right-sm">{{ item.screenName }}</text>
-									{{ item.created | formatTime }}</view>
+									{{ formatTime(item.created) }}</view>
 								<view class="text-gray">
 									<text class="icon-attentionfill margin-xs"></text>
 									{{ item.views }}
@@ -36,72 +36,58 @@
 				</view>
 			</view>
 		</view>
-		<!-- 分页栏 -->
-		<view class="flex justify-center padding-bottom-sm">
-			<button class="cu-btn sm bg-white margin-xs" @tap="navPage(1)">首页</button>
-			<button @tap="navPage(curPage * 1 - 1 * 1)" class="cu-btn sm bg-white margin-xs">上一页</button>
-			<view class="cu-btn sm  margin-xs">{{curPage}}/{{pageNum}}</view>
-			<button @tap="navPage(curPage * 1 + 1 * 1)" class="cu-btn sm bg-white margin-xs">下一页</button>
-			<button class="cu-btn sm bg-white margin-xs" @tap="navPage(pageNum)">末页</button>
-		</view>
-		<tm-footer></tm-footer>
 	</block>
 </template>
 
 <script>
-	import moment from 'moment'
-	import 'moment/locale/zh-cn'
-	moment.locale('zh-cn')
-
 	export default {
 		data() {
 			return {
 				loadProgress: 0,
-				pageNum: 0,
-				curPage: 1,
-				drawerHidden: true,
+				curPage: 0,
 				postData: [],
-				StatusBar: this.StatusBar,
-				CustomBar: this.CustomBar,
-			}
-		},
-		filters: {
-			formatTime(value) {
-				return moment.unix(value).fromNow()
 			}
 		},
 		methods: {
+			formatTime(value) {
+				// return this.$moment.unix(value).fromNow()
+				return this.$moment.unix(value).fromNow()
+			},
 			seePost(cid) {
 				wx.navigateTo({
 					url: './post?cid=' + cid
 				})
 			},
-			async initPost(pageOffset) {
-				this.postData = []
-				const _this = this;
-				var loadProcess = setInterval(() => {
-					if (_this.loadProgress < 100) {
-						_this.loadProgress = _this.loadProgress + 1;
+			loadProcess() {
+				var Interval = setInterval(() => {
+					if (this.loadProgress < 100) {
+						this.loadProgress = this.loadProgress + 1;
 					} else {
-						_this.loadProgress = 0;
-						clearInterval(loadProcess)
+						this.loadProgress = 0;
+						clearInterval(Interval)
 					}
 				}, 100);
-				this.postData = await this.$api.getRecentPost({
-					page: pageOffset
-				})
-				_this.loadProgress = 100
 			},
-			navPage(page) {
-				if (page <= 0 || page > this.pageNum) return
-				this.curPage = page
-				this.drawerHidden = this.initPost(page)
+			async loadPost() {
+				this.loadProcess()
+				let res = await this.$api.getRecentPost({
+					page: ++this.curPage
+				})
+				this.loadProgress = 100
+				if (res != null &&
+					res.length > 0) {
+					console.log("修改前", this.postData)
+					this.postData = this.postData.concat(res)
+					console.log("修改后", this.postData)
+				}
 			}
 		},
 		async onLoad(options) {
-			const _this = this
-			this.pageNum = await this.$api.getPageNum()
-			this.initPost(1)
+			this.loadPost()
+		},
+		onReachBottom() {
+			console.log("触底事件")
+			this.loadPost()
 		}
 	}
 </script>

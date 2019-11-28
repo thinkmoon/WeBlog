@@ -7,6 +7,8 @@
   "subPackages": [],
   "window": {},
   "tabBar": {
+    "color": "#555555",
+    "backgroundColor": "#EEEEEE",
     "selectedColor": "#42B983",
     "list": [
       {

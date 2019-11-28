@@ -28,6 +28,7 @@
 			<view class="icon-emojifill text-green"></view>
 			<view class="gray-text">加载中...</view>
 		</view>
+		<tm-footer></tm-footer>
 	</view>
 </template>
 

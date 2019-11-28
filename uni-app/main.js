@@ -10,8 +10,12 @@ Vue.component('tm-footer', tmFooter)
 // 引入API
 import * as API from './static/utils/api'
 Vue.prototype.$api = API
+// 引入moment
+import moment from 'moment'
+import 'moment/locale/zh-cn'
+moment.locale('zh-cn')
 
-Vue.config.productionTip = false
+Vue.prototype.$moment = moment
 
 App.mpType = 'app'
 
@@ -22,7 +26,7 @@ app.$mount()
 
 Vue.mixin({
 	onShareAppMessage() {
-		console.log('分享路径', this.$mp.page.route + '&' + qs.stringify(this.$mp.query))
-		return {};
+		return {
+		};
 	}
 })
