@@ -996,13 +996,13 @@ button.icon.lg {
   font-size: 32rpx;
 }
 
-.cu-load.load-icon::after {
+/* .cu-load.load-icon::after {
   display: none;
-}
+} */
 
-.cu-load.load-icon.over {
+/* .cu-load.load-icon.over {
   display: none;
-}
+} */
 
 .cu-load.load-modal {
   position: fixed;

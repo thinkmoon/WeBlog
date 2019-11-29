@@ -28,6 +28,9 @@
 			<view class="icon-emojifill text-green"></view>
 			<view class="gray-text">加载中...</view>
 		</view>
+		<!-- #ifdef MP-QQ -->
+		<ad unit-id="01a084f529176b8df06deaa2274f6721" type="card"></ad>
+		<!-- #endif -->
 		<tm-footer></tm-footer>
 	</view>
 </template>
@@ -50,6 +53,14 @@
 			console.log('请求成功')
 			this.isLoading = false
 			this.Overview = await this.$api.getOverview()
+		},
+		onShow() {
+			 let appbox = qq.createAppBox({
+			              adUnitId: "7c4ab133a7e04ed20d69363ec14d0085"
+			            })
+			            appbox.load().then(()=>{
+			              appbox.show()
+			            })
 		}
 	}
 </script>

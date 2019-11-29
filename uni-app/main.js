@@ -26,7 +26,6 @@ app.$mount()
 
 Vue.mixin({
 	onShareAppMessage() {
-		return {
-		};
+		return {};
 	}
 })

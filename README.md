@@ -1,6 +1,6 @@
 # WeBlog
 
-一个typecho博客的微信小程序版
+typecho博客的小程序版,支持微信小程序，QQ小程序
 
 ![小程序二维码][1]
 
@@ -46,6 +46,16 @@
 - [ ] 网页端微信登录
 
 - [ ] 接口加密
+
+## 特别鸣谢
+[uni-app](https://github.com/dcloudio/uni-app)
+[ColorUI](https://github.com/weilanwl/ColorUI)
+[WeTypecho](https://github.com/MingliangLu/WeTypecho)
+[Moment](https://momentjs.com/)
+[flyio](https://github.com/wendux/fly)
+[towxml](https://github.com/sbfkcel/towxml)
+
+> 感谢各位开源作者优秀的作品！
 
 ## 更新日志
 
