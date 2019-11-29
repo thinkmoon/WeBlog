@@ -2,7 +2,11 @@
 
 typecho博客的小程序版,支持微信小程序，QQ小程序
 
-![小程序二维码][1]
+微信小程序二维码
+![微信小程序二维码][1]
+
+QQ小程序二维码
+![QQ小程序二维码][2]
 
 <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 
@@ -76,4 +80,6 @@ v0.1.2
 3. 支持博客多作者显示
 
 
+  
   [1]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-11-22T07:58:08.png
+  [2]: https://blog.cdn.thinkmoon.cn/blog/typecho/2576c006617a8efb2218a1e9145646a4.png
