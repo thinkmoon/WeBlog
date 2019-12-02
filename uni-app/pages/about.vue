@@ -55,12 +55,6 @@
 			this.Overview = await this.$api.getOverview()
 		},
 		onShow() {
-			 let appbox = qq.createAppBox({
-			              adUnitId: "7c4ab133a7e04ed20d69363ec14d0085"
-			            })
-			            appbox.load().then(()=>{
-			              appbox.show()
-			            })
 		}
 	}
 </script>

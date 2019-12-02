@@ -44,10 +44,11 @@
 					<view class="cu-avatar-group">
 						<view class="cu-avatar round sm" v-for="(item, index) in likeUsers" v-if="index < 5" :key="index" :style="'background-image:url(' + item.avatarUrl + ');'"></view>
 					</view>
-					<text class="text-grey text-sm">{{ likeUsers[0].nickName }} 等
-						{{ likeUsers.length }} 人觉得很赞</text>
+					<text class="text-grey text-sm">{{ likeUsers[0].nickName }}等{{ likeUsers.length }}人觉得很赞</text>
 				</view>
+				<!-- #ifndef MP-QQ -->
 				<textarea v-model="commentText" placeholder="(已开启评论审核模式,评论审核通过后方能显示)" class="solid padding margin-top-sm" />
+				<!-- #endif -->
 				<view class="margin-top-sm flex justify-between">
           <view class="text-bold" v-if="!isLogin">
             <button
@@ -64,7 +65,9 @@
             <open-data type="userNickName" class="line-green"></open-data>
           </view>
           <view>
-            <button class="cu-btn line-green" @click="comment">发表</button>
+			  <!-- #ifndef MP-QQ -->
+			  <button class="cu-btn line-green" @click="comment">发表</button>
+			  <!-- #endif -->
           </view>
         </view>
       </view>
@@ -149,6 +152,7 @@ export default {
 					icon:'none',
 					title:"发表评论需要先授权登录"
 				})
+				return 
 			}
 			if(this.commentText == null){
 				return
@@ -205,6 +209,13 @@ export default {
 			})
 		},
 		like() {
+			if(!this.isLogin){
+				uni.showToast({
+					icon:'none',
+					title:"点赞需要先授权登录"
+				})
+				return 
+			}
 			this.$api.likePost({
 				cid: this.cid
 			})
@@ -259,15 +270,7 @@ export default {
 		this.isLoading = false
 	},
 	async onShow() {
-		// #ifdef MP-QQ
-		let appbox = qq.createAppBox({
-		             adUnitId: "07eb0e16234bc22f48cf909c3cd40cc4"
-		           })
-		           appbox.load().then(()=>{
-		             appbox.show()
-		           })
-		// #endif
-		 
+		
 		wx.getSetting({
 			success: res => {
 				if (res.authSetting['scope.userInfo']) {

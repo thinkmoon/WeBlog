@@ -72,7 +72,7 @@
         "appid" : "1109992579",
         "setting" : {
             "es6" : true,
-            "urlCheck" : false,
+            "urlCheck" : true,
             "postcss" : true
         }
     }
