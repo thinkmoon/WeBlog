@@ -25,15 +25,15 @@
 				评论({{ postData[0].commentsNum }})
 			</view>
 		</view>
+		<!-- #ifdef MP-QQ -->
+		<ad unit-id="53bfa608c0f8bfad5ef40eddb665f864" class="ad"></ad>
+		<!-- #endif -->
 		<towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
 		<view class="like-area solid-top bg-white tm-every-center flex-direction" v-if="!isLoading">
 			<view class="like-btn text-xxl line-green tm-every-center padding border" @click="like" v-if="!isLike">赞</view>
 			<view class="like-btn text-xxl line-red tm-every-center padding border" v-else @click="reward">赏</view>
 			<view class="margin-top">您的支持是对我最大的鼓励</view>
 		</view>
-		<!-- #ifdef MP-QQ -->
-		<ad unit-id="53bfa608c0f8bfad5ef40eddb665f864"></ad>
-		<!-- #endif -->
 		<view class="margin-sm" v-if="!isLoading">
 			<view class="text-lg">
 				<text class="icon-titles text-green"></text>
@@ -72,6 +72,7 @@
         </view>
       </view>
     </view>
+	<!-- #ifndef MP-QQ -->
     <view class="margin-sm" v-if="!isLoading">
       <view class="text-lg">
         <text class="icon-titles text-green"></text>
@@ -109,6 +110,7 @@
         </view>
       </view>
     </view>
+	<!-- #endif -->
 	<!-- #ifdef MP-QQ -->
 	<ad unit-id="35cc08ee6d98e478f658c5acd1c2c11c" type="card"></ad>
 	<!-- #endif -->
@@ -320,5 +322,9 @@ export default {
 
 .border {
   border: 1px solid;
+}
+.ad {
+	background-color: #fff;
+	padding-top: 10upx;
 }
 </style>
