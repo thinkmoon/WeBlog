@@ -38,7 +38,7 @@
 					</view>
 				</view>
 			</view>
-			<view>
+			<view style="padding-bottom: 50px;">
 				<view class="action">
 					<view class="cu-load load-icon" :class="isLoading?'loading':'over'"></view>
 				</view>
@@ -95,6 +95,7 @@
 					console.log("修改后", this.postData)
 				}
 				this.isLoading = false
+				uni.stopPullDownRefresh()
 			}
 		},
 		async onLoad(options) {
@@ -102,6 +103,11 @@
 		},
 		onReachBottom() {
 			console.log("触底事件")
+			this.loadPost()
+		},
+		onPullDownRefresh(){
+			this.curPage = 0 
+			this.postData = []
 			this.loadPost()
 		}
 	}
@@ -180,7 +186,7 @@
 		animation-delay: #{$waitTime}s;
 	}
 
-	@for $i from 1 to 6 {
+	@for $i from 1 through 7 {
 		.list__item:nth-child(#{$i}) {
 			@include item($i);
 		}

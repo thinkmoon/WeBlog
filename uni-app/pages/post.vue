@@ -10,7 +10,7 @@
 		<view class="bg-white flex bg-white solid-bottom padding-bottom-sm padding-top-sm justify-around text-sm">
 			<view>
 				<text class="icon-time"></text>
-				{{ postData[0].created | formatTime }}
+				{{ formatTime(postData[0].created)}}
 			</view>
 			<view>
 				<text class="icon-file"></text>
@@ -100,7 +100,7 @@
             <view class="solid-bottom padding-bottom-xs margin-left-xs">
               <text class="text-grey text-sm">{{ item.nickName }}</text>
               <text class="text-grey text-sm margin-left-xs">{{
-                item.created | formatTime
+                formatTime (item.created)
               }}</text>
             </view>
           </view>
@@ -123,9 +123,6 @@
 </template>
 
 <script>
-import moment from 'moment'
-import 'moment/locale/zh-cn'
-moment.locale('zh-cn')
 export default {
 	data() {
 		return {
@@ -142,12 +139,10 @@ export default {
 			commentList:[]
 		}
 	},
-	filters: {
-		formatTime(value) {
-			return moment.unix(value).format('YYYY年MM月DD日')
-		}
-	},
 	methods: {
+		formatTime(value) {
+			return this.$moment.unix(value).format('YYYY年MM月DD日')
+		},
 		async comment() {
 			if(!this.isLogin){
 				uni.showToast({
@@ -291,16 +286,32 @@ export default {
 		})
 		console.log("文章点赞用户列表", data)
 		this.likeUsers = data
+		// #ifndef APP-PLUS
 		data = await this.$api.getComment({
 			cid: this.cid
 		})
 		this.commentList = data
+		// #endif
 	},
+	// #ifdef MP-QQ
 	onShareAppMessage() {
+		let query = "path=" + this.$mp.page.route + "&" + this.$qs.stringify(this.$mp.query, {
+						encode: false
+					})
+					console.log("分享链接",query)
 		return {
-			title: this.postData[0].title
+			title: this.postData[0].title,
+			query: query
 		};
 	}
+	// #endif
+	// #ifdef MP-WEIXIN
+	onShareAppMessage() {
+		return {
+			title: this.postData[0].title,
+		};
+	}
+	// #endif
 }
 
 </script>

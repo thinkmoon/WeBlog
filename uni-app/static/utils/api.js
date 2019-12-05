@@ -1,26 +1,33 @@
-var Fly=require("flyio/dist/npm/wx") 
-var fly=new Fly
+var Fly = require("flyio/dist/npm/wx")
+var fly = new Fly
 
-fly.config.baseURL= process.env.NODE_ENV === 'production' ? "https://www.thinkmoon.cn/WeBlog/api/" : "http://127.0.0.1/WeBlog/api/",
+fly.config.baseURL = process.env.NODE_ENV === 'production' ? "https://www.thinkmoon.cn/WeBlog/api/" :
+	"http://127.0.0.1/WeBlog/api/",
 
-fly.config.headers={
-	"openid":uni.getStorageSync("openid")
-}
+	fly.config.headers = {
+		"openid": uni.getStorageSync("openid")
+	}
 
 fly.interceptors.response.use(
-    (response) => {
-        //只将请求结果的data字段返回
-        return response.data.data
-    },
-    (err) => {
-        //发生网络错误后会走到这里
-        return Promise.resolve("ERROR")
-    }
+	(response) => {
+		//只将请求结果的data字段返回
+		return response.data.data
+	},
+	(err) => {
+		//发生网络错误后会走到这里
+		return Promise.resolve("ERROR")
+	}
 )
 
 // 登录
 export const login = (params) => {
-	return fly.get('login', params)
+	// #ifdef MP-QQ
+	return fly.get('login?mp=qq', params)
+	// #endif
+	
+	// #ifdef MP-WEIXIN
+	return fly.get('login?mp=weixin', params)
+	// #endif
 }
 // 获取最近文章
 export const getRecentPost = (params) => {
@@ -66,7 +73,3 @@ export const addComment = (params) => {
 export const getComment = (params) => {
 	return fly.get('getComment', params)
 }
-
-
-
-

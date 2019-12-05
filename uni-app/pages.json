@@ -1,6 +1,9 @@
 {
 	"pages": [{
-			"path": "pages/index"
+			"path": "pages/index",
+			"style":{
+				"enablePullDownRefresh": true
+			}
 		},
 		{
 			"path": "pages/about",

@@ -14,8 +14,10 @@ Vue.prototype.$api = API
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 moment.locale('zh-cn')
-
 Vue.prototype.$moment = moment
+// 引入query-string
+import qs from 'query-string'
+Vue.prototype.$qs = qs
 
 App.mpType = 'app'
 

@@ -1,10 +1,11 @@
 <template>
 	<view>
-		<view class="overView flex justify-between flex-direction" style="height: 40vh;width: 100%;">
-			<view class="flex justify-between align-center" style="height: 30vh;width: 100%;">
-				<image class="avatar shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"></image>
+		<view class="overView flex justify-between flex-direction weather rain" style="height: 500upx;width: 100%;">
+			<view class="flex justify-center align-center flex-direction margin-top-lg" style="height: 300upx;width: 100%;">
+				<image class="avatar shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg" style="z-index:99"></image>
+				<view class="text-bold text-shadow text-lg">指尖魔法屋</view>
 			</view>
-			<view class="flex align-end padding-xs justify-around text-white text-shadow text-bold bg-shadeBottom" style="width: 100%;">
+			<view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top" style="width: 100%;">
 				<view class="margin-xs flex align-center flex-direction">
 					<view>文章</view>
 					<view>{{ Overview.posts[0].Num }}</view>
@@ -23,6 +24,7 @@
 				</view>
 			</view>
 		</view>
+		<image src='https://ws3.sinaimg.cn/large/005BYqpgly1g1hovoxxodg30f002skhn.jpg' mode='scaleToFill' class='gif-wave'></image>
 		<towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
 		<view class="cu-load load-modal" v-if="isLoading">
 			<view class="icon-emojifill text-green"></view>
@@ -54,12 +56,14 @@
 			this.isLoading = false
 			this.Overview = await this.$api.getOverview()
 		},
-		onShow() {
-		}
+		onShow() {}
 	}
 </script>
 
 <style>
+	@import '../static/css/weather.css';
+	/*引入天气的css*/
+
 	// 头像
 	.avatar {
 		width: 200rpx;
@@ -73,5 +77,14 @@
 		background-image: url("https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png");
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
+	}
+
+	.gif-wave {
+		margin: 0;
+		mix-blend-mode: screen;
+		height: 100upx;
+		position: absolute;
+		top: 404upx;
+		z-index: 99;
 	}
 </style>

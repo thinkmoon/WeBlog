@@ -1,6 +1,8 @@
 <script>
 	import Vue from 'vue'
-
+	// 引入query-string
+	import qs from 'query-string'
+	
 	export default {
 		methods: {
 			// 更新提示
@@ -8,7 +10,7 @@
 				const updateManager = wx.getUpdateManager()
 				updateManager.onCheckForUpdate(function(res) {
 					// 请求完新版本信息的回调
-					console.log("是否有新版本？",res.hasUpdate)
+					console.log("是否有新版本？", res.hasUpdate)
 				})
 				updateManager.onUpdateReady(function() {
 					wx.showModal({
@@ -47,7 +49,7 @@
 			login() {
 				wx.login({
 					success: async res => {
-						console.log("尝试登录",res)
+						console.log("尝试登录", res)
 						if (res.code) {
 							//发起网络请求
 							wx.getSetting({
@@ -58,7 +60,9 @@
 										wx.getUserInfo({
 											success: async Info => {
 												console.log("尝试获取用户信息", Info)
-												let data = {code: res.code}
+												let data = {
+													code: res.code
+												}
 												Object.assign(data, Info.userInfo);
 												let openid = await this.$api.login(data)
 												uni.setStorageSync('openid', openid)
@@ -85,8 +89,19 @@
 			this.init()
 			this.login()
 		},
-		onShow: function() {
-			console.log('App Show')
+		onShow: res => {
+			console.log('App Show', res)
+			// #ifdef MP-QQ
+			if(typeof res.query.path == 'undefined'){
+				console.log("不是转发进入的")
+				return
+			}
+			uni.navigateTo({
+				url: res.query.path + "?" + qs.stringify(res.query, {
+					encode: false
+				})
+			});
+			// #endif
 		},
 		onHide: function() {
 			console.log('App Hide')

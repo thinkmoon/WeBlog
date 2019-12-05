@@ -5,7 +5,7 @@
  * 
  * @package WeBlog 
  * @author 醉月思
- * @version 0.1.1
+ * @version 0.1.5
  * @link https://github.com/thinkmoon/WeBlog
  */
 class WeBlog_Plugin implements Typecho_Plugin_Interface
@@ -57,29 +57,26 @@ class WeBlog_Plugin implements Typecho_Plugin_Interface
         //创建赞数据库
         try {
             //增加点赞和阅读量
-            if (!array_key_exists('views', $db->fetchRow($db->select()->from('table.contents'))))
-            {
+            if (!array_key_exists('views', $db->fetchRow($db->select()->from('table.contents')))) {
                 $db->query(
                     'ALTER TABLE `' . $prefix
-                    . 'contents` ADD `views` INT DEFAULT 0;'
+                        . 'contents` ADD `views` INT DEFAULT 0;'
                 );
             }
-            if (!array_key_exists('likes', $db->fetchRow($db->select()->from('table.contents'))))
-            {
+            if (!array_key_exists('likes', $db->fetchRow($db->select()->from('table.contents')))) {
                 $db->query(
                     'ALTER TABLE `' . $prefix
-                    . 'contents` ADD `likes` INT DEFAULT 0;'
+                        . 'contents` ADD `likes` INT DEFAULT 0;'
                 );
             }
-            if (!array_key_exists('openid', $db->fetchRow($db->select()->from('table.comments'))))
-            {
+            if (!array_key_exists('openid', $db->fetchRow($db->select()->from('table.comments')))) {
                 $db->query(
                     'ALTER TABLE `' . $prefix
-                    . 'comments` ADD `openid` varchar(500) DEFAULT NULL;'
+                        . 'comments` ADD `openid` varchar(500) DEFAULT NULL;'
                 );
             }
         } catch (Exception $e) {
-            echo($e->getMessage());
+            echo ($e->getMessage());
         }
     }
 
@@ -89,23 +86,24 @@ class WeBlog_Plugin implements Typecho_Plugin_Interface
         Helper::removeRoute('WeBlog');
         Helper::removeAction('WeBlog');
         Helper::removePanel(1, 'WeBlog/manage.php');
-        Helper::removeRoute('TmWeBlog');
-        Helper::removeAction('TmWeBlog');
-        Helper::removePanel(1, 'TmWeBlog/manage.php');
     }
 
     /* 插件配置方法 */
     public static function config(Typecho_Widget_Helper_Form $form)
     {
-        $appID = new Typecho_Widget_Helper_Form_Element_Text('appID', NULL, 'wx53f9b5912c0f0cf6', _t('微信小程序的APPID'),  _t('小程序的APP ID'));
-        $form->addInput($appID);
-        $appSecret = new Typecho_Widget_Helper_Form_Element_Text('appSecret', NULL, '77376fa2b2dea8a18de2be5a6c56dbdf', _t('微信小程序的secret'),  _t('小程序的secret'));
-        $form->addInput($appSecret);
-        $avatarUrl = new Typecho_Widget_Helper_Form_Element_Text('avatarUrl', NULL, 'https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg', _t('你的博客头像'),  _t('显示在微信小程序的头像'));
+        $weixinAppID = new Typecho_Widget_Helper_Form_Element_Text('weixinAppID', NULL, 'wx53f9b5912c0f0cf6', _t('微信小程序的APPID'),  _t('小程序的APP ID'));
+        $form->addInput($weixinAppID);
+        $weixinAppSecret = new Typecho_Widget_Helper_Form_Element_Text('weixinAppSecret', NULL, '77376fa2b2dea8a18de2be5a6c56dbdf', _t('微信小程序的secret'),  _t('微信小程序的secret'));
+        $form->addInput($weixinAppSecret);
+        $qqAppID = new Typecho_Widget_Helper_Form_Element_Text('qqAppID', NULL, '1109992579', _t('QQ小程序的APPID'),  _t('小程序的APP ID'));
+        $form->addInput($qqAppID);
+        $qqAppSecret = new Typecho_Widget_Helper_Form_Element_Text('qqAppSecret', NULL, 'nXrapk4Lkd35ilOY', _t('QQ小程序的secret'),  _t('小程序的secret'));
+        $form->addInput($qqAppSecret);
+        $avatarUrl = new Typecho_Widget_Helper_Form_Element_Text('avatarUrl', NULL, 'https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg', _t('你的博客头像'),  _t('显示在小程序的头像'));
         $form->addInput($avatarUrl);
         $pageSize = new Typecho_Widget_Helper_Form_Element_Text('pageSize', NULL, '7', _t('每页文章数'),  _t('请不要留空'));
         $form->addInput($pageSize);
-        $aboutCid = new Typecho_Widget_Helper_Form_Element_Text('aboutCid', NULL, '2', _t('关于页面CID'),  _t('小程序关于页面显示内容'));
+        $aboutCid = new Typecho_Widget_Helper_Form_Element_Text('aboutCid', NULL, '2', _t('关于页面CID'),  _t('小程序关于页面显示文章cid'));
         $form->addInput($aboutCid);
     }
 

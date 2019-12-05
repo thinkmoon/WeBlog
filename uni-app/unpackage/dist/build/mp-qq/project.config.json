@@ -5,11 +5,11 @@
   },
   "setting": {
     "es6": true,
-    "urlCheck": true,
+    "urlCheck": false,
     "postcss": true
   },
   "compileType": "miniprogram",
-  "projectname": "uni-app",
+  "projectname": "指尖魔法屋",
   "condition": {
     "search": {
       "current": -1,

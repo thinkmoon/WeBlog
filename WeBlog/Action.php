@@ -1,5 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: https://servicewechat.com');
 class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
 {
     private $db;
@@ -7,10 +6,14 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     public function __construct($request, $response, $params = NULL)
     {
         parent::__construct($request, $response, $params);
-        // appID
-        $this->appID = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->appID;
+        // 微信小程序相关配置
+        $this->weixinAppID = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->weixinAppID;
         // appSecret
-        $this->appSecret = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->appSecret;
+        $this->weixinAppSecret = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->weixinAppSecret;
+        // QQ小程序相关配置
+        $this->qqAppID = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->qqAppID;
+        // appSecret
+        $this->qqAppSecret = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->qqAppSecret;
         // 博客头像
         $this->avatarUrl = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->avatarUrl;
         // 页面文章数
@@ -29,6 +32,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     function login()
     {
         $code = self::GET('code', 'null');
+        $mp = self::GET('mp', null);
         if ($code != 'null') {
             $nickName = self::GET('nickName', 'null');
             $avatarUrl = self::GET('avatarUrl', 'null');
@@ -36,7 +40,11 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
             $country = self::GET('country', 'null');
             $gender = self::GET('gender', 'null');
             $province = self::GET('province', 'null');
-            $url = sprintf('https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code', $this->appID, $this->appSecret, $code);
+            if ($mp == "weixin") {
+                $url = sprintf('https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code', $this->weixinAppID, $this->weixinAppSecret, $code);
+            } else if ($mp == "qq") {
+                $url = sprintf('https://api.q.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code', $this->qqAppID, $this->qqAppSecret, $code);
+            }
             $info = file_get_contents($url);
             $json = json_decode($info); //对json数据解码
             $arr = get_object_vars($json);
@@ -151,7 +159,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
             'ownerId' => '1', 'text' => $text, 'type' => 'comment',
             'status' => 'waiting', 'parent' => $parent
         )));
-        
+
         if ($coid > 0) {
             $row = $this->db->fetchRow($this->db->select('commentsNum')->from('table.contents')->where('cid = ?', $cid));
             $this->db->query($this->db->update('table.contents')->rows(array('commentsNum' => (int) $row['commentsNum'] + 1))->where('cid = ?', $cid));

@@ -1,5 +1,5 @@
 {
-    "name" : "uni-app",
+    "name" : "指尖魔法屋",
     "appid" : "__UNI__A05B6C1",
     "description" : "",
     "versionName" : "1.0.0",
@@ -72,7 +72,7 @@
         "appid" : "1109992579",
         "setting" : {
             "es6" : true,
-            "urlCheck" : true,
+            "urlCheck" : false,
             "postcss" : true
         }
     }
