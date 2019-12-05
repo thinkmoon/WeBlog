@@ -15,14 +15,14 @@ $pageSize = 30;
 $currentPage = isset($_REQUEST['p']) ? ($_REQUEST['p'] + 0) : 1;
 
 $users = $db->fetchAll($db->select()->from('table.WeBlog_users')
-    ->order('table.WeBlog_users.createtime', Typecho_Db::SORT_DESC));
+    ->where('nickName != ?','null')->order('table.WeBlog_users.lastlogin', Typecho_Db::SORT_DESC));
 
 $pageCount = ceil(count($users) / $pageSize);
 
 $userpage = $db->fetchAll($db->select()->from('table.WeBlog_users')
     ->where('table.WeBlog_users.avatarUrl != ?', 'null')
     ->page($currentPage, $pageSize)
-    ->order('table.WeBlog_users.createtime', Typecho_Db::SORT_DESC));
+    ->order('table.WeBlog_users.lastlogin', Typecho_Db::SORT_DESC));
 
 // //计算分组
 // $options = Helper::options();
@@ -48,7 +48,7 @@ $userpage = $db->fetchAll($db->select()->from('table.WeBlog_users')
         <div class="row typecho-page-main" role="main">
             <div class="col-mb-12 typecho-list">
                 <div class="typecho-list-operate clearfix">
-                    <form method="POST" action="<?php $options->adminUrl('extending.php?panel=WeTypecho%2FUsers.php'); ?>">
+                    <form method="POST" action="<?php $options->adminUrl('extending.php?panel=WeBlog%2Fmanage.php'); ?>">
                         <div class="search" role="search">
                             <select name="p">
                                 <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
