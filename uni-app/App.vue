@@ -89,20 +89,6 @@
 			this.init()
 			this.login()
 		},
-		onShow: res => {
-			console.log('App Show', res)
-			// #ifdef MP-QQ
-			if(typeof res.query.path == 'undefined'){
-				console.log("不是转发进入的")
-				return
-			}
-			uni.navigateTo({
-				url: res.query.path + "?" + qs.stringify(res.query, {
-					encode: false
-				})
-			});
-			// #endif
-		},
 		onHide: function() {
 			console.log('App Hide')
 		}

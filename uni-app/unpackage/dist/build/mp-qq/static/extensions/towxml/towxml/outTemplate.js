@@ -174,4 +174,4 @@ class outwxml{
         return s;
     }
 };
-new outwxml({depth:10}).init();
+new outwxml({depth:5}).init();

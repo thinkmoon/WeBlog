@@ -293,25 +293,14 @@ export default {
 		this.commentList = data
 		// #endif
 	},
-	// #ifdef MP-QQ
 	onShareAppMessage() {
-		let query = "path=" + this.$mp.page.route + "&" + this.$qs.stringify(this.$mp.query, {
+		return {
+			title: this.postData[0].title,
+			path: this.$mp.page.route + "?" + this.$qs.stringify(this.$mp.query, {
 						encode: false
 					})
-					console.log("分享链接",query)
-		return {
-			title: this.postData[0].title,
-			query: query
 		};
 	}
-	// #endif
-	// #ifdef MP-WEIXIN
-	onShareAppMessage() {
-		return {
-			title: this.postData[0].title,
-		};
-	}
-	// #endif
 }
 
 </script>

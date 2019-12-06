@@ -15,6 +15,7 @@ Component({
 	methods: {
 		__bind_tap(e) {
 			let element = e.currentTarget.dataset._el
+			console.log("点击",element.tag)
 			if (element.tag == 'image') {
 				wx.previewImage({
 					current: element.attr.src, // 当前显示图片的http链接
@@ -22,8 +23,6 @@ Component({
 				})
 			}
 		},
-		__bind_touchstart() {},
-		__bind_touchend() {}
 	},
 	lifetimes: {
 		attached() {
