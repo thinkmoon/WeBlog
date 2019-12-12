@@ -15,15 +15,28 @@ Component({
 	methods: {
 		__bind_tap(e) {
 			let element = e.currentTarget.dataset._el
+			console.log("点击",element.tag)
 			if (element.tag == 'image') {
 				wx.previewImage({
 					current: element.attr.src, // 当前显示图片的http链接
 					urls: [element.attr.src] // 需要预览的图片http链接列表
 				})
+			}else if(element.tag == 'navigator'){
+				console.log(element)
+				wx.showModal({
+					title:"外部链接提示",
+					content:"这是一个外部链接,需要复制到浏览器中打开. 是否复制?",
+					confirmText: "复制链接",
+					success: res => {
+						if(res.confirm){
+							wx.setClipboardData({
+							    data: element.attr.href
+							});
+						}
+					}
+				})
 			}
 		},
-		__bind_touchstart() {},
-		__bind_touchend() {}
 	},
 	lifetimes: {
 		attached() {

@@ -7,4 +7,4 @@
         })
     },
     [['common/componets/cu-custom-create-component']]
-]);                
+]);

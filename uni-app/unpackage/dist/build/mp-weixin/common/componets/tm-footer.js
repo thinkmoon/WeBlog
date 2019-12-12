@@ -7,4 +7,4 @@
         })
     },
     [['common/componets/tm-footer-create-component']]
-]);                
+]);

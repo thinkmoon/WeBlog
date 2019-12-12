@@ -45,7 +45,7 @@ class outwxml{
                 attr += `value="{{item.attr['value']}}"`;
             };
 
-            s+= `<${item} wx:if="{{item.node === 'element' && item.tag === '${item}'}}" ${attr} ${imgMode}><block wx:for="{{item.child}}" wx:key="{{item}}"><template is="m${id}" data="{{item}}"/></block></${item}>`;
+            s+= `<${item} wx:if="{{item.node === 'element' && item.tag === '${item}'}}" ${attr} ${imgMode}><block wx:for="{{item.child}}" wx:key="item"><template is="m${id}" data="{{item}}"/></block></${item}>`;
         });
 
         return s;
@@ -174,4 +174,4 @@ class outwxml{
         return s;
     }
 };
-new outwxml({depth:10}).init();
+new outwxml({depth:5}).init();
