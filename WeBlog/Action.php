@@ -18,6 +18,8 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->avatarUrl = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->avatarUrl;
         // 页面文章数
         $this->pageSize = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->pageSize;
+        // 页面文章缩略图thumb
+        $this->thumb = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->thumb;
         $this->db  = Typecho_Db::get();
         $this->res = new Typecho_Response();
         if (method_exists($this, $this->request->type)) {
@@ -137,7 +139,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         $posts  = $this->db->fetchAll($select);
         foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
-            $thumb = "https://blog.cdn.thinkmoon.cn/default.jpg";
+            $thumb = $this->thumb;
             $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])) ? $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])) : array(array("str_value" => $thumb));
             $result[]    = $post;
         }

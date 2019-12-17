@@ -2,7 +2,7 @@
 	import Vue from 'vue'
 	// 引入query-string
 	import qs from 'query-string'
-	
+
 	export default {
 		methods: {
 			// 更新提示

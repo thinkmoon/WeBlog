@@ -121,7 +121,7 @@ class towxml {
 					// 得到音频播放选项
 					let audioOption = data._e.attr,
 						audioId = data._id;
-
+						
 					// 保存当前播放器数据
 					global.__towxmldata__[dataId].audio[audioId] = data;
 

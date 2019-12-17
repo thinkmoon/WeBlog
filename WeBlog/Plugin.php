@@ -5,7 +5,7 @@
  * 
  * @package WeBlog 
  * @author 醉月思
- * @version 0.1.5
+ * @version 0.1.6
  * @link https://github.com/thinkmoon/WeBlog
  */
 class WeBlog_Plugin implements Typecho_Plugin_Interface
@@ -101,6 +101,8 @@ class WeBlog_Plugin implements Typecho_Plugin_Interface
         $form->addInput($qqAppSecret);
         $avatarUrl = new Typecho_Widget_Helper_Form_Element_Text('avatarUrl', NULL, 'https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg', _t('你的博客头像'),  _t('显示在小程序的头像'));
         $form->addInput($avatarUrl);
+        $thumb = new Typecho_Widget_Helper_Form_Element_Text('thumb', NULL, 'https://blog.cdn.thinkmoon.cn/default.jpg', _t('默认缩略图'),  _t('显示在小程序的文章默认缩略图'));
+        $form->addInput($thumb);
         $pageSize = new Typecho_Widget_Helper_Form_Element_Text('pageSize', NULL, '7', _t('每页文章数'),  _t('请不要留空'));
         $form->addInput($pageSize);
         $aboutCid = new Typecho_Widget_Helper_Form_Element_Text('aboutCid', NULL, '2', _t('关于页面CID'),  _t('小程序关于页面显示文章cid'));

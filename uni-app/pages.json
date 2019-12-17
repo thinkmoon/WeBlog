@@ -40,5 +40,6 @@
 			}
 		]
 	},
-	"globalStyle": {}
+	"globalStyle": {},
+	"sitemapLocation": "sitemap.json"
 }

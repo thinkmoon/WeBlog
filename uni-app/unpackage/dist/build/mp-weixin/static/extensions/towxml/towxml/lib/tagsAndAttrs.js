@@ -30,7 +30,7 @@ let wxml = [
     // 'picker',
     // 'picker-view',
     // 'switch',
-    // // 'audio',
+    // 'audio',
     // 'contact-button'
 ],
 binds = [
