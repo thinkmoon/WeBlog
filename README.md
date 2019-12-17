@@ -2,11 +2,19 @@
 
 typecho博客的小程序版,支持微信小程序，QQ小程序
 
+## 特性
+
+### 支持Aplayer插件播放audio
+
+![执着][1]
+
+> 示例请在小程序端打开此文章
+
 微信小程序二维码
-![微信小程序二维码][1]
+![微信小程序二维码][2]
 
 QQ小程序二维码
-![QQ小程序二维码][2]
+![QQ小程序二维码][3]
 
 <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 
@@ -47,6 +55,10 @@ QQ小程序二维码
 
 - [x] 点击链接复制功能
 
+- [x] Aplayer插件的支持
+
+- [ ] 文章搜索
+
 - [ ] 评论回复功能
 
 - [ ] 评论通知功能
@@ -66,6 +78,9 @@ QQ小程序二维码
 > 感谢各位开源作者优秀的作品！
 
 ## 更新日志
+v0.1.6
+1. 支持Aplayer插件
+2. 支持默认缩略图地址自定义
 
 v0.1.5
 1. 美化关于页界面
@@ -90,5 +105,8 @@ v0.1.2
 
 
   
-  [1]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-11-22T07:58:08.png
-  [2]: https://blog.cdn.thinkmoon.cn/blog/typecho/2576c006617a8efb2218a1e9145646a4.png
+
+
+  [1]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-12-17T13:11:03.png
+  [2]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-11-22T07:58:08.png
+  [3]: https://blog.cdn.thinkmoon.cn/blog/typecho/2576c006617a8efb2218a1e9145646a4.png
