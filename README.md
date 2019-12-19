@@ -1,5 +1,6 @@
 # WeBlog
 
+<a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 typecho博客的小程序版,支持微信小程序，QQ小程序
 
 ## 特性
@@ -10,13 +11,9 @@ typecho博客的小程序版,支持微信小程序，QQ小程序
 
 > 示例请在小程序端打开此文章
 
-微信小程序二维码
-![微信小程序二维码][2]
-
-QQ小程序二维码
-![QQ小程序二维码][3]
-
-<a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
+| 微信小程序二维码 | QQ小程序二维码 |
+|  ----  | ----  |
+| ![微信小程序二维码][2]  | ![QQ小程序二维码][3] |
 
 ## 使用方法
 
