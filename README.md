@@ -107,6 +107,6 @@ v0.1.2
   
 
 
-  [1]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-12-17T13:11:03.png = 200x300
+  [1]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-12-17T13:11:03.png=200x300
   [2]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-11-22T07:58:08.png
   [3]: https://blog.cdn.thinkmoon.cn/blog/typecho/2576c006617a8efb2218a1e9145646a4.png
