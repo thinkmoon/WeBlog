@@ -6,7 +6,7 @@ typecho博客的小程序版,支持微信小程序，QQ小程序
 
 ### 支持Aplayer插件播放audio
 
-![执着][1]
+<img src="https://blog.cdn.thinkmoon.cn/blog/typecho/2019-12-17T13:11:03.png" width="500" hegiht="313" align=center />
 
 > 示例请在小程序端打开此文章
 
@@ -103,10 +103,5 @@ v0.1.2
 2. 弃用Vuex
 3. 支持博客多作者显示
 
-
-  
-
-
-  [1]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-12-17T13:11:03.png=200x300
   [2]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-11-22T07:58:08.png
   [3]: https://blog.cdn.thinkmoon.cn/blog/typecho/2576c006617a8efb2218a1e9145646a4.png
