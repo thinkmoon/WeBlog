@@ -52,7 +52,6 @@
 			this.postData = await this.$api.getPostBycid({
 				cid: this.cid
 			})
-			console.log('请求成功')
 			this.isLoading = false
 			this.Overview = await this.$api.getOverview()
 		},

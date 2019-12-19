@@ -67,16 +67,6 @@
           url: './post?cid=' + cid
         })
       },
-      // loadProcess() {
-      // 	var Interval = setInterval(() => {
-      // 		if (this.loadProgress < 100) {
-      // 			this.loadProgress = this.loadProgress + 1;
-      // 		} else {
-      // 			this.loadProgress = 0;
-      // 			clearInterval(Interval)
-      // 		}
-      // 	}, 100);
-      // },
       async loadPost() {
         this.isLoading = true
         // 每隔十页清空一下，避免内存溢出
@@ -89,10 +79,8 @@
         // this.loadProgress = 100
         if (res != null &&
           res.length > 0) {
-          console.log("修改前", this.postData)
           this.postData = this.postData.concat(res)
           this.curPage++
-          console.log("修改后", this.postData)
         }
         this.isLoading = false
         uni.stopPullDownRefresh()

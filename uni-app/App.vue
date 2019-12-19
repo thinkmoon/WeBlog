@@ -1,8 +1,8 @@
 <script>
+  const Towxml = require('./static/extensions/towxml/towxml/main');
 	import Vue from 'vue'
 	// 引入query-string
 	import qs from 'query-string'
-
 	export default {
 		methods: {
 			// 更新提示
@@ -91,7 +91,10 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
-		}
+		},
+    globalData: {
+      towxml:new Towxml()
+    }
 	}
 </script>
 

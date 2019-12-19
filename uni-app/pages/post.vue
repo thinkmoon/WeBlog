@@ -263,7 +263,6 @@ export default {
 		this.postData = await this.$api.getPostBycid({
 			cid: query.cid
 		})
-		console.log('请求成功')
 		this.isLoading = false
 	},
 	async onShow() {

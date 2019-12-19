@@ -132,7 +132,8 @@ class ToJson {
                                         tag:"image",
                                         type:"audio",
                                         attr:{
-                                            class:"h2w__img"
+                                            class:"h2w__img",
+                                            src: "./images/loading.svg"
                                         }
                                     }
                                 ]
