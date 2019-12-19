@@ -1,6 +1,7 @@
 # WeBlog
 
 <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
+
 typecho博客的小程序版,支持微信小程序，QQ小程序
 
 ## 特性
