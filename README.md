@@ -6,7 +6,7 @@ typecho博客的小程序版,支持微信小程序，QQ小程序
 
 ### 支持Aplayer插件播放audio
 
-<img src="https://blog.cdn.thinkmoon.cn/blog/typecho/2019-12-17T13:11:03.png" width="500" hegiht="313" align=center />
+<img src="https://blog.cdn.thinkmoon.cn/blog/typecho/2019-12-17T13:11:03.png" width="300" align=center />
 
 > 示例请在小程序端打开此文章
 
