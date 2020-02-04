@@ -9,7 +9,7 @@
 			"path": "pages/about",
 			"style": {
 				"usingComponents": {
-					"towxml": "../static/extensions/towxml/index"
+					"towxml": "../static/extensions/parse/index"
 				}
 			}
 		},
@@ -17,7 +17,7 @@
 			"path": "pages/post",
 			"style": {
 				"usingComponents": {
-					"towxml": "../static/extensions/towxml/index"
+					"towxml": "../static/extensions/parse/index"
 				}
 			}
 		}

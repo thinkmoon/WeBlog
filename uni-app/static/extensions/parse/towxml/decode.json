@@ -1,0 +1,13 @@
+{
+  "component": true,
+  "usingComponents": {
+    "decode": "./decode",
+    "audio-player": "./audio-player/audio-player",
+    "echarts": "./echarts/echarts",
+    "latex": "./latex/latex",
+    "table": "./table/table",
+    "todogroup": "./todogroup/todogroup",
+    "yuml": "./yuml/yuml",
+    "img": "./img/img"
+  }
+}

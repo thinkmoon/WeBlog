@@ -24,7 +24,7 @@
 				</view>
 			</view>
 		</view>
-		<image src='https://ws3.sinaimg.cn/large/005BYqpgly1g1hovoxxodg30f002skhn.jpg' mode='scaleToFill' class='gif-wave'></image>
+		<image src='https://tva3.sinaimg.cn/large/8d406c5egy1gamn31scsdg20f002skhn.gif' mode='scaleToFill' class='gif-wave'></image>
 		<towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
 		<view class="cu-load load-modal" v-if="isLoading">
 			<view class="icon-emojifill text-green"></view>
@@ -85,5 +85,6 @@
 		position: absolute;
 		top: 404upx;
 		z-index: 99;
+		width: 100%;
 	}
 </style>
