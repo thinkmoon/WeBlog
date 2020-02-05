@@ -2,20 +2,23 @@
 	"pages": [{
 			"path": "pages/index",
 			"style":{
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "首页"
 			}
 		},
 		{
 			"path": "pages/about",
 			"style": {
 				"usingComponents": {
-					"towxml": "../static/extensions/parse/index"
+					"towxml": "../static/extensions/parse/index",
+					"navigationBarTitleText": "指尖魔法屋"
 				}
 			}
 		},
 		{
 			"path": "pages/post",
 			"style": {
+				"navigationBarTitleText": "文章内容",
 				"usingComponents": {
 					"towxml": "../static/extensions/parse/index"
 				}

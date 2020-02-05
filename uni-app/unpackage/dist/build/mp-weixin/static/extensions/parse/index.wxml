@@ -1,0 +1,13 @@
+<!--index.wxml-->
+
+<!--loading-->
+<view class="loading" wx:if="{{isloading}}">
+  <image class="loading__icon" src="./images/loading.svg"></image>
+</view>
+<view style="background-color: #fff;padding-bottom: 60rpx;">
+	<!--使用towxml-->
+	<towxml nodes="{{article}}"/>
+</view>
+
+
+

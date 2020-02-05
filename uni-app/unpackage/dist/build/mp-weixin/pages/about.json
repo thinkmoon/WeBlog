@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "towxml": "../static/extensions/parse/index",
+    "navigationBarTitleText": "指尖魔法屋"
+  }
+}

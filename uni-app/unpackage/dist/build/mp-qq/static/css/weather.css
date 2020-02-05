@@ -1,0 +1,92 @@
+/* 
+ *这个是直接从网上扒下来的，稍微做了点精简.
+ *动画分为两层,一层为较慢,一层为较快的,这样更逼真一些!
+ */
+.weather {
+  position: relative;
+  overflow: hidden;
+}
+
+.weather:before, .weather:after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  right: -50%;
+  bottom: -50%;
+  z-index: 1;
+  pointer-events: none;
+  background: transparent repeat;
+  opacity: 0.5;
+  transform: rotate(0deg);/*下雨(下雪)的反向*/
+  animation-name: w;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.weather:after {
+  opacity: 0.6;
+  background-position: 64rpx 64rpx;
+  animation-name: x;
+}
+
+/* 下雨 */
+.weather.rain:before, .weather.rain:after {
+  background-image: url('http://download.tpengyun.cn/res/WeatherTop/rain.png');
+  animation-duration: 2s;/*下雨较慢层，自行调整*/
+}
+
+.weather.rain:after {
+  animation-duration: 1.5s;/*下雨较快层，自行调整*/
+}
+
+/* 下雪 */
+.weather.snow:before, .weather.snow:after {
+  background-image: url('http://download.tpengyun.cn/res/WeatherTop/snow.png');
+  animation-duration: 20s;/*下雨较慢层，自行调整*/
+}
+
+.weather.snow:after {
+  animation-duration: 15s;/*下雪较快层，自行调整*/
+}
+
+/* 动画设置 */
+@-webkit-keyframes w {
+  from {
+    background-position: 0 0rpx;
+  }
+
+  to {
+    background-position: 0 2048rpx;
+  }
+}
+
+@keyframes w {
+  from {
+    background-position: 0 0rpx;
+  }
+
+  to {
+    background-position: 0 2048rpx;
+  }
+}
+
+@-webkit-keyframes x {
+  from {
+    background-position: 128rpx 128rpx;
+  }
+
+  to {
+    background-position: 128rpx 2176rpx;
+  }
+}
+
+@keyframes x {
+  from {
+    background-position: 218rpx 128rpx;
+  }
+
+  to {
+    background-position: 128rpx 2176rpx;
+  }
+}

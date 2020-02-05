@@ -50,12 +50,13 @@
 				<textarea v-model="commentText" placeholder="(已开启评论审核模式,评论审核通过后方能显示)" class="solid padding margin-top-sm" />
 				<!-- #endif -->
 				<view class="margin-top-sm flex justify-between">
-          <view class="text-bold" v-if="!isLogin">
+          <view style="width:46%" v-if="!isLogin">
             <button
               v-if="canIUse"
               open-type="getUserInfo"
               @getuserinfo="loadUserInfo"
               class="cu-btn bg-green"
+							style="width:100%;margin-right: ;"
             >
               <text class="line-white">授权登录</text>
             </button>
@@ -64,10 +65,10 @@
           <view class="text-bold" v-else>
             <open-data type="userNickName" class="line-green"></open-data>
           </view>
-          <view>
-			  <!-- #ifndef MP-QQ -->
-			  <button class="cu-btn line-green" @click="comment">发表</button>
-			  <!-- #endif -->
+          <view style="width:46%">
+							<!-- #ifndef MP-QQ -->
+							<button style="width:100%" class="cu-btn line-green" @click="comment">发表</button>
+							<!-- #endif -->
           </view>
         </view>
       </view>
@@ -127,6 +128,7 @@ export default {
 	data() {
 		return {
 			cid: null,
+			thumb:"",
 			postData: [{
 				created: 0
 			}],
@@ -260,6 +262,7 @@ export default {
 	},
 	async onLoad(query) {
 		this.cid = query.cid
+		this.thumb = query.thumb
 		this.postData = await this.$api.getPostBycid({
 			cid: query.cid
 		})
@@ -297,7 +300,8 @@ export default {
 			title: this.postData[0].title,
 			path: this.$mp.page.route + "?" + this.$qs.stringify(this.$mp.query, {
 						encode: false
-					})
+					}),
+			imageUrl: this.thumb
 		};
 	}
 }

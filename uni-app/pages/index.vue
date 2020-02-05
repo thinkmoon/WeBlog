@@ -14,7 +14,7 @@
         <!-- #ifdef MP-QQ -->
         <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
         <!-- #endif -->
-        <view @tap="seePost(item.cid)" class="list__item">
+        <navigator :url='"/pages/post?cid=" + item.cid + "&thumb=" + item.thumb[0].str_value' class="list__item">
           <view class="image">
             <image :src="item.thumb[0].str_value" mode="widthFix" :lazy-load="true"></image>
             <!-- <view class="cu-tag bg-blue">置顶</view> -->
@@ -36,7 +36,7 @@
               </view>
             </view>
           </view>
-        </view>
+        </navigator>
       </view>
       <view style="padding-bottom: 50px;">
         <view class="action">
@@ -61,11 +61,6 @@
       formatTime(value) {
         // return this.$moment.unix(value).fromNow()
         return this.$moment.unix(value).fromNow()
-      },
-      seePost(cid) {
-        wx.navigateTo({
-          url: './post?cid=' + cid
-        })
       },
       async loadPost() {
         this.isLoading = true
