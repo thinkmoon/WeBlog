@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "文章内容",
   "usingComponents": {
     "towxml": "../static/extensions/parse/index"
   }

@@ -10,9 +10,9 @@
 			"path": "pages/about",
 			"style": {
 				"usingComponents": {
-					"towxml": "../static/extensions/parse/index",
-					"navigationBarTitleText": "指尖魔法屋"
-				}
+					"towxml": "../static/extensions/parse/index"
+				},
+				"navigationBarTitleText": "指尖魔法屋"
 			}
 		},
 		{

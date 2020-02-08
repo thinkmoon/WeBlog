@@ -5,8 +5,15 @@
   },
   "setting": {
     "es6": true,
-    "urlCheck": false,
-    "postcss": true
+    "urlCheck": true,
+    "postcss": false,
+    "newFeature": true,
+    "minified": false,
+    "remoteDebugLogEnable": false,
+    "uploadWithSourceMap": false,
+    "nodeModules": false,
+    "autoAudits": false,
+    "uglifyFileName": false
   },
   "compileType": "miniprogram",
   "projectname": "指尖魔法屋",
