@@ -1,40 +1,45 @@
 {
-  "description": "项目配置文件。",
-  "packOptions": {
-    "ignore": []
-  },
-  "setting": {
-    "es6": true,
-    "urlCheck": true,
-    "postcss": false,
-    "newFeature": true,
-    "minified": false,
-    "remoteDebugLogEnable": false,
-    "uploadWithSourceMap": false,
-    "nodeModules": false,
-    "autoAudits": false,
-    "uglifyFileName": false
-  },
-  "compileType": "miniprogram",
-  "projectname": "指尖魔法屋",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": -1,
-      "list": []
-    }
-  },
-  "qqappid": "1109992579",
-  "qqLibVersion": "1.6.3"
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"es6": true,
+		"urlCheck": true,
+		"postcss": false,
+		"newFeature": true,
+		"minified": false,
+		"remoteDebugLogEnable": false,
+		"uploadWithSourceMap": false,
+		"nodeModules": false,
+		"autoAudits": false,
+		"uglifyFileName": false
+	},
+	"compileType": "miniprogram",
+	"projectname": "指尖魔法屋",
+	"qqappid": "1109992579",
+	"qqLibVersion": "1.6.3",
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": []
+		}
+	}
 }
