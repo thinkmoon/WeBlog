@@ -83,5 +83,8 @@
 			"autoAudits": false,
 			"uglifyFileName": false
 		}
+	},
+	"uniStatistics": {
+		"enable": false //全局关闭
 	}
 }

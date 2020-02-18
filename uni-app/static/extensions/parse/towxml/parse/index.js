@@ -62,7 +62,8 @@ const parse2 = require('./parse2/index'),
                     // o.tag = o.tag === 'text' ? 'view' : o.tag;
                     e.tag = item.name;                  // 原始
                     o.attr = item.attribs;
-                    e.attr = JSON.parse(JSON.stringify(item.attribs));
+										
+										e.attr = JSON.parse(JSON.stringify(item.attribs));
 
                     o.attr.class = o.attr.class ? `h2w__${item.name} ${o.attr.class}` : `h2w__${item.name}`;
 

@@ -26,9 +26,8 @@
 		</view>
 		<image src='https://tva3.sinaimg.cn/large/8d406c5egy1gamn31scsdg20f002skhn.gif' mode='scaleToFill' class='gif-wave'></image>
 		<towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
-		<view class="cu-load load-modal" v-if="isLoading">
-			<view class="icon-emojifill text-green"></view>
-			<view class="gray-text">加载中...</view>
+		<view class="modal bg-white" v-if="isLoading">
+			<view class="spinner bg-base" ></view>
 		</view>
 		<!-- #ifdef MP-QQ -->
 		<ad unit-id="01a084f529176b8df06deaa2274f6721" type="card"></ad>

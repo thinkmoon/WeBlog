@@ -14,7 +14,7 @@
 			</view>
 			<view>
 				<text class="icon-file"></text>
-				学习笔记
+				{{ postData[0].category[0]["name"] }}
 			</view>
 			<view>
 				<text class="icon-like"></text>
@@ -30,13 +30,13 @@
 		<!-- #endif -->
 		<towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
 		<view class="like-area solid-top bg-white tm-every-center flex-direction" v-if="!isLoading">
-			<view class="like-btn text-xxl line-green tm-every-center padding border" @click="like" v-if="!isLike">赞</view>
-			<view class="like-btn text-xxl line-red tm-every-center padding border" v-else @click="reward">赏</view>
+			<view class="like-btn text-xxl line-base tm-every-center padding border" @click="like" v-if="!isLike">赞</view>
+			<view class="like-btn text-xxl line-complement tm-every-center padding border" v-else @click="reward">赏</view>
 			<view class="margin-top">您的支持是对我最大的鼓励</view>
 		</view>
 		<view class="margin-sm" v-if="!isLoading">
 			<view class="text-lg">
-				<text class="icon-titles text-green"></text>
+				<text class="icon-titles color-base"></text>
 				<text class="text-bold">发表看法</text>
 			</view>
 			<view class="comment-area bg-white margin-top padding">
@@ -55,7 +55,7 @@
               v-if="canIUse"
               open-type="getUserInfo"
               @getuserinfo="loadUserInfo"
-              class="cu-btn bg-green"
+              class="cu-btn bg-base"
 							style="width:100%;margin-right: ;"
             >
               <text class="line-white">授权登录</text>
@@ -63,11 +63,11 @@
             <view v-else>请升级微信版本</view>
           </view>
           <view class="text-bold" v-else>
-            <open-data type="userNickName" class="line-green"></open-data>
+            <open-data type="userNickName" class="line-base"></open-data>
           </view>
           <view style="width:46%">
 							<!-- #ifndef MP-QQ -->
-							<button style="width:100%" class="cu-btn line-green" @click="comment">发表</button>
+							<button style="width:100%" class="cu-btn line-base" @click="comment">发表</button>
 							<!-- #endif -->
           </view>
         </view>
@@ -76,7 +76,7 @@
 	<!-- #ifndef MP-QQ -->
     <view class="margin-sm" v-if="!isLoading">
       <view class="text-lg">
-        <text class="icon-titles text-green"></text>
+        <text class="icon-titles color-base"></text>
         <text class="text-bold">精彩评论</text>
       </view>
       <view class="comment-area bg-white margin-top padding">
@@ -116,10 +116,9 @@
 	<ad unit-id="35cc08ee6d98e478f658c5acd1c2c11c" type="card"></ad>
 	<!-- #endif -->
     <tm-footer></tm-footer>
-    <view class="cu-load load-modal" v-if="isLoading">
-      <view class="icon-emojifill text-green"></view>
-      <view class="gray-text">加载中...</view>
-    </view>
+		<view class="modal bg-white" v-if="isLoading">
+			<view class="spinner bg-base" ></view>
+		</view>
   </block>
 </template>
 
@@ -307,7 +306,7 @@ export default {
 }
 
 </script>
-<style>
+<style lang="less">
 .like-area {
   height: 300upx;
 }

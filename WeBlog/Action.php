@@ -3,6 +3,8 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
 {
     private $db;
     private $res;
+    private $redis;
+
     public function __construct($request, $response, $params = NULL)
     {
         parent::__construct($request, $response, $params);
@@ -140,7 +142,8 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
             $thumb = $this->thumb;
-            $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])) ? $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])) : array(array("str_value" => $thumb));
+            $thumb2 = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb2"));
+            $post['thumb'] = $thumb2 != null ? $thumb2 : array(array("str_value" => $thumb));
             $result[]    = $post;
         }
         $this->export($result);
@@ -255,17 +258,20 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     // 获取AccessToken
     private function getAccessToken()
     {
-        // 如果 session中存有 access_token 并且未超过有效期 使用session中的access_token
-        if ($_SESSION['access_token'] && $_SESSION['expire_time'] > time()) {
-            //$this->export($_SESSION['access_token']);
-            return $_SESSION['access_token'];
+    	//实例化redis
+		$redis = new Redis();
+		//连接
+		$redis->connect('127.0.0.1', 6379);
+		$redis->select(1);
+    	$access_token = $redis->get("access_token");
+    	if ($access_token && $redis->get("token_expire_time") > time()) {
+    		return $access_token;
         } else {
-            $url = sprintf('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s', $this->appID, $this->appSecret);
+            $url = sprintf('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s', $this->weixinAppID,$this->weixinAppSecret);
             $res = json_decode(file_get_contents($url));
             $access_token = $res->access_token;
-            //将获取到的access_token存到session 设置过期时间
-            $_SESSION['access_token'] = $access_token;
-            $_SESSION['expire_time'] = time() + 7000;
+            $redis->set('access_token', $access_token);
+            $redis->set('token_expire_time', time() + 7000);
             return $access_token;
         }
     }
