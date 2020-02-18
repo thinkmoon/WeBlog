@@ -227,6 +227,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
             $posts  = $this->db->fetchAll($select);
             foreach ($posts as $post) {
                 $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
+                $post['category'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'category'));
                 $result[]    = $post;
             }
             $this->export($result);
