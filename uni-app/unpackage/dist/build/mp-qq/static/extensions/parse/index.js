@@ -41,10 +41,15 @@ Component({
 	lifetimes: {
 		attached() {
 			let towxml = require('/towxml/index')
+			// 处理meting
 			let text = this.data.content.replace(
 				/\[Meting\].*?\[Music.*?title="(.*?)".*?author="(.*?)".*?url="(.*?)".*?pic="(.*?)".*?\/\].*?\[\/Meting\]/s,
 				"<audio autoplay='true' loop='true' name='$1' author='$2' poster='$4' src='$3'></audio>")
-			let result = towxml(text.slice(15), 'markdown', {
+			// 处理<!-- -->
+			text = text.replace(
+				/<!--(.*?)-->/g,
+				"")
+			let result = towxml(text, 'markdown', {
 				base: "https://www.thinkmoon.cn", // 相对资源的base路径
 				events: { // 为元素绑定的事件方法
 					tap: (e) => {
@@ -52,7 +57,6 @@ Component({
 					}
 				}
 			});
-
 			// 更新解析数据
 			this.setData({
 				article: result,
