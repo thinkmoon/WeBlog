@@ -1,7 +1,14 @@
 {
 	"pages": [{
+			"path": "pages/page",
+			"style": {
+				"usingComponents": {
+					"towxml": "../static/extensions/parse/index"
+				}
+			}
+		}, {
 			"path": "pages/index",
-			"style":{
+			"style": {
 				"enablePullDownRefresh": true,
 				"navigationBarTitleText": "首页"
 			}
@@ -25,24 +32,13 @@
 			}
 		}
 	],
-	"tabBar": {
-		"color":"#555555",
-		"backgroundColor":"#EEEEEE",
-		"selectedColor": "#42B983",
-		"list": [{
-				"selectedIconPath": "./static/icon/home_a.png",
-				"iconPath": "./static/icon/home.png",
-				"pagePath": "pages/index",
-				"text": "主页"
-			},
-			{
-				"selectedIconPath": "./static/icon/about_a.png",
-				"iconPath": "./static/icon/about.png",
-				"pagePath": "pages/about",
-				"text": "关于"
-			}
-		]
+	"globalStyle": {
+		"mp-alipay": {
+			/* 支付宝小程序特有相关 */
+			"transparentTitle": "always",
+			"allowsBounceVertical": "NO"
+		},
+		"navigationStyle": "custom"
 	},
-	"globalStyle": {},
 	"sitemapLocation": "sitemap.json"
 }

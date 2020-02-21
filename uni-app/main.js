@@ -7,6 +7,12 @@ Vue.component('cu-custom', cuCustom)
 // 引入footer
 import tmFooter from './common/componets/tm-footer.vue'
 Vue.component('tm-footer', tmFooter)
+// 引入home
+import home from './pages/index.vue'
+Vue.component('home',home)
+// 引入about
+import about from './pages/about.vue'
+Vue.component('about',about)
 // 引入API
 import * as API from './static/utils/api'
 Vue.prototype.$api = API

@@ -1,7 +1,18 @@
 /* 在colorUI上拓展的CSS */
 
-// @color-base       : #0081ff; 
-@color-base       : #39b54a; 
+// @color-base       : #0081ff; //科技蓝
+// @color-base       : #39b54a; //自然绿
+// @color-base    : #000; //低调黑
+// @color-base : #f44444; // CSDN红
+// @color-base : #009A61; // 思否绿
+@color-base : #007fff; // 掘金蓝
+// @color-base : #ea6f5a; // 简书红
+// @color-base : #24292e; // github黑
+// @color-base : #0077e6; //知乎蓝
+
+
+
+
 @color-hover   : saturate(@color-base, 10%);
 @color-focus   : desaturate(@color-base, 10%);
 @color-disable : lightness(desaturate(@color-base, 100%), 30%);
@@ -31,6 +42,20 @@
 
 .bg-complement {
 	background-color: @color-complement;
+}
+
+// 主色调渐变
+.bg-gradual {
+	background-image: linear-gradient(45deg, @color-base, spin(rgb(@color-base), -10));
+}
+
+// 主色调对比色 
+.color-contrast {
+	color: contrast(@color-base);
+}
+
+.bg-contrast {
+	background-color: contrast(@color-base);
 }
 
 /* 按钮样式的修改 */
@@ -115,6 +140,13 @@
     color:black;
 }
 
+.h2w__table {
+    width: 670rpx !important;
+}
+
+.h2w__td  .h2w__img { 
+	width: 100% !important;
+}
 // 加载动画
 .modal {
 		position: fixed;

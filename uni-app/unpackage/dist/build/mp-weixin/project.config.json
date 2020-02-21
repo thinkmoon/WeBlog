@@ -4,28 +4,18 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"coverView": true,
 		"nodeModules": true,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
 		"checkInvalidKey": true,
-		"checkSiteMap": false,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		}
+		"checkSiteMap": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.10.1",
+	"libVersion": "2.9.2",
 	"appid": "wx53f9b5912c0f0cf6",
 	"projectname": "指尖魔法屋",
 	"simulatorType": "wechat",

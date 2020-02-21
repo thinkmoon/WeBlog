@@ -1,8 +1,8 @@
-<template>
+<template name="about">
 	<view>
 		<view class="overView flex justify-between flex-direction weather rain" style="height: 500upx;width: 100%;">
 			<view class="flex justify-center align-center flex-direction margin-top-lg" style="height: 300upx;width: 100%;">
-				<image class="avatar shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg" style="z-index:99"></image>
+				<image class="icon shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg" style="z-index:99"></image>
 				<view class="text-bold text-shadow text-lg">指尖魔法屋</view>
 			</view>
 			<view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top" style="width: 100%;">
@@ -38,6 +38,7 @@
 
 <script>
 	export default {
+		name:"about",
 		data() {
 			return {
 				cid: null,
@@ -46,7 +47,7 @@
 				postData: {}
 			}
 		},
-		async onLoad(query) {
+		async onReady(query) {
 			this.cid = await this.$api.getAboutcid()
 			this.postData = await this.$api.getPostBycid({
 				cid: this.cid
@@ -63,7 +64,7 @@
 	/*引入天气的css*/
 
 	// 头像
-	.avatar {
+	.icon {
 		width: 200rpx;
 		height: 200rpx;
 		border-radius: 50%;
@@ -82,7 +83,7 @@
 		mix-blend-mode: screen;
 		height: 100upx;
 		position: absolute;
-		top: 404upx;
+		top: 555upx;
 		z-index: 99;
 		width: 100%;
 	}

@@ -2,13 +2,15 @@
 
 <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 
-typecho博客的小程序版, 支持微信小程序，QQ小程序
+typecho博客的小程序版, 支持微信小程序，QQ小程序。
+
+> 有建议欢迎提issue
 
 ## 特性
 
-1. 支持Aplayer插件播放audio/音乐
-2. 基于uni-app开发，支持多端编译
-3. 采用互补色彩设计原则，支持一键修改主题色
+1. 支持Aplayer插件播放audio/音乐 [详情](https://www.thinkmoon.cn/20191122/cid=555.html#article-header-1)
+2. 基于uni-app开发，支持多端编译 [详情](https://www.thinkmoon.cn/20191122/cid=555.html#article-header-2)
+3. 采用互补色彩设计原则，支持一键修改主题色 [详情](https://www.thinkmoon.cn/20191122/cid=555.html#article-header-3)
 
 ## 小程序二维码
 

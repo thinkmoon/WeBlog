@@ -1,5 +1,6 @@
 <template>
 	<block>
+		<cu-custom bgColor="bg-gradual" :isBack="true"><block slot="backText"><text class="icon-home"></text></block><block slot="content">文章详情</block></cu-custom>
 		<view class="cu-bar bg-white padding-top ">
 			<view class="action">
 				<text class="text-xxl text-bold text-black">{{
@@ -31,7 +32,7 @@
 		<towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
 		<view class="like-area solid-top bg-white tm-every-center flex-direction" v-if="!isLoading">
 			<view class="like-btn text-xxl line-base tm-every-center padding border" @click="like" v-if="!isLike">赞</view>
-			<view class="like-btn text-xxl line-complement tm-every-center padding border" v-else @click="reward">赏</view>
+			<view class="like-btn text-xxl line-red tm-every-center padding border" v-else @click="reward">赏</view>
 			<view class="margin-top">您的支持是对我最大的鼓励</view>
 		</view>
 		<view class="margin-sm" v-if="!isLoading">

@@ -1,6 +1,6 @@
-<template>
+<template name="home">
 	<block>
-		<view class="cu-card case">
+		<scroll-view  scroll-y class="cu-card case scroll-view">
 			<!-- <view class="load-progress" :class="loadProgress!=0?'show':'hide'">
 				<view class="load-progress-bar bg-green" :style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
 				<view class="load-progress-spinner text-green"></view>
@@ -10,7 +10,7 @@
 					<image src="https://image.weilanwl.com/gif/loading-white.gif" mode="aspectFit" class="gif-white response" style="height:240upx"></image>
 				</view>
 			</view> -->
-			<view v-for="(item, index) in postData" :key="index" class="margin list" style="overflow: hidden;">
+			<view v-for="(item, index) in postData" :key="index" class="margin list" style="overflow: hidden; ">
 				<!-- #ifdef MP-QQ -->
 				<ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
 				<!-- #endif -->
@@ -43,12 +43,13 @@
 					<view class="cu-load load-icon" :class="isLoading?'loading':'over'"></view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 	</block>
 </template>
 
 <script>
 	export default {
+		name: "home",
 		data() {
 			return {
 				// loadProgress: 0,
@@ -81,21 +82,40 @@
 				uni.stopPullDownRefresh()
 			}
 		},
-		async onLoad(options) {
-			this.loadPost()
+		async onReady() {
+			await this.loadPost()
+			this._observer = wx.createIntersectionObserver(this)
+			this._observer.relativeToViewport({
+				bottom: 600
+			}).observe('.action', (res) => {
+				console.log(res);
+				this.loadPost()
+			})
 		},
-		onReachBottom() {
-			console.log("触底事件")
-			this.loadPost()
-		},
-		onPullDownRefresh() {
-			this.curPage = 0
-			this.postData = []
-			this.loadPost()
+		pageLifetimes: {
+			onReachBottom() {
+				console.log("触底事件")
+				this.loadPost()
+			},
+			onPullDownRefresh() {
+				this.curPage = 0
+				this.postData = []
+				this.loadPost()
+			}
 		}
+
 	}
 </script>
 <style lang="less">
+	.scroll-view {
+		height: 100vh;
+	}
+	::-webkit-scrollbar {
+		display: none;
+	  width: 0;
+	  height: 0;
+	  color: transparent;
+	}
 	// 博客内容的统计
 	.intro {
 		width: 506rpx;
