@@ -54,7 +54,7 @@ typecho博客的小程序版, 支持微信小程序，QQ小程序。
 
 ## 开发计划，更新日志
 
-[更多](https://www.thinkmoon.cn/20191122/cid=555.html)
+[WIKI](https://github.com/thinkmoon/WeBlog/wiki) [更多](https://www.thinkmoon.cn/20191122/cid=555.html)
 
   [2]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-11-22T07:58:08.png
   [3]: https://blog.cdn.thinkmoon.cn/blog/typecho/2576c006617a8efb2218a1e9145646a4.png
