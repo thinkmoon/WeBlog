@@ -35,7 +35,7 @@ typecho博客的小程序版, 支持微信小程序，QQ小程序。
 #### 不编译直接使用(适用于零基础或基础较差的同学)
 
 1. 打开[uni-app/unpackage/dist/build/mp-weixin](https://github.com/thinkmoon/WeBlog/tree/master/uni-app/unpackage/dist/build/mp-weixin)目录导入小程序开发者工具
-2. 激活插件后，修改请求链接文件 `@/static/utils/api.js` 中的baseUrl, 将域名更换为你的域名。 
+2. ~~激活插件后，修改请求链接文件 `@/static/utils/api.js` 中的baseUrl, 将域名更换为你的域名。~~ 请修改文件`@/common/vendor.js`,搜索`www.thinkmoon.cn`替换为你的域名。
 
 ### Typecho插件端
 
