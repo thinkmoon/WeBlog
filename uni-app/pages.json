@@ -1,44 +1,51 @@
 {
-	"pages": [{
-			"path": "pages/page",
-			"style": {
-				"usingComponents": {
-					"towxml": "../static/extensions/parse/index"
-				}
-			}
-		}, {
-			"path": "pages/index",
-			"style": {
-				"enablePullDownRefresh": true,
-				"navigationBarTitleText": "首页"
-			}
-		},
-		{
-			"path": "pages/about",
-			"style": {
-				"usingComponents": {
-					"towxml": "../static/extensions/parse/index"
-				},
-				"navigationBarTitleText": "指尖魔法屋"
-			}
-		},
-		{
-			"path": "pages/post",
-			"style": {
-				"navigationBarTitleText": "文章内容",
-				"usingComponents": {
-					"towxml": "../static/extensions/parse/index"
-				}
-			}
-		}
-	],
-	"globalStyle": {
-		"mp-alipay": {
-			/* 支付宝小程序特有相关 */
-			"transparentTitle": "always",
-			"allowsBounceVertical": "NO"
-		},
-		"navigationStyle": "custom"
-	},
-	"sitemapLocation": "sitemap.json"
+  "pages": [{
+      "path": "pages/page",
+      "style": {
+        "usingComponents": {
+          "towxml": "../static/extensions/parse/index"
+        }
+      }
+    }, {
+      "path": "pages/index",
+      "style": {
+        "enablePullDownRefresh": true,
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/about",
+      "style": {
+        "usingComponents": {
+          "towxml": "../static/extensions/parse/index"
+        },
+        "navigationBarTitleText": "指尖魔法屋"
+      }
+    },
+    {
+      "path": "pages/post",
+      "style": {
+        "navigationBarTitleText": "文章内容",
+        "usingComponents": {
+          "towxml": "../static/extensions/parse/index"
+        }
+      }
+    }, {
+      "path": "pages/search/search",
+      "style": {}
+    }
+      ,{
+            "path" : "pages/search/searchResult",
+            "style" : {}
+        }
+    ],
+  "globalStyle": {
+    "mp-alipay": {
+      /* 支付宝小程序特有相关 */
+      "transparentTitle": "always",
+      "allowsBounceVertical": "NO"
+    },
+    "navigationStyle": "custom"
+  },
+  "sitemapLocation": "sitemap.json"
 }

@@ -3,7 +3,9 @@
     "pages/page",
     "pages/index",
     "pages/about",
-    "pages/post"
+    "pages/post",
+    "pages/search/search",
+    "pages/search/searchResult"
   ],
   "subPackages": [],
   "window": {

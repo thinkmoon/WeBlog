@@ -2,19 +2,30 @@ var Fly = require("flyio/dist/npm/wx")
 var fly = new Fly
 
 fly.config.baseURL = process.env.NODE_ENV === 'production' ? "https://www.thinkmoon.cn/WeBlog/api/" :
-	"https://www.thinkmoon.cn/WeBlog/api/",
+	"http://127.0.0.1/WeBlog/api/"
 
-	fly.config.headers = {
-		"openid": uni.getStorageSync("openid")
-	}
+fly.config.headers = {
+	"openid": uni.getStorageSync("openid"),
+  "apisecret": "xxx"
+}
+
 
 fly.interceptors.response.use(
 	(response) => {
 		//只将请求结果的data字段返回
+    let res = response.data
+    if(res.status == "200"){
+      return res.data
+    }else{
+      uni.showModal({
+        title:"API请求出错:" + res.status,
+        content:"错误信息" + res.data 
+      })
+    }
 		return response.data.data
 	},
 	(err) => {
-		//发生网络错误后会走到这里
+    console.error(err)
 		return Promise.resolve("ERROR")
 	}
 )
@@ -24,7 +35,7 @@ export const login = (params) => {
 	// #ifdef MP-QQ
 	return fly.get('login?mp=qq', params)
 	// #endif
-	
+
 	// #ifdef MP-WEIXIN
 	return fly.get('login?mp=weixin', params)
 	// #endif
@@ -72,4 +83,8 @@ export const addComment = (params) => {
 // 获取文章评论
 export const getComment = (params) => {
 	return fly.get('getComment', params)
+}
+// 搜索内容
+export const search = (params) => {
+	return fly.get('search', params)
 }

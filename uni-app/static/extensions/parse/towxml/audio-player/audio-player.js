@@ -34,9 +34,11 @@ Component({
 
 		},
 		moved:function(){
-			_this.audio.destroy();
+			console.log("audio moved")
+			_this.audio.pause();
 		},
 		detached:()=>{
+			console.log("audio detached")
 			_this.audio.destroy()
 		},
 	},
@@ -55,8 +57,6 @@ Component({
 		playAndPause: function () {
 			const _ts = this,
 				audio = _ts.audio;
-
-			console.log(audio);
 
 			audio.isTouch = true;
 			if(audio.status === 'update' || audio.status === 'play'){

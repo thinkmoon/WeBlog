@@ -3,7 +3,6 @@
 		<view class="cu-custom" :style="[{height:CustomBar + 'px'}]">
 			<view class="cu-bar fixed" :style="style" :class="[bgImage!=''?'none-bg text-white bg-img':'',bgColor]">
 				<view class="action text-white" @tap="BackPage" v-if="isBack">
-					<text class="cuIcon-back"></text>
 					<slot name="backText"></slot>
 				</view>
 				<view class="content color-contrast" :style="[{top:StatusBar + 'px'}]">

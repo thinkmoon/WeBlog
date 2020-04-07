@@ -22,9 +22,15 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->pageSize = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->pageSize;
         // 页面文章缩略图thumb
         $this->thumb = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->thumb;
+        // apiSecret
+        $this->apiSecret = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->apiSecret;
         $this->db  = Typecho_Db::get();
         $this->res = new Typecho_Response();
         if (method_exists($this, $this->request->type)) {
+            if($_SERVER['HTTP_APISECRET'] != $this->apiSecret){
+                $this->export("接口密钥不正确",403);
+                return 0;
+            }
             call_user_func(array(
                 $this,
                 $this->request->type
@@ -80,10 +86,10 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
                     $this->export($openid);
                 }
             } else {
-                $this->export('none');
+                $this->export("兑换openId失败",500);
             }
         } else {
-            $this->export("error code");
+            $this->export("错误的code",500);
         }
     }
     // 获取文章点赞用户列表
@@ -142,7 +148,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
             $thumb = $this->thumb;
-            $thumb2 = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb2"));
+            $thumb2 = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb"));
             $post['thumb'] = $thumb2 != null ? $thumb2 : array(array("str_value" => $thumb));
             $result[]    = $post;
         }
@@ -255,6 +261,25 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         } else {
             $this->export(true);
         }
+    }
+    // 搜索关键字
+    function search()
+    {
+        $keyword = self::GET('keyWord', 'null');
+        $data = $this->db->fetchAll($this->db->query("SELECT\n".
+        "	typecho_contents.cid,\n".
+        "	typecho_contents.title,\n".
+        "	SUBSTRING(typecho_contents.text from 16 for 100) AS text \n".
+        "FROM\n".
+        "	typecho_contents \n".
+        "WHERE\n".
+        "	typecho_contents.type = \"post\" \n".
+        "	AND typecho_contents.`status` = \"publish\" \n".
+        "	AND (\n".
+        "		typecho_contents.text LIKE \"%".$keyword."%\" \n".
+        "	OR typecho_contents.title LIKE  \"%".$keyword."%\" \n".
+        "	)"));
+        $this->export($data);
     }
     // 获取AccessToken
     private function getAccessToken()

@@ -2,11 +2,12 @@ var Fly = require("flyio/dist/npm/wx")
 var fly = new Fly
 
 fly.config.baseURL = process.env.NODE_ENV === 'production' ? "https://www.thinkmoon.cn/WeBlog/api/" :
-	"https://www.thinkmoon.cn/WeBlog/api/",
+	"https://www.thinkmoon.cn/WeBlog/api/"
 
-	fly.config.headers = {
-		"openid": uni.getStorageSync("openid")
-	}
+fly.config.headers = {
+	"openid": uni.getStorageSync("openid")
+}
+
 
 fly.interceptors.response.use(
 	(response) => {
@@ -24,7 +25,7 @@ export const login = (params) => {
 	// #ifdef MP-QQ
 	return fly.get('login?mp=qq', params)
 	// #endif
-	
+
 	// #ifdef MP-WEIXIN
 	return fly.get('login?mp=weixin', params)
 	// #endif

@@ -5,7 +5,7 @@
  * 
  * @package WeBlog 
  * @author 醉月思
- * @version 0.1.9
+ * @version 0.2.0 dev
  * @link https://github.com/thinkmoon/WeBlog
  */
 class WeBlog_Plugin implements Typecho_Plugin_Interface
@@ -91,22 +91,24 @@ class WeBlog_Plugin implements Typecho_Plugin_Interface
     /* 插件配置方法 */
     public static function config(Typecho_Widget_Helper_Form $form)
     {
-        $weixinAppID = new Typecho_Widget_Helper_Form_Element_Text('weixinAppID', NULL, 'wx53f9b5912c0f0cf6', _t('微信小程序的APPID'),  _t('小程序的APP ID'));
+        $weixinAppID = new Typecho_Widget_Helper_Form_Element_Text('weixinAppID', NULL, 'xxx', _t('微信小程序的APPID'),  _t('小程序的APP ID'));
         $form->addInput($weixinAppID);
-        $weixinAppSecret = new Typecho_Widget_Helper_Form_Element_Text('weixinAppSecret', NULL, '77376fa2b2dea8a18de2be5a6c56dbdf', _t('微信小程序的secret'),  _t('微信小程序的secret'));
+        $weixinAppSecret = new Typecho_Widget_Helper_Form_Element_Text('weixinAppSecret', NULL, 'xxx', _t('微信小程序的secret'),  _t('微信小程序的secret'));
         $form->addInput($weixinAppSecret);
-        $qqAppID = new Typecho_Widget_Helper_Form_Element_Text('qqAppID', NULL, '1109992579', _t('QQ小程序的APPID'),  _t('小程序的APP ID'));
+        $qqAppID = new Typecho_Widget_Helper_Form_Element_Text('qqAppID', NULL, 'xxx', _t('QQ小程序的APPID'),  _t('小程序的APP ID'));
         $form->addInput($qqAppID);
-        $qqAppSecret = new Typecho_Widget_Helper_Form_Element_Text('qqAppSecret', NULL, 'nXrapk4Lkd35ilOY', _t('QQ小程序的secret'),  _t('小程序的secret'));
+        $qqAppSecret = new Typecho_Widget_Helper_Form_Element_Text('qqAppSecret', NULL, 'xxx', _t('QQ小程序的secret'),  _t('小程序的secret'));
         $form->addInput($qqAppSecret);
-        $avatarUrl = new Typecho_Widget_Helper_Form_Element_Text('avatarUrl', NULL, 'https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg', _t('你的博客头像'),  _t('显示在小程序的头像'));
+        $avatarUrl = new Typecho_Widget_Helper_Form_Element_Text('avatarUrl', NULL, 'xxx', _t('你的博客头像'),  _t('显示在小程序的头像'));
         $form->addInput($avatarUrl);
-        $thumb = new Typecho_Widget_Helper_Form_Element_Text('thumb', NULL, 'https://blog.cdn.thinkmoon.cn/default.jpg', _t('默认缩略图'),  _t('显示在小程序的文章默认缩略图'));
+        $thumb = new Typecho_Widget_Helper_Form_Element_Text('thumb', NULL, 'xxx', _t('默认缩略图'),  _t('显示在小程序的文章默认缩略图'));
         $form->addInput($thumb);
         $pageSize = new Typecho_Widget_Helper_Form_Element_Text('pageSize', NULL, '7', _t('每页文章数'),  _t('请不要留空'));
         $form->addInput($pageSize);
         $aboutCid = new Typecho_Widget_Helper_Form_Element_Text('aboutCid', NULL, '2', _t('关于页面CID'),  _t('小程序关于页面显示文章cid'));
         $form->addInput($aboutCid);
+        $apiSecret = new Typecho_Widget_Helper_Form_Element_Text('apiSecret', NULL, 'xxx', _t('你的接口密钥'),  _t('你可以设置一个不容易被他人猜出来的随机字符串'));
+        $form->addInput($apiSecret);
     }
 
     /* 个人用户的配置方法 */

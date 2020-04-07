@@ -29,7 +29,7 @@ page {
   --pink: #e03997;
   --brown: #a5673f;
   --grey: #8799a3;
-  --gray: #aaa;
+  --gray: #ccc;
   --black: #333;
   --white: #fff;
   --gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);

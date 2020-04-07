@@ -89,11 +89,11 @@ module.exports = {
     // 自定义组件
     components:[
         'audio-player',             // 音频组件，建议保留，由于小程序原生audio存在诸多问题，towxml解决了原生音频播放器的相关问题
-        'echarts',                  // echarts图表支持
-        'latex',                    // 数学公式支持
+        // 'echarts',                  // echarts图表支持
+        // 'latex',                    // 数学公式支持
         'table',                    // 表格支持
         'todogroup',                // todo支持
-        'yuml',                     // yuml图表支持
+        // 'yuml',                     // yuml图表支持
         'img'                       // 图片解析组件
     ],
 
@@ -119,5 +119,8 @@ module.exports = {
     ],
 
     // 图片倍数
-    dpr:1
+    dpr:1,
+
+    // 代码块显示行号
+    showLineNumber:true
 }

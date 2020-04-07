@@ -1,55 +1,58 @@
 <template>
-	<block>
-		<cu-custom bgColor="bg-gradual" :isBack="true"><block slot="backText"><text class="icon-home"></text></block><block slot="content">文章详情</block></cu-custom>
-		<view class="cu-bar bg-white padding-top ">
-			<view class="action">
-				<text class="text-xxl text-bold text-black">{{
+  <block>
+    <cu-custom bgColor="bg-gradual" :isBack="true">
+      <block slot="backText"><text class="icon-home"></text></block>
+      <block slot="content">文章详情</block>
+    </cu-custom>
+    <view class="cu-bar bg-white padding-top ">
+      <view class="action">
+        <text class="text-xxl text-bold text-black">{{
           postData[0].title
         }}</text>
-			</view>
-		</view>
-		<view class="bg-white flex bg-white solid-bottom padding-bottom-sm padding-top-sm justify-around text-sm">
-			<view>
-				<text class="icon-time"></text>
-				{{ formatTime(postData[0].created)}}
-			</view>
-			<view>
-				<text class="icon-file"></text>
-				{{ postData[0].category[0]["name"] }}
-			</view>
-			<view>
-				<text class="icon-like"></text>
-				点赞({{ postData[0].likes }})
-			</view>
-			<view>
-				<text class="icon-comment"></text>
-				评论({{ postData[0].commentsNum }})
-			</view>
-		</view>
-		<!-- #ifdef MP-QQ -->
-		<ad unit-id="53bfa608c0f8bfad5ef40eddb665f864" class="ad"></ad>
-		<!-- #endif -->
-		<towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
-		<view class="like-area solid-top bg-white tm-every-center flex-direction" v-if="!isLoading">
-			<view class="like-btn text-xxl line-base tm-every-center padding border" @click="like" v-if="!isLike">赞</view>
-			<view class="like-btn text-xxl line-red tm-every-center padding border" v-else @click="reward">赏</view>
-			<view class="margin-top">您的支持是对我最大的鼓励</view>
-		</view>
-		<view class="margin-sm" v-if="!isLoading">
-			<view class="text-lg">
-				<text class="icon-titles color-base"></text>
-				<text class="text-bold">发表看法</text>
-			</view>
-			<view class="comment-area bg-white margin-top padding">
-				<view class="action" v-if="likeUsers != null">
-					<view class="cu-avatar-group">
-						<view class="cu-avatar round sm" v-for="(item, index) in likeUsers" v-if="index < 5" :key="index" :style="'background-image:url(' + item.avatarUrl + ');'"></view>
-					</view>
-					<text class="text-grey text-sm">{{ likeUsers[0].nickName }}等{{ likeUsers.length }}人觉得很赞</text>
-				</view>
-				<!-- #ifndef MP-QQ -->
-				<textarea v-model="commentText" placeholder="(已开启评论审核模式,评论审核通过后方能显示)" class="solid padding margin-top-sm" />
-				<!-- #endif -->
+      </view>
+    </view>
+    <view class="bg-white flex bg-white solid-bottom padding-bottom-sm padding-top-sm justify-around text-sm">
+      <view>
+        <text class="icon-time"></text>
+        {{ formatTime(postData[0].created)}}
+      </view>
+      <view>
+        <text class="icon-file"></text>
+        {{ postData[0].category[0]["name"] }}
+      </view>
+      <view>
+        <text class="icon-like"></text>
+        点赞({{ postData[0].likes }})
+      </view>
+      <view>
+        <text class="icon-comment"></text>
+        评论({{ postData[0].commentsNum }})
+      </view>
+    </view>
+    <!-- #ifdef MP-QQ -->
+    <ad unit-id="53bfa608c0f8bfad5ef40eddb665f864" class="ad"></ad>
+    <!-- #endif -->
+    <towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
+    <view class="like-area solid-top bg-white tm-every-center flex-direction" v-if="!isLoading">
+      <view class="like-btn text-xxl line-base tm-every-center padding border" @click="like" v-if="!isLike">赞</view>
+      <view class="like-btn text-xxl line-red tm-every-center padding border" v-else @click="reward">赏</view>
+      <view class="margin-top">您的支持是对我最大的鼓励</view>
+    </view>
+    <view class="margin-sm" v-if="!isLoading">
+      <view class="text-lg">
+        <text class="icon-titles color-base"></text>
+        <text class="text-bold">发表看法</text>
+      </view>
+      <view class="comment-area bg-white margin-top padding">
+        <view class="action" v-if="likeUsers != null">
+          <view class="cu-avatar-group">
+            <view class="cu-avatar round sm" v-for="(item, index) in likeUsers" v-if="index < 5" :key="index" :style="'background-image:url(' + item.avatarUrl + ');'"></view>
+          </view>
+          <text class="text-grey text-sm">{{ likeUsers[0].nickName }}等{{ likeUsers.length }}人觉得很赞</text>
+        </view>
+        <!-- #ifndef MP-QQ -->
+        <textarea v-model="commentText" placeholder="(已开启评论审核模式,评论审核通过后方能显示)" class="solid padding margin-top-sm" />
+        <!-- #endif -->
 				<view class="margin-top-sm flex justify-between">
           <view style="width:46%" v-if="!isLogin">
             <button
@@ -124,6 +127,20 @@
 </template>
 
 <script>
+// #ifdef MP-QQ
+let videoAd = qq.createRewardedVideoAd({
+  adUnitId: "2623e52894edca46483527a4e2355e2e"
+ })
+videoAd.onError(function(res){
+  console.log('videoAd onError',res)
+})
+videoAd.onLoad(function(res){
+  console.log('videoAd onLoad',res)
+})
+videoAd.onClose(function(res){
+  console.log('videoAd onClose',res)
+})
+// #endif
 export default {
 	data() {
 		return {
@@ -230,33 +247,16 @@ export default {
 		// #endif
 		// #ifdef MP-QQ
 		reward() {
-			let videoAd = qq.createRewardedVideoAd({
-			              adUnitId: "2623e52894edca46483527a4e2355e2e"
-			            })
-			
-			            videoAd.onError(function(res){
-			              console.log('videoAd onError',res)
-			            })
-			            videoAd.onLoad(function(res){
-			              console.log('videoAd onLoad',res)
-			            })
-			            videoAd.onClose(function(res){
-			              console.log('videoAd onClose',res)
-			            })
-			            
-			            videoAd.load()
-			              .then(() => {
-			                console.log('激励视频加载成功');
-			                videoAd.show().then(() => {
-			                  console.log('激励视频 广告显示成功')
-			                })
-			                .catch(err => {
-			                  console.log('激励视频 广告显示失败')
-			                })
-			              })
-			              .catch(err => {
-			                console.log('激励视频加载失败');
-			              })
+			videoAd.load().then(() => {
+			  console.log('激励视频加载成功');
+			  videoAd.show().then(() => {
+			    console.log('激励视频 广告显示成功')
+			  }).catch(err => {
+			    console.log('激励视频 广告显示失败')
+			  })
+			}).catch(err => {
+			  console.log('激励视频加载失败');
+			})
 		},
 		// #endif
 	},

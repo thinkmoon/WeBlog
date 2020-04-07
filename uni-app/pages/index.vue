@@ -1,20 +1,33 @@
 <template name="home">
 	<block>
-		<scroll-view  scroll-y class="cu-card case scroll-view">
-			<!-- <view class="load-progress" :class="loadProgress!=0?'show':'hide'">
-				<view class="load-progress-bar bg-green" :style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
-				<view class="load-progress-spinner text-green"></view>
-			</view> -->
-			<!-- 			<view class="margin flex" v-if="postData.length == 0" style="min-height: 60vh;">
-				<view class="bg-white flex-sub radius shadow-lg" style="padding-top: 200upx;">
-					<image src="https://image.weilanwl.com/gif/loading-white.gif" mode="aspectFit" class="gif-white response" style="height:240upx"></image>
+		<scroll-view scroll-y class="cu-card case scroll-view">
+			<view class="cu-bar search bg-white" @click="toSearch">
+				<view class="search-form round">
+					<text class="icon-search"></text>
+					<view :adjust-position="false" type="text" placeholder="" confirm-type="search">搜索分类、文章、标签</view>
+				</view>
+			</view>
+			<!-- <swiper class="card-swiper margin-top margin-bottom" :class="dotStyle?'square-dot':'round-dot'" :indicator-dots="true" :circular="true"
+			 :autoplay="true" interval="5000" duration="500" @change="cardSwiper" indicator-color="#8799a3"
+			 indicator-active-color="#0081ff">
+				<swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''" style="padding: 0;">
+					<view class="swiper-item">
+						<image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
+						<video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video>
+					</view>
+				</swiper-item>
+			</swiper>
+			<view class="cu-bar bg-white margin-top">
+				<view class="action">
+					<text class="cuIcon-title text-green"></text>
+					<text>底部操作条</text>
 				</view>
 			</view> -->
 			<view v-for="(item, index) in postData" :key="index" class="margin list" style="overflow: hidden; ">
 				<!-- #ifdef MP-QQ -->
 				<ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
 				<!-- #endif -->
-				<navigator :url='"/pages/post?cid=" + item.cid + "&thumb=" + item.thumb[0].str_value' class="list__item">
+				<navigator :url='"/pages/post?cid=" + item.cid + "&thumb=" + item.thumb[0].str_value' class="list__item animation-scale-up">
 					<view class="image">
 						<image :src="item.thumb[0].str_value" mode="widthFix" :lazy-load="true"></image>
 						<!-- <view class="cu-tag bg-blue">置顶</view> -->
@@ -56,9 +69,22 @@
 				isLoading: true,
 				curPage: 0,
 				postData: [],
+				cardCur: 0,
+				dotStyle: false,
+				towerStart: 0,
+				direction: ''
 			}
 		},
 		methods: {
+			toSearch() {
+				uni.navigateTo({
+					url: './search/search'
+				})
+			},
+			// cardSwiper
+			cardSwiper(e) {
+				this.cardCur = e.detail.current
+			},
 			formatTime(value) {
 				// return this.$moment.unix(value).fromNow()
 				return this.$moment.unix(value).fromNow()
@@ -93,29 +119,15 @@
 			})
 		},
 		pageLifetimes: {
-			onReachBottom() {
-				console.log("触底事件")
-				this.loadPost()
-			},
-			onPullDownRefresh() {
-				this.curPage = 0
-				this.postData = []
-				this.loadPost()
-			}
-		}
 
+		}
 	}
 </script>
 <style lang="less">
 	.scroll-view {
 		height: 100vh;
 	}
-	::-webkit-scrollbar {
-		display: none;
-	  width: 0;
-	  height: 0;
-	  color: transparent;
-	}
+
 	// 博客内容的统计
 	.intro {
 		width: 506rpx;
@@ -165,33 +177,6 @@
 
 	.image {
 		max-height: 400upx;
+		min-height: 300upx;
 	}
-
-
-	// list动画
-	.list__item {
-		animation: list 1s ease both
-	}
-
-	@keyframes list {
-		0% {
-			transform: scale(0);
-		}
-
-		100% {
-			transform: scale(1);
-		}
-	}
-
-	.generate-columns(7);
-
-	.generate-columns(@n, @i: 1) when (@i =< @n) {
-		.list__item:nth-child(@{i}) {
-			animation-delay: @i * 0.2;
-		}
-
-		.generate-columns(@n, (@i + 1));
-	}
-
-	// --------------
 </style>

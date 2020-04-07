@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual" :isBack="true"><block slot="content">{{ navigation[PageCur] }}</block></cu-custom>
+		<cu-custom bgColor="bg-gradual"><block slot="content">{{ navigation[PageCur] }}</block></cu-custom>
 		<home v-if="PageCur=='home'"></home>
 		<about v-if="PageCur=='about'"></about>
-		<view class="cu-bar tabbar bg-gray shadow foot">
+		<view class="cu-bar tabbar bg-white shadow-blur foot">
 			<view class="action" @click="NavChange('home')">
 				<view>
 					<view class="icon-home" :class="PageCur=='home'?'color-base':'text-gray'"></view>
@@ -40,9 +40,7 @@
 </script>
 
 <style>
-::-webkit-scrollbar{
-width: 0;
-height: 0;
-color: transparent;
-}
+	.card-swiper {
+		height: 320rpx;
+	}
 </style>
