@@ -24,17 +24,17 @@ response
 ```json
 [
   {
-    thumb: '缩略图.png', // 支持，拼接
-    desc: '文章描述',
-    title: '文章标题',
-    tags: '文章标签', // 支持，拼接
-    category: '文章分类', 
-    authorName: '作者名',
-    createTime: '创建时间',
-    updateTime: '更新时间',
-    like: '点赞数',
-    comment: '评论数',
-    view: '阅读数',
+    'thumb': '缩略图.png', // 支持，拼接
+    'desc': '文章描述',
+    'title': '文章标题',
+    'tags': '文章标签', // 支持，拼接
+    'category': '文章分类', 
+    'authorName': '作者名',
+    'createTime': '创建时间',
+    'updateTime': '更新时间',
+    'like': '点赞数',
+    'comment': '评论数',
+    'view': '阅读数',
   }
   ...
 ]
