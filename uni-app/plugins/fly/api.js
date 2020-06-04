@@ -26,7 +26,7 @@ fly.interceptors.response.use(
   },
   (err) => {
     console.error(err)
-    return Promise.resolve("ERROR")
+    return Promise.reject(err)
   }
 )
 

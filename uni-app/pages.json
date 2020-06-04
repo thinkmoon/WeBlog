@@ -1,11 +1,6 @@
 {
   "pages": [{
-      "path": "pages/page",
-      "style": {
-        "usingComponents": {
-          "towxml": "../static/extensions/parse/index"
-        }
-      }
+      "path": "pages/page"
     }, {
       "path": "pages/index",
       "style": {
@@ -17,7 +12,7 @@
       "path": "pages/about",
       "style": {
         "usingComponents": {
-          "towxml": "../static/extensions/parse/index"
+          "towxml": "../plugins/parse/index"
         },
         "navigationBarTitleText": "指尖魔法屋"
       }
@@ -27,7 +22,7 @@
       "style": {
         "navigationBarTitleText": "文章内容",
         "usingComponents": {
-          "towxml": "../static/extensions/parse/index"
+          "towxml": "../plugins/parse/index"
         }
       }
     }, {
@@ -46,6 +41,5 @@
       "allowsBounceVertical": "NO"
     },
     "navigationStyle": "custom"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

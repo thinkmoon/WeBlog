@@ -60,7 +60,7 @@
 </script>
 
 <style>
-	@import '../static/css/weather.css';
+	@import '@/assets/css/weather.css';
 	/*引入天气的css*/
 
 	// 头像
