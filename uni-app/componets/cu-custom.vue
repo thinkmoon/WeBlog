@@ -32,6 +32,7 @@
 				if (this.bgImage) {
 					style = `${style}background-image:url(${bgImage});`;
 				}
+        console.log(`this.bgColor ${this.bgColor}`)
 				return style
 			}
 		},

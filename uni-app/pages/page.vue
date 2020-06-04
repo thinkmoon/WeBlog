@@ -1,6 +1,6 @@
 <template>
   <view style="width: 750rpx;">
-    <cu-custom bgcolor="bg-gradual">
+    <cu-custom bgColor="bg-gradual">
       <block slot="content">{{ navigation[PageCur] }}</block>
     </cu-custom>
     <home v-if="PageCur == 'home'"></home>
