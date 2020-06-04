@@ -104,7 +104,7 @@ request
 request
 ```json
 {
-  'postId': 1
+  "postId": 1
 }
 ```
 
