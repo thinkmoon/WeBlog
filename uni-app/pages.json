@@ -1,7 +1,9 @@
 {
-  "pages": [{
+  "pages": [
+    {
       "path": "pages/page"
-    }, {
+    },
+    {
       "path": "pages/index",
       "style": {
         "enablePullDownRefresh": true,
@@ -25,15 +27,16 @@
           "towxml": "../plugins/parse/index"
         }
       }
-    }, {
+    },
+    {
       "path": "pages/search/search",
       "style": {}
+    },
+    {
+      "path": "pages/search/searchResult",
+      "style": {}
     }
-      ,{
-            "path" : "pages/search/searchResult",
-            "style" : {}
-        }
-    ],
+  ],
   "globalStyle": {
     "mp-alipay": {
       /* 支付宝小程序特有相关 */
