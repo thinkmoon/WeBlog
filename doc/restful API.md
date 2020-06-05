@@ -20,10 +20,10 @@ https://${baseUrl}/WeBlog/api/
 
 ```json
 {
-code:"响应状态码",
-msg:"响应消息提示",
-data: "返回的response数据"
-success: "是否成功标识"
+"code":"响应状态码",
+"msg":"响应消息提示",
+"data": "返回的response数据"
+"success": "是否成功标识"
 }
 ```
 
