@@ -16,6 +16,17 @@ https://${baseUrl}/WeBlog/api/
 - 404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。
 - 500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。
 
+## 响应体结构
+
+```json
+{
+code:"响应状态码",
+msg:"响应消息提示",
+data: "返回的response数据"
+success: "是否成功标识"
+}
+```
+
 ## GET
 
 - GET	/post/	Browse posts
