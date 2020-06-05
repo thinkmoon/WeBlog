@@ -18,57 +18,131 @@ https://${baseUrl}/WeBlog/api/
 
 ## GET
 
-- GET	/posts/	Browse posts
+- GET	/post/	Browse posts
 
 response
 ```json
 [
   {
-    'thumb': '缩略图.png', // 支持，拼接
-    'desc': '文章描述',
-    'title': '文章标题',
-    'tags': '文章标签', // 支持，拼接
-    'category': '文章分类', 
-    'authorName': '作者名',
-    'createTime': '创建时间',
-    'updateTime': '更新时间',
-    'like': '点赞数',
-    'comment': '评论数',
-    'view': '阅读数',
+    "thumb": "缩略图.png", // 支持，拼接
+    "desc": "文章描述",
+    "title": "文章标题",
+    "tags": "文章标签", // 支持，拼接
+    "category": "文章分类", 
+    "authorName": "作者名",
+    "createTime": "创建时间",
+    "updateTime": "更新时间",
+    "like": "点赞数",
+    "comment": "评论数",
+    "view": "阅读数",
   }
   ...
 ]
 ```
 
-GET	/posts/{id}/	Read a post by ID
+- GET	/post/{id}/	Read a post by ID
+
+文章列表引用[1]
 
 response
 ```json
 [
   {
-    text: '文章内容', // 支持，拼接
-    desc: '文章描述',
-    title: '文章标题',
-    tags: '文章标签', // 支持，拼接
-    category: '文章分类', 
-    authorName: '作者名',
-    createTime: '创建时间',
-    updateTime: '更新时间',
-    like: '点赞数',
-    comment: '评论数',
-    view: '阅读数',
+    "text": "文章内容", // 支持，拼接
+    "desc": "文章描述",
+    "title": "文章标题",
+    "tags": "文章标签", // 支持，拼接
+    "category": "文章分类", 
+    "authorName": "作者名",
+    "createTime": "创建时间",
+    "updateTime": "更新时间",
+    "like": "点赞数",
+    "comment": "评论数",
+    "view": "阅读数",
   }
   ...
 ]
 ```
 
-GET	/tags/	Browse tags
-GET	/tags/{id}/	Read a tag by ID
-GET	/categories/	Browse tags
-GET	/categories/{id}/	Read a tag by category ID
-GET	/pages/{id}/	Read a single page by page ID
-GET /like/posts/{id} Return people list by post ID
-GET /comments/post/{id} Return comment list by post ID
+- GET	/tag/	Browse tags
+
+response
+```json
+[
+  {
+    "name": "标签名",
+    "id": "标签ID",
+    "num": "标签文章数"
+  }
+  ...
+]
+```
+
+- GET	/post/tag/{id}/	返回标签ID下文章列表
+
+文章列表引用[2]
+
+response
+```json
+[
+  {
+    "text": "文章内容", // 支持，拼接
+    "desc": "文章描述",
+    "title": "文章标题",
+    "tags": "文章标签", // 支持，拼接
+    "category": "文章分类", 
+    "authorName": "作者名",
+    "createTime": "创建时间",
+    "updateTime": "更新时间",
+    "like": "点赞数",
+    "comment": "评论数",
+    "view": "阅读数",
+  }
+  ...
+]
+```
+
+- GET	/category/	返回所有分类
+
+response
+```json
+[
+  {
+    "name": "分类名",
+    "id": "分类ID",
+    "num": "分类文章数"
+  }
+  ...
+]
+```
+
+- GET	/post/category/{id}/	根据分类ID返回文章列表
+
+文章列表引用[3]
+
+response
+```json
+[
+  {
+    "text": "文章内容", // 支持，拼接
+    "desc": "文章描述",
+    "title": "文章标题",
+    "tags": "文章标签", // 支持，拼接
+    "category": "文章分类", 
+    "authorName": "作者名",
+    "createTime": "创建时间",
+    "updateTime": "更新时间",
+    "like": "点赞数",
+    "comment": "评论数",
+    "view": "阅读数",
+  }
+  ...
+]
+```
+
+GET	/page/{id}/	Read a single page by page ID
+GET /like/post/{id} Return people list by post ID
+GET /comment/post/{id} Return comment list by post ID
 
 ### filters
 
@@ -87,7 +161,6 @@ Value: ^[1-9]\d*$
 
 ## POST
 - POST /login
-
 ... 
 
 - POST /comments/ add a comment by comment ID
@@ -95,8 +168,9 @@ Value: ^[1-9]\d*$
 request
 ```json
 {
-  postId: 1,
-  commentId: 50
+  "postId": 1,
+  "commentId": 50,
+  "content": "评论内容"
 }
 ```
 - POST /like/ like a post
