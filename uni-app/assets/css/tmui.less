@@ -10,179 +10,189 @@
 // @color-base : #24292e; // github黑
 // @color-base : #0077e6; //知乎蓝
 
-
-
-
-@color-hover   : saturate(@color-base, 10%);
-@color-focus   : desaturate(@color-base, 10%);
+@color-hover : saturate(@color-base, 10%);
+@color-focus : desaturate(@color-base, 10%);
 @color-disable : lightness(desaturate(@color-base, 100%), 30%);
 
-@color-complement : spin(@color-base, 180); 
+@color-complement : spin(@color-base, 180);
 
 // 基色
-.color-base,.line-base {
-	color: @color-base;
+.color-base,
+.line-base {
+  color: @color-base;
 }
 
-.line-base::after{
+.line-base::after {
   border-color: @color-base;
 }
 
 .bg-base {
-	background-color: @color-base;
+  background-color: @color-base;
 }
 //补充色
-.color-complement,.line-complement {
-	color: @color-complement;
+.color-complement,
+.line-complement {
+  color: @color-complement;
 }
 
-.line-complement::after{
+.line-complement::after {
   border-color: @color-complement;
 }
 
 .bg-complement {
-	background-color: @color-complement;
+  background-color: @color-complement;
 }
 
 // 主色调渐变
 .bg-gradual {
-	background-image: linear-gradient(45deg, @color-base, spin(rgb(@color-base), -10));
+  background-image: linear-gradient(0deg, @color-base, spin(rgb(@color-base), -10));
 }
 
-// 主色调对比色 
+.bg-radius::after {
+  width: 140%;
+  height: 100px;
+  position: absolute;
+  left: -20%;
+  top: 0;
+  z-index: -1;
+  content: '';
+  border-radius: 0 0 50% 50%;
+  background-color: @color-base;
+}
+
+// 主色调对比色
 .color-contrast {
-	color: contrast(@color-base);
+  color: contrast(@color-base);
 }
 
 .bg-contrast {
-	background-color: contrast(@color-base);
+  background-color: contrast(@color-base);
 }
 
 /* 按钮样式的修改 */
 .cu-btn.xs {
-    padding: 0 20rpx;
-    font-size: 20rpx;
-    height: 48rpx;
+  padding: 0 20rpx;
+  font-size: 20rpx;
+  height: 48rpx;
 }
-  
+
 .cu-btn.sm {
-    padding: 0 26rpx;
-    font-size: 28rpx;
-    height: 56rpx;
+  padding: 0 26rpx;
+  font-size: 28rpx;
+  height: 56rpx;
 }
 
 /* 水平垂直居中 */
 .tm-every-center {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.line-sub{
-	color:#A9A9A9;
+.line-sub {
+  color: #a9a9a9;
 }
 
 /*正文样式*/
 .h2w-light {
-  color:#333;
-  background-color:white;
+  color: #333;
+  background-color: white;
 }
 
 /**标题**/
 .h2w-light .h2w__h1,
 .h2w-light .h2w__h2 {
-    border-color:#eee;
+  border-color: #eee;
 }
-
 
 /**表格**/
 .h2w-light .h2w__thead .h2w__tr {
-    background-color:#f6f8fa;
+  background-color: #f6f8fa;
 }
-.h2w-light .h2w__table .h2w__tr:nth-child(2n){
-    background-color:#fbfcfd;
+.h2w-light .h2w__table .h2w__tr:nth-child(2n) {
+  background-color: #fbfcfd;
 }
 .h2w-light .h2w__th,
 .h2w-light .h2w__td {
-    border-color:#dfe2e5;
+  border-color: #dfe2e5;
 }
-
 
 /**代码块**/
 .h2w-light .h2w__pre {
-    background-color:#f6f8fa;
-    border-color:#eaedf0;
+  background-color: #f6f8fa;
+  border-color: #eaedf0;
 }
 
 .h2w-light .h2w__code {
-    background-color:#f6f8fa;
-    border-color:#eaedf0;
+  background-color: #f6f8fa;
+  border-color: #eaedf0;
 }
-
 
 /**块元素**/
 .h2w-light .h2w__blockquote {
-    border-left-color:#dfe2e5;
+  border-left-color: #dfe2e5;
 }
 
 /**内连元素**/
 .h2w-light .h2w__a {
-    color:@color-base; 
-		border-color:@color-hover;
+  color: @color-base;
+  border-color: @color-hover;
 }
 
 .h2w-light .h2w__hr {
-    background-color:#eee;
+  background-color: #eee;
 }
 
 .h2w-light .h2w__mark {
-    background:yellow;
-    color:black;
+  background: yellow;
+  color: black;
 }
 
 .h2w__table {
-    width: 670rpx !important;
+  width: 670rpx !important;
 }
 
-.h2w__td  .h2w__img { 
-	width: 100% !important;
+.h2w__td .h2w__img {
+  width: 100% !important;
 }
 // 加载动画
 .modal {
-		position: fixed;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: 999;
-	}
-	.spinner {
-	  width: 100rpx;
-	  height: 100rpx;
-	  margin: 40vh auto;
-	 
-	  border-radius: 100%; 
-	  -webkit-animation: scaleout 1.0s infinite ease-in-out;
-	  animation: scaleout 1.0s infinite ease-in-out;
-	}
-	 
-	@-webkit-keyframes scaleout {
-	  0% { -webkit-transform: scale(0.0) }
-	  100% {
-	    -webkit-transform: scale(1.0);
-	    opacity: 0;
-	  }
-	}
-	 
-	@keyframes scaleout {
-	  0% {
-	    transform: scale(0.0);
-	    -webkit-transform: scale(0.0);
-	  } 100% {
-	    transform: scale(1.0);
-	    -webkit-transform: scale(1.0);
-	    opacity: 0;
-	  }
-	}
-	// 加载动画END
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+.spinner {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 40vh auto;
 
+  border-radius: 100%;
+  -webkit-animation: scaleout 1s infinite ease-in-out;
+  animation: scaleout 1s infinite ease-in-out;
+}
+
+@-webkit-keyframes scaleout {
+  0% {
+    -webkit-transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes scaleout {
+  0% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    opacity: 0;
+  }
+}
+// 加载动画END

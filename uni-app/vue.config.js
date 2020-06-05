@@ -6,14 +6,12 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new RemovePlugin({
-        before: {
+        after: {
           root: path.join(__dirname, "./unpackage"),
           include: [
             path.join(
               __dirname,
-              "unpackage/dist",
-              process.env.NODE_ENV === "production" ? "build" : "dev",
-              "./mp-weixin/sitemap.json"
+              "unpackage/dist/dev/mp-weixin/sitemap.json"
             ),
           ],
           trash: false,
