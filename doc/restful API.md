@@ -2,7 +2,7 @@
 
 tips: 设计阶段，未投入使用
 
-# Version v2.0
+# Version v1.0
 
 ## URL
 
@@ -24,10 +24,10 @@ response
 ```json
 [
   {
-    "thumb": "缩略图.png", // 支持，拼接
+    "thumb": "缩略图.png",
     "desc": "文章描述",
     "title": "文章标题",
-    "tags": "文章标签", // 支持，拼接
+    "tags": "文章标签",
     "category": "文章分类", 
     "authorName": "作者名",
     "createTime": "创建时间",
@@ -36,7 +36,6 @@ response
     "comment": "评论数",
     "view": "阅读数",
   }
-  ...
 ]
 ```
 
@@ -48,10 +47,10 @@ response
 ```json
 [
   {
-    "text": "文章内容", // 支持，拼接
+    "text": "文章内容", 
     "desc": "文章描述",
     "title": "文章标题",
-    "tags": "文章标签", // 支持，拼接
+    "tags": "文章标签", 
     "category": "文章分类", 
     "authorName": "作者名",
     "createTime": "创建时间",
@@ -60,7 +59,6 @@ response
     "comment": "评论数",
     "view": "阅读数",
   }
-  ...
 ]
 ```
 
@@ -74,7 +72,6 @@ response
     "id": "标签ID",
     "num": "标签文章数"
   }
-  ...
 ]
 ```
 
@@ -86,10 +83,10 @@ response
 ```json
 [
   {
-    "text": "文章内容", // 支持，拼接
+    "text": "文章内容", 
     "desc": "文章描述",
     "title": "文章标题",
-    "tags": "文章标签", // 支持，拼接
+    "tags": "文章标签", 
     "category": "文章分类", 
     "authorName": "作者名",
     "createTime": "创建时间",
@@ -98,7 +95,6 @@ response
     "comment": "评论数",
     "view": "阅读数",
   }
-  ...
 ]
 ```
 
@@ -124,10 +120,10 @@ response
 ```json
 [
   {
-    "text": "文章内容", // 支持，拼接
+    "text": "文章内容", 
     "desc": "文章描述",
     "title": "文章标题",
-    "tags": "文章标签", // 支持，拼接
+    "tags": "文章标签", 
     "category": "文章分类", 
     "authorName": "作者名",
     "createTime": "创建时间",
@@ -136,13 +132,13 @@ response
     "comment": "评论数",
     "view": "阅读数",
   }
-  ...
 ]
 ```
 
-GET	/page/{id}/	Read a single page by page ID
-GET /like/post/{id} Return people list by post ID
-GET /comment/post/{id} Return comment list by post ID
+- GET	/page/{id}/	Read a single page by page ID
+
+- GET /like/post/{id} Return people list by post ID
+- GET /comment/post/{id} Return comment list by post ID
 
 ### filters
 
