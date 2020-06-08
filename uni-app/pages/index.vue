@@ -7,9 +7,9 @@
           <view :adjust-position="false" type="text" placeholder="" confirm-type="search">搜索分类、文章、标签</view>
         </view>
       </view>
-      <swiper class="card-swiper margin-top margin-bottom" :class="dotStyle?'square-dot':'round-dot'" :indicator-dots="true"
-        :circular="true" :autoplay="true" interval="5000" duration="500" @change="cardSwiper" indicator-color="#8799a3"
-        indicator-active-color="#0081ff">
+      <swiper class="card-swiper margin-bottom square-dot" :indicator-dots="true"
+        :circular="true" :autoplay="true" interval="5000" duration="1500" @change="cardSwiper" indicator-color="#fff"
+        indicator-active-color="#fff">
         <swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''" style="padding: 0;">
           <view class="swiper-item">
             <image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
@@ -17,10 +17,22 @@
           </view>
         </swiper-item>
       </swiper>
-      <view class="cu-bar bg-white margin-top">
-        <view class="action">
-          <text class="cuIcon-title text-green"></text>
-          <text>底部操作条</text>
+      <view class="flex justify-around bg-white padding margin-bottom-sm">
+        <view class="flex-direction flex align-center">
+          <span class="text-xxl text-blue"><text class="icon-newsfill"></text></span>
+          <span class="text-sm">分类</span>
+        </view>
+        <view class="flex-direction flex align-center">
+          <span class="text-xxl text-red"><text class="icon-rankfill"></text></span>
+          <span class="text-sm">排行</span>
+        </view>
+        <view class="flex-direction flex align-center">
+          <span class="text-xxl text-cyan"><text class="icon-calendar"></text></span>
+          <span class="text-sm">归档</span>
+        </view>
+        <view class="flex-direction flex align-center">
+          <span class="text-xxl  text-orange"><text class="icon-tagfill"></text></span>
+          <span class="text-sm">标签</span>
         </view>
       </view>
       <view class="bg-white padding-top">
@@ -51,7 +63,7 @@
               <view class="cu-item" style="height: 70upx; min-height: 70upx;">
                 <view class="text-gray text-sm flex justify-between align-center" style="width: 100%;">
                   <view>
-                    <text class="color-base margin-right-sm">{{ item.screenName }}</text>
+                    <text class=" margin-right-sm">学习笔记</text>
                     {{ formatTime(item.created) }}
                   </view>
                   <view class="text-gray">
@@ -189,6 +201,10 @@
   .post-entry-categories view:nth-child(5n+4) {
     background-color: #19B5FE
   }
+
+  // .text-xxl {
+  //   font-size: 64upx;
+  // }
 
   .post-entry-categories {
     background-color: #fff;
