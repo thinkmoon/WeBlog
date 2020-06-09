@@ -63,7 +63,7 @@
               <view class="cu-item" style="height: 70upx; min-height: 70upx;">
                 <view class="text-gray text-sm flex justify-between align-center" style="width: 100%;">
                   <view>
-                    <text class=" margin-right-sm">学习笔记</text>
+                    <text class=" margin-right-sm"> <text class="icon-file margin-right-xs"></text>学习笔记</text>
                     {{ formatTime(item.created) }}
                   </view>
                   <view class="text-gray">
