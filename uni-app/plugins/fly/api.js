@@ -2,7 +2,7 @@ var Fly = require("flyio/dist/npm/wx")
 var fly = new Fly
 
 fly.config.baseURL = process.env.NODE_ENV === 'production' ? "https://www.thinkmoon.cn/WeBlog/api/" :
-  "http://127.0.0.1/WeBlog/api/"
+  "http://192.168.1.194/WeBlog/api/"
 
 fly.config.headers = {
   "openid": uni.getStorageSync("openid"),
@@ -41,8 +41,8 @@ export const login = (params) => {
   // #endif
 }
 // 获取最近文章
-export const getRecentPost = (params) => {
-  return fly.get('getRecentPost', params)
+export const getPost = (params) => {
+  return fly.get('post', params)
 }
 // 获取作者信息
 export const getAuthorInfo = (params) => {

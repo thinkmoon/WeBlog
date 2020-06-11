@@ -51,6 +51,7 @@ view, scroll-view, swiper, button, input, textarea, label, navigator, image {
 
 .radius {
   border-radius: 6rpx;
+  overflow: hidden;
 }
 
 /* ==================

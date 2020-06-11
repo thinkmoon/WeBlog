@@ -7,9 +7,8 @@
           <view :adjust-position="false" type="text" placeholder="" confirm-type="search">搜索分类、文章、标签</view>
         </view>
       </view>
-      <swiper class="card-swiper margin-bottom square-dot" :indicator-dots="true"
-        :circular="true" :autoplay="true" interval="5000" duration="1500" @change="cardSwiper" indicator-color="#fff"
-        indicator-active-color="#fff">
+      <swiper class="card-swiper margin-bottom square-dot" :indicator-dots="true" :circular="true" :autoplay="true"
+        interval="5000" duration="1500" @change="cardSwiper" indicator-color="#fff" indicator-active-color="#fff">
         <swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''" style="padding: 0;">
           <view class="swiper-item">
             <image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
@@ -35,12 +34,12 @@
           <span class="text-sm">标签</span>
         </view>
       </view>
-      <view class="bg-white padding-top">
+      <view class="">
         <view v-for="(item, index) in postData" :key="index" class="margin-sm list solid">
           <!-- #ifdef MP-QQ -->
           <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
           <!-- #endif -->
-          <navigator :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value" class="list__item animation-slide-bottom">
+          <navigator hover-class="none" :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value" class="list__item animation-slide-bottom bg-white shadow radius">
             <view class="image-container">
               <view class="overplay">
 
@@ -50,20 +49,17 @@
               <!-- <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view> -->
             </view>
             <view class="flex align-center padding-xs post-entry-categories text-xs">
-              <view class="margin-left-xs">Xposed框架模块</view>
-              <view class="margin-left-xs">XPrivacy</view>
-              <view class="margin-left-xs">XPrivacyLua</view>
-              <view class="margin-left-xs">X隐私</view>
+              <view class="margin-left-xs" v-for="(tagItem,index) in item.tag">{{ tagItem.name }}</view>
             </view>
             <view class="bg-white padding-left-sm title">{{ item.title }}</view>
             <view class="desc padding-sm">
-              虚拟大师能够方便快速的安装谷歌服务框架，使用谷歌商店，对于本身没有内置谷歌服务框架的国内厂商或者像华为MATE30
+              {{ item.desc.length ? item.desc[0].str_value : "" }}
             </view>
             <view class="cu-list menu menu-avatar">
               <view class="cu-item" style="height: 70upx; min-height: 70upx;">
                 <view class="text-gray text-sm flex justify-between align-center" style="width: 100%;">
                   <view>
-                    <text class=" margin-right-sm"> <text class="icon-file margin-right-xs"></text>学习笔记</text>
+                    <text class=" margin-right-sm"> <text class="icon-file margin-right-xs"></text>{{ item.category[0].name }}</text>
                     {{ formatTime(item.created) }}
                   </view>
                   <view class="text-gray">
@@ -154,7 +150,7 @@
         if (this.postData.curPage % 10 == 0) {
           this.postData = [];
         }
-        let res = await this.$api.getRecentPost({
+        let res = await this.$api.getPost({
           page: this.curPage + 1
         });
         // this.loadProgress = 100
@@ -187,7 +183,7 @@
   }
 
   .post-entry-categories view:nth-child(5n+1) {
-    background-color: #ff5e5c
+    background-color: #1ac756
   }
 
   .post-entry-categories view:nth-child(5n+2) {
@@ -195,7 +191,7 @@
   }
 
   .post-entry-categories view:nth-child(5n+3) {
-    background-color: #1ac756
+    background-color: #ff5e5c
   }
 
   .post-entry-categories view:nth-child(5n+4) {
