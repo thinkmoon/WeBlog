@@ -15,7 +15,7 @@ class WeBlog_Plugin implements Typecho_Plugin_Interface
     {
         Helper::addRoute('WeBlog', '/WeBlog/api/[type]', 'WeBlog_Action');
         Helper::addAction('WeBlog', 'WeBlog_Action');
-        Helper::addPanel(1, 'WeBlog/manage.php', 'WeBlog', '管理', 'administrator');
+        Helper::addPanel(1, 'WeBlog/Manage.php', 'WeBlog', '管理', 'administrator');
         $db = Typecho_Db::get();
         $prefix = $db->getPrefix();
         //创建用户数据库
@@ -85,7 +85,7 @@ class WeBlog_Plugin implements Typecho_Plugin_Interface
     {
         Helper::removeRoute('WeBlog');
         Helper::removeAction('WeBlog');
-        Helper::removePanel(1, 'WeBlog/manage.php');
+        Helper::removePanel(1, 'WeBlog/Manage.php');
     }
 
     /* 插件配置方法 */

@@ -29,7 +29,7 @@ https://${baseUrl}/WeBlog/api/
 
 ## GET
 
-- GET	/post/	Browse posts
+- GET	/post/	返回文章列表
 
 response
 ```json
@@ -51,8 +51,6 @@ response
 ```
 
 - GET	/post/{id}/	Read a post by ID
-
-文章列表引用[1]
 
 response
 ```json

@@ -1,9 +1,9 @@
 <?php
+include("./Action/Post.php");
 class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
 {
     private $db;
     private $res;
-    private $redis;
 
     public function __construct($request, $response, $params = NULL)
     {
@@ -154,6 +154,22 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         }
         $this->export($result);
     }
+     // 获取最近post
+     function post()
+     {
+         $page     = (int) self::GET('page', 1);
+         $offset   = $this->pageSize * ($page - 1);
+         $select   = $this->db->select('cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes', 'screenName', 'url')->from('table.contents')->join('table.users', 'table.contents.authorId = table.users.uid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->where('table.contents.created < ?', time())->order('table.contents.created', Typecho_Db::SORT_DESC)->offset($offset)->limit($this->pageSize);
+         $posts  = $this->db->fetchAll($select);
+         foreach ($posts as $post) {
+             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
+             $post['category'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'category'));
+             $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb"));
+             $post['desc'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "desc"));
+             $result[]    = $post;
+         }
+         $this->export($result);
+     }
     // 新增评论
     function addComment()
     {
@@ -249,6 +265,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->db->query($this->db->update('table.contents')->rows(array('likes' => (int) $row['likes'] + 1))->where('cid = ?', $cid));
         //更新赞数据库
         $this->db->query($this->db->insert('table.WeBlog_like')->rows(array('openid' => $openid, 'cid' => $cid)));
+        $this->export(true);
     }
     // 获取用户点赞信息
     function getPostLikeStatus()
