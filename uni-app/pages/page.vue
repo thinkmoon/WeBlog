@@ -5,7 +5,7 @@
     </cu-custom>
     <home v-if="PageCur == 'home'"></home>
     <about v-if="PageCur == 'about'"></about>
-    <!-- <view class="cu-bar tabbar bg-white shadow-blur foot">
+    <view class="cu-bar tabbar bg-white shadow-blur foot">
       <view class="action" @click="NavChange('home')">
         <view>
           <view
@@ -28,7 +28,7 @@
           >关于</view
         >
       </view>
-    </view> -->
+    </view>
   </view>
 </template>
 

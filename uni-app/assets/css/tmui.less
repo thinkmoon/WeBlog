@@ -82,6 +82,36 @@
   height: 56rpx;
 }
 
+/* 便签 */
+  .post-entry-categories view:nth-child(5n) {
+    background-color: #4A4A4A
+  }
+
+  .post-entry-categories view:nth-child(5n+1) {
+    background-color: #1ac756
+  }
+
+  .post-entry-categories view:nth-child(5n+2) {
+    background-color: #ffbb50
+  }
+
+  .post-entry-categories view:nth-child(5n+3) {
+    background-color: #ff5e5c
+  }
+
+  .post-entry-categories view:nth-child(5n+4) {
+    background-color: #19B5FE
+  }
+  .post-entry-categories {
+    background-color: #fff;
+
+    view {
+      line-height: 1;
+      color: #fff;
+      padding: 8upx;
+    }
+  }
+  
 /* 水平垂直居中 */
 .tm-every-center {
   display: flex;
@@ -95,66 +125,66 @@
 
 /*正文样式*/
 .h2w-light {
-  color: #333;
-  background-color: white;
+  color:#333;
+  background-color:white;
 }
 
 /**标题**/
 .h2w-light .h2w__h1,
 .h2w-light .h2w__h2 {
-  border-color: #eee;
+    border-color:#eee;
 }
+
 
 /**表格**/
 .h2w-light .h2w__thead .h2w__tr {
-  background-color: #f6f8fa;
+    background-color:#f6f8fa;
 }
-.h2w-light .h2w__table .h2w__tr:nth-child(2n) {
-  background-color: #fbfcfd;
+.h2w-light .h2w__table .h2w__tr:nth-child(2n){
+    background-color:#fbfcfd;
 }
 .h2w-light .h2w__th,
 .h2w-light .h2w__td {
-  border-color: #dfe2e5;
+    border-color:#dfe2e5;
 }
+
 
 /**代码块**/
 .h2w-light .h2w__pre {
-  background-color: #f6f8fa;
-  border-color: #eaedf0;
+    background-color:#f6f8fa;
+    border-color:#eaedf0;
 }
 
 .h2w-light .h2w__code {
-  background-color: #f6f8fa;
-  border-color: #eaedf0;
+    background-color:#f6f8fa;
+    border-color:#eaedf0;
 }
+
 
 /**块元素**/
 .h2w-light .h2w__blockquote {
-  border-left-color: #dfe2e5;
+    border-left-color:#dfe2e5;
 }
 
 /**内连元素**/
 .h2w-light .h2w__a {
-  color: @color-base;
-  border-color: @color-hover;
+    color:@color-base;
+    border-color:#b9d9b8;
 }
 
 .h2w-light .h2w__hr {
-  background-color: #eee;
+    background-color:#eee;
 }
 
 .h2w-light .h2w__mark {
-  background: yellow;
-  color: black;
+    background:yellow;
+    color:black;
 }
 
-.h2w__table {
-  width: 670rpx !important;
+.h2w-light .h2w__lineNum {
+    color:#ccc;
 }
 
-.h2w__td .h2w__img {
-  width: 100% !important;
-}
 // 加载动画
 .modal {
   position: fixed;

@@ -1,18 +1,20 @@
 <template name="home">
   <block>
-    <scroll-view scroll-y class="cu-card case scroll-view">
-      <view class="cu-bar search bg-blue bg-radius" @click="toSearch">
+    <scroll-view scroll-y class="cu-card case scroll-view" :scroll-into-view="top">
+      <view class="cu-bar search bg-blue bg-radius" @click="toSearch" id="top">
         <view class="search-form round">
           <text class="icon-search"></text>
-          <view :adjust-position="false" type="text" placeholder="" confirm-type="search">搜索分类、文章、标签</view>
+          <view :adjust-position="false" type="text" placeholder="" confirm-type="search">请输入你想知道的内容</view>
         </view>
       </view>
-      <swiper class="card-swiper margin-bottom square-dot" :indicator-dots="true" :circular="true" :autoplay="true"
-        interval="5000" duration="1500" @change="cardSwiper" indicator-color="#fff" indicator-active-color="#fff">
-        <swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''" style="padding: 0;">
-          <view class="swiper-item">
-            <image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-            <video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video>
+      <swiper class="card-swiper margin-bottom square-dot" :indicator-dots="false" :circular="true" :autoplay="true"
+        interval="5000" duration="1500" @change="cardSwiper">
+        <swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''" class="padding-0">
+          <view class="image swiper-item bg-white">
+            <navigator hover-class="none" :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb">
+            <image :src="item.thumb" mode="widthFix" :lazy-load="true"></image>
+            <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view>
+            </navigator>
           </view>
         </swiper-item>
       </swiper>
@@ -34,30 +36,29 @@
           <span class="text-sm">标签</span>
         </view>
       </view>
-      <view class="">
+      <view>
         <view v-for="(item, index) in postData" :key="index" class="margin-sm list solid">
           <!-- #ifdef MP-QQ -->
           <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
           <!-- #endif -->
-          <navigator hover-class="none" :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value" class="list__item animation-slide-bottom bg-white shadow radius">
-            <view class="image-container">
-              <view class="overplay">
-
-              </view>
+          <navigator hover-class="none" :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value"
+            class="list__item animation-slide-bottom bg-white shadow radius">
+            <view class="image-container" v-if="item.thumb.length">
+              <view class="overplay"></view>
               <image :src="item.thumb[0].str_value" mode="aspectFill" :lazy-load="true" class="image"></image>
               <!-- <view class="cu-tag bg-blue">置顶</view> -->
               <!-- <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view> -->
             </view>
             <view class="flex align-center padding-xs post-entry-categories text-xs">
-              <view class="margin-left-xs" v-for="(tagItem,index) in item.tag">{{ tagItem.name }}</view>
+              <view class="margin-left-xs" v-for="(tagItem,index) in item.tag" :key="index">{{ tagItem.name }}</view>
             </view>
             <view class="bg-white padding-left-sm title">{{ item.title }}</view>
             <view class="desc padding-sm">
               {{ item.desc.length ? item.desc[0].str_value : "" }}
             </view>
-            <view class="cu-list menu menu-avatar">
-              <view class="cu-item" style="height: 70upx; min-height: 70upx;">
-                <view class="text-gray text-sm flex justify-between align-center" style="width: 100%;">
+            <view class="cu-list padding-lr-sm padding-bottom-xs">
+              <view class="cu-item">
+                <view class="text-gray text-sm flex justify-between align-center">
                   <view>
                     <text class=" margin-right-sm"> <text class="icon-file margin-right-xs"></text>{{ item.category[0].name }}</text>
                     {{ formatTime(item.created) }}
@@ -76,8 +77,8 @@
           </navigator>
         </view>
       </view>
-
-      <view style="padding-bottom: 50px;">
+      <!-- <view @click="goTop" style="bottom:100px;position: fixed;">回到顶部</view> -->
+      <view>
         <view class="action">
           <view class="cu-load load-icon" :class="isLoading ? 'loading' : 'over'"></view>
         </view>
@@ -92,35 +93,7 @@
     data() {
       return {
         cardCur: 0,
-        swiperList: [{
-          id: 0,
-          type: 'image',
-          url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
-        }, {
-          id: 1,
-          type: 'image',
-          url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg',
-        }, {
-          id: 2,
-          type: 'image',
-          url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
-        }, {
-          id: 3,
-          type: 'image',
-          url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-        }, {
-          id: 4,
-          type: 'image',
-          url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-        }, {
-          id: 5,
-          type: 'image',
-          url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
-        }, {
-          id: 6,
-          type: 'image',
-          url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-        }],
+        swiperList: [],
         isLoading: true,
         curPage: 0,
         postData: [],
@@ -131,6 +104,13 @@
       };
     },
     methods: {
+      goTop() {
+        console.log("回到顶部")
+        uni.pageScrollTo({
+          scrollTop: 0,
+          duration: 300
+        })
+      },
       toSearch() {
         uni.navigateTo({
           url: './search/search'
@@ -173,11 +153,14 @@
           console.log(res);
           this.loadPost();
         });
+      this.$api.getSticky().then(res => {
+        this.swiperList = res
+      })
     },
     pageLifetimes: {}
   };
 </script>
-<style lang="less">
+<style lang="less" scoped>
   .post-entry-categories view:nth-child(5n) {
     background-color: #4A4A4A
   }

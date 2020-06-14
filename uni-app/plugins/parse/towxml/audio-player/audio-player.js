@@ -1,5 +1,4 @@
 const Audio = require('./Audio');
-var _this = null;
 Component({
 	options: {
 		styleIsolation: 'shared'
@@ -13,7 +12,7 @@ Component({
 	lifetimes:{
 		// 页面生命周期
 		attached:function(){
-			const _ts = _this = this,
+			const _ts = this,
 				audio = _ts.audio = new Audio(this.data.data);
 
 			audio.eventPlay = function(){
@@ -32,14 +31,45 @@ Component({
 				_ts.setData({tips:{state:'h2w__audio--end',text:'End'}});
 			};
 
+
+
+
+
+			// // 更新播放状态
+			// _ts.audio.onTimeUpdate = function(duration,currentTime){
+			// 	_ts.setData({
+			// 		playerData:{
+			// 			state:'h2w__audio--play',
+			// 			tips:'Playing',
+			// 			currentTime:currentTime,
+			// 			duration:duration,
+			// 			schedule:_ts.audio.currentTime / _ts.audio.duration * 100 + '%'
+			// 		}
+			// 	});
+			// };
+
+			// _ts.audio.onPause = function(){
+			// 	_ts.setData({playerData:{state:'h2w__audio--pause',tips:'Pause'}});
+			// };
+
+			// _ts.audio.onCanplay = function(){
+			// 	_ts.setData({playerData:{state:'h2w__audio--readyed',tips:'Readyed'}});
+			// };
+
+			// _ts.audio.onError = function(){
+			// 	_ts.setData({playerData:{state:'h2w__audio--error',tips:'Error'}});
+			// };
+
+			// _ts.audio.onEnded = ()=>{
+			// 	_ts.setData({playerData:{state:'h2w__audio--end',tips:'End'}});
+			// };
+
 		},
 		moved:function(){
-			console.log("audio moved")
-			_this.audio.pause();
+			_ts.audio.destroy();
 		},
 		detached:()=>{
-			console.log("audio detached")
-			_this.audio.destroy()
+
 		},
 	},
 	data: {
@@ -58,12 +88,14 @@ Component({
 			const _ts = this,
 				audio = _ts.audio;
 
+			// console.log(audio);
+
 			audio.isTouch = true;
 			if(audio.status === 'update' || audio.status === 'play'){
-				console.log('pause');
+				// console.log('pause');
 				audio.pause();
 			}else{
-				console.log('play');
+				// console.log('play');
 				audio.play();
 			};
 		}

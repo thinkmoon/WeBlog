@@ -1,5 +1,5 @@
 <template>
-  <block>
+  <view class="bg-white">
     <cu-custom bgColor="bg-gradual" :isBack="true">
       <block slot="backText"><text class="icon-home"></text></block>
       <block slot="content">文章详情</block>
@@ -30,58 +30,45 @@
     <!-- #ifdef MP-QQ -->
     <ad unit-id="53bfa608c0f8bfad5ef40eddb665f864" class="ad"></ad>
     <!-- #endif -->
-    <towxml :content="postData[0].text" v-if="postData[0].text"></towxml>
-    <view class="like-area solid-top bg-white tm-every-center flex-direction" v-if="!isLoading">
+    <parse :content="postData[0].text" v-if="postData[0].text"></parse>
+    <view class="like-area solid-top bg-white tm-every-center flex-direction padding-top" v-if="!isLoading">
       <view class="like-btn text-xxl line-base tm-every-center padding border" @click="like" v-if="!isLike">赞</view>
       <view class="like-btn text-xxl line-red tm-every-center padding border" v-else @click="reward">赏</view>
       <view class="margin-top">您的支持是对我最大的鼓励</view>
-      <view class="margin-top" v-if="likeUsers != null">
+      <view class="margin-top like-list" v-if="likeUsers != null">
         <view class="cu-avatar round sm" v-for="(item, index) in likeUsers" :key="index" :style="'background-image:url(' + item.avatarUrl + ');'"></view>
       </view>
-      <view class="margin-sm" v-if="!isLoading">
-        <view class="text-lg">
-          <text class="icon-titles color-base"></text>
-          <text class="text-bold">发表看法</text>
+    </view>
+    <view class="comment-area padding-sm bg-white" v-if="!isLoading">
+      <view class="text-lg">
+        <text class="icon-titles color-base"></text>
+        <text class="text-bold">发表看法</text>
+      </view>
+      <!-- #ifndef MP-QQ -->
+      <textarea v-model="commentText" placeholder="(已开启评论审核模式,评论审核通过后方能显示)" class="solid padding margin-top-sm" />
+      <!-- #endif -->
+      <view class="margin-top-sm flex justify-between">
+        <view v-if="!isLogin">
+          <button v-if="canIUse" open-type="getUserInfo" @getuserinfo="loadUserInfo" class="cu-btn bg-base">
+            <text class="line-white">授权登录</text>
+          </button>
+          <view v-else>请升级微信版本</view>
         </view>
-        <view class="comment-area bg-white margin-top padding">
-          <!-- <view class="action" v-if="likeUsers != null">
-          <view class="cu-avatar-group">
-            <view
-              class="cu-avatar round sm"
-              v-for="(item, index) in likeUsers"
-              v-if="index < 5"
-              :key="index"
-              :style="'background-image:url(' + item.avatarUrl + ');'"
-            ></view>
-          </view> -->
-          <text class="text-grey text-sm">{{ likeUsers[0].nickName }}等{{ likeUsers.length }}人觉得很赞</text>
-        </view>
-        <!-- #ifndef MP-QQ -->
-        <textarea v-model="commentText" placeholder="(已开启评论审核模式,评论审核通过后方能显示)" class="solid padding margin-top-sm" />
-        <!-- #endif -->
-        <view class="margin-top-sm flex justify-between">
-          <view style="width: 46%;" v-if="!isLogin">
-            <button v-if="canIUse" open-type="getUserInfo" @getuserinfo="loadUserInfo" class="cu-btn bg-base" style="width: 100%; margin-right: ;">
-              <text class="line-white">授权登录</text>
-            </button>
-            <view v-else>请升级微信版本</view>
-          </view>
-          <view class="text-bold" v-else><open-data type="userNickName" class="line-base"></open-data></view>
-          <view style="width: 46%;">
-            <!-- #ifndef MP-QQ -->
-            <button style="width: 100%;" class="cu-btn line-base" @click="comment">发表</button>
-            <!-- #endif -->
-          </view>
+        <view class="text-bold" v-else><open-data type="userNickName" class="line-base"></open-data></view>
+        <view>
+          <!-- #ifndef MP-QQ -->
+          <button style="width: 100%;" class="cu-btn line-base" @click="comment">发表</button>
+          <!-- #endif -->
         </view>
       </view>
     </view>
     <!-- #ifndef MP-QQ -->
-    <view class="margin-sm" v-if="!isLoading">
+    <view class="padding-sm bg-white" v-if="!isLoading">
       <view class="text-lg">
         <text class="icon-titles color-base"></text>
         <text class="text-bold">精彩评论</text>
       </view>
-      <view class="comment-area bg-white margin-top padding">
+      <view class="comment-area bg-white margin-top padding-xs">
         <view v-for="(item, index) in commentList" :key="index" class="margin-bottom">
           <view class="flex align-center">
             <view class="cu-avatar sm round" :style="'background-image:url(' + item.avatarUrl + ')'">
@@ -92,7 +79,7 @@
               <text class="text-grey text-sm margin-left-xs">{{ formatTime(item.created) }}</text>
             </view>
           </view>
-          <view style="margin-left: 64rpx;">
+          <view class="padding-left-lg">
             <text>{{ item.text }}</text>
           </view>
         </view>
@@ -104,7 +91,7 @@
     <!-- #endif -->
     <tm-footer></tm-footer>
     <view class="modal bg-white" v-if="isLoading"><view class="spinner bg-base"></view></view>
-  </block>
+  </view>
 </template>
 
 <script>
@@ -298,9 +285,14 @@ export default {
 };
 </script>
 <style lang="less">
-.like-area {
-  height: 300upx;
-}
+  
+ .like-list {
+   width: 90%;
+   text-align: center;
+   view {
+     margin: 2upx;
+   }
+ }
 
 .like-btn {
   height: 130upx;
@@ -309,7 +301,7 @@ export default {
 }
 
 .comment-area textarea {
-  width: 650upx;
+  width: 100%;
   height: 250upx;
 }
 

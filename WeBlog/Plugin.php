@@ -99,23 +99,19 @@ class WeBlog_Plugin implements Typecho_Plugin_Interface
         $form->addInput($qqAppID);
         $qqAppSecret = new Typecho_Widget_Helper_Form_Element_Text('qqAppSecret', NULL, 'xxx', _t('QQ小程序的secret'),  _t('小程序的secret'));
         $form->addInput($qqAppSecret);
-        $avatarUrl = new Typecho_Widget_Helper_Form_Element_Text('avatarUrl', NULL, 'xxx', _t('你的博客头像'),  _t('显示在小程序的头像'));
-        $form->addInput($avatarUrl);
-        $thumb = new Typecho_Widget_Helper_Form_Element_Text('thumb', NULL, 'xxx', _t('默认缩略图'),  _t('显示在小程序的文章默认缩略图'));
-        $form->addInput($thumb);
-        $pageSize = new Typecho_Widget_Helper_Form_Element_Text('pageSize', NULL, '7', _t('每页文章数'),  _t('请不要留空'));
-        $form->addInput($pageSize);
-        $aboutCid = new Typecho_Widget_Helper_Form_Element_Text('aboutCid', NULL, '2', _t('关于页面CID'),  _t('小程序关于页面显示文章cid'));
-        $form->addInput($aboutCid);
+        $sticky = new Typecho_Widget_Helper_Form_Element_Text('sticky', NULL, '1,2,3', _t('置顶文章cid'),  _t('显示在轮播图中'));
+        $form->addInput($sticky);
         $apiSecret = new Typecho_Widget_Helper_Form_Element_Text('apiSecret', NULL, 'xxx', _t('你的接口密钥'),  _t('你可以设置一个不容易被他人猜出来的随机字符串'));
         $form->addInput($apiSecret);
     }
 
     /* 个人用户的配置方法 */
     public static function personalConfig(Typecho_Widget_Helper_Form $form)
-    { }
+    {
+    }
 
     /* 插件实现方法 */
     public static function render()
-    { }
+    {
+    }
 }

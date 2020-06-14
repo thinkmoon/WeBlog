@@ -24,7 +24,7 @@
       "style": {
         "navigationBarTitleText": "文章内容",
         "usingComponents": {
-          "towxml": "../plugins/parse/index"
+          "parse": "../plugins/parse/index"
         }
       }
     },

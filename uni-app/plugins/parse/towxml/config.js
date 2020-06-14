@@ -2,17 +2,17 @@ module.exports = {
     // LaTex公式、yuml解析服务架设参见 https://github.com/sbfkcel/markdown-server
 
     // 数学公式解析API
-    latex:{
-        api:'http://towxml.vvadd.com/?tex'
-    },
+    // latex:{
+    //     api:'http://towxml.vvadd.com/?tex'
+    // },
 
-    // yuml图解析APPI
-    yuml:{
-        api:'http://towxml.vvadd.com/?yuml'
-    },
+    // // yuml图解析APPI
+    // yuml:{
+    //     api:'http://towxml.vvadd.com/?yuml'
+    // },
 
     // markdown解析配置，保留需要的选项即可
-    markdown:[
+    markdown: [
         'sub',                      // 下标支持
         'sup',                      // 上标支持
         'ins',                      // 文本删除线支持
@@ -21,38 +21,202 @@ module.exports = {
         'todo'                      // todo支持
     ],
 
-    // 代码高亮配置，保留需要的选项即可
-    highlight:[
+    // 代码高亮配置，保留需要的选项即可（尽量越少越好，不要随意调整顺序。部分高亮有顺序依赖）
+    highlight: [
+        'c-like',
+        'c',
         'bash',
+        'css',
+        'dart',
+        'go',
+        'java',
         'javascript',
         'json',
-        'python',
-        'htmlbars',
-        'css',
-        'php',
+        'less',
         'scss',
         'shell',
+        'xml',
+        'htmlbars',
+        'nginx',
+        'php',
+        'python',
+        'python-repl',
+        'typescript',
 
-        // 'coffeescript',
-        // 'dns',
-        // 'dos',
-        // 'erlang',
-        // 'go',
+        // 'csharp',
         // 'http',
-        // 'java',
-        // 'less',
-        // 'makefile',
+        // 'swift',
+        // 'yaml',
         // 'markdown',
-        // 'nginx',
         // 'powershell',
         // 'ruby',
+        // 'makefile',
+        // 'lua',
+        // 'stylus',
+        // 'basic',
+        // '1c',
+        // 'abnf',
+        // 'accesslog',
+        // 'actionscript',
+        // 'ada',
+        // 'angelscript',
+        // 'apache',
+        // 'applescript',
+        // 'arcade',
+        // 'cpp',
+        // 'arduino',
+        // 'armasm',
+        // 'asciidoc',
+        // 'aspectj',
+        // 'autohotkey',
+        // 'autoit',
+        // 'avrasm',
+        // 'awk',
+        // 'axapta',
+        // 'bnf',
+        // 'brainfuck',
+        // 'cal',
+        // 'capnproto',
+        // 'ceylon',
+        // 'clean',
+        // 'clojure-repl',
+        // 'clojure',
+        // 'cmake',
+        // 'coffeescript',
+        // 'coq',
+        // 'cos',
+        // 'crmsh',
+        // 'crystal',
+        // 'csp',
+        // 'd',
+        // 'delphi',
+        // 'diff',
+        // 'django',
+        // 'dns',
+        // 'dockerfile',
+        // 'dos',
+        // 'dsconfig',
+        // 'dts',
+        // 'dust',
+        // 'ebnf',
+        // 'elixir',
+        // 'elm',
+        // 'erb',
+        // 'erlang-repl',
+        // 'erlang',
+        // 'excel',
+        // 'fix',
+        // 'flix',
+        // 'fortran',
+        // 'fsharp',
+        // 'gams',
+        // 'gauss',
+        // 'gcode',
+        // 'gherkin',
+        // 'glsl',
+        // 'gml',
+        // 'golo',
+        // 'gradle',
+        // 'groovy',
+        // 'haml',
+        // 'handlebars',
+        // 'haskell',
+        // 'haxe',
+        // 'hsp',
+        // 'hy',
+        // 'inform7',
+        // 'ini',
+        // 'irpf90',
+        // 'isbl',
+        // 'jboss-cli',
+        // 'julia-repl',
+        // 'julia',
+        // 'kotlin',
+        // 'lasso',
+        // 'latex',
+        // 'ldif',
+        // 'leaf',
+        // 'lisp',
+        // 'livecodeserver',
+        // 'livescript',
+        // 'llvm',
+        // 'lsl',
+        // 'mathematica',
+        // 'matlab',
+        // 'maxima',
+        // 'mel',
+        // 'mercury',
+        // 'mipsasm',
+        // 'mizar',
+        // 'mojolicious',
+        // 'monkey',
+        // 'moonscript',
+        // 'n1ql',
+        // 'nim',
+        // 'nix',
+        // 'nsis',
+        // 'objectivec',
+        // 'ocaml',
+        // 'openscad',
+        // 'oxygene',
+        // 'parser3',
+        // 'perl',
+        // 'pf',
+        // 'pgsql',
+        // 'php-template',
+        // 'plaintext',
+        // 'pony',
+        // 'processing',
+        // 'profile',
+        // 'prolog',
+        // 'properties',
+        // 'protobuf',
+        // 'puppet',
+        // 'purebasic',
+        // 'q',
+        // 'qml',
+        // 'r',
+        // 'reasonml',
+        // 'rib',
+        // 'roboconf',
+        // 'routeros',
+        // 'rsl',
+        // 'ruleslanguage',
+        // 'rust',
+        // 'sas',
+        // 'scala',
+        // 'scheme',
+        // 'scilab',
+        // 'smali',
+        // 'smalltalk',
+        // 'sml',
+        // 'sqf',
         // 'sql',
-        // 'swift',
-        // 'typescript'
+        // 'stan',
+        // 'stata',
+        // 'step21',
+        // 'subunit',
+        // 'taggerscript',
+        // 'tap',
+        // 'tcl',
+        // 'thrift',
+        // 'tp',
+        // 'twig',
+        // 'vala',
+        // 'vbnet',
+        // 'vbscript-html',
+        // 'vbscript',
+        // 'verilog',
+        // 'vhdl',
+        // 'vim',
+        // 'x86asm',
+        // 'xl',
+        // 'xquery',
+        // 'zephir'
     ],
 
     // wxml原生标签，该系列标签将不会被转换
-    wxml:[
+    wxml: [
         'view',
         'video',
         'text',
@@ -87,7 +251,7 @@ module.exports = {
     ],
 
     // 自定义组件
-    components:[
+    components: [
         'audio-player',             // 音频组件，建议保留，由于小程序原生audio存在诸多问题，towxml解决了原生音频播放器的相关问题
         // 'echarts',                  // echarts图表支持
         // 'latex',                    // 数学公式支持
@@ -98,7 +262,7 @@ module.exports = {
     ],
 
     // 保留原本的元素属性（建议不要变动）
-    attrs:[
+    attrs: [
         'class',
         'data',
         'id',
@@ -106,10 +270,10 @@ module.exports = {
     ],
 
     // 事件绑定方式（catch或bind），catch 会阻止事件向上冒泡。更多请参考：https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/event.html
-    bindType:'catch',
+    bindType: 'catch',
 
     // 需要激活的事件
-    events:[
+    events: [
         // 'touchstart',
         // 'touchmove',
         // 'touchcancel',
@@ -119,8 +283,8 @@ module.exports = {
     ],
 
     // 图片倍数
-    dpr:1,
+    dpr: 1,
 
     // 代码块显示行号
-    showLineNumber:true
+    showLineNumber: true
 }

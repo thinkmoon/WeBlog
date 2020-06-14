@@ -2,10 +2,10 @@ var Fly = require("flyio/dist/npm/wx")
 var fly = new Fly
 
 fly.config.baseURL = process.env.NODE_ENV === 'production' ? "https://www.thinkmoon.cn/WeBlog/api/" :
-  "http://192.168.1.194/WeBlog/api/"
+  "http://192.168.99.201/WeBlog/api/"
 
 fly.config.headers = {
-  "openid": uni.getStorageSync("openid"),
+  "openid": uni.getStorageSync("openid") ? uni.getStorageSync("openid") : "",
   "apisecret": "xxx"
 }
 
@@ -19,7 +19,7 @@ fly.interceptors.response.use(
     } else {
       uni.showModal({
         title: "API请求出错:" + res.status,
-        content: "错误信息" + res.data
+        content: "错误信息:" + res.data
       })
     }
     return response.data.data
@@ -43,6 +43,9 @@ export const login = (params) => {
 // 获取最近文章
 export const getPost = (params) => {
   return fly.get('post', params)
+}
+export const getSticky = (params) => {
+  return fly.get('getSticky', params)
 }
 // 获取作者信息
 export const getAuthorInfo = (params) => {

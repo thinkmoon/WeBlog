@@ -2524,7 +2524,6 @@ swiper.round-dot .wx-swiper-dot.wx-swiper-dot-active {
   width: 610rpx !important;
   left: 70rpx;
   box-sizing: border-box;
-  padding: 40rpx 0rpx 70rpx;
   overflow: initial;
 }
 

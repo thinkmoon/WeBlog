@@ -1,5 +1,4 @@
 <?php
-include("./Action/Post.php");
 class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
 {
     private $db;
@@ -17,18 +16,14 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         // appSecret
         $this->qqAppSecret = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->qqAppSecret;
         // 博客头像
-        $this->avatarUrl = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->avatarUrl;
-        // 页面文章数
-        $this->pageSize = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->pageSize;
-        // 页面文章缩略图thumb
-        $this->thumb = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->thumb;
+        $this->sticky = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->sticky;
         // apiSecret
         $this->apiSecret = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->apiSecret;
         $this->db  = Typecho_Db::get();
         $this->res = new Typecho_Response();
         if (method_exists($this, $this->request->type)) {
-            if($_SERVER['HTTP_APISECRET'] != $this->apiSecret){
-                $this->export("接口密钥不正确",403);
+            if ($_SERVER['HTTP_APISECRET'] != $this->apiSecret) {
+                $this->export("接口密钥不正确", 403);
                 return 0;
             }
             call_user_func(array(
@@ -39,6 +34,12 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
             $this->defaults();
         }
     }
+    /**
+     * 登录API
+     *  @param code 小程序login的code
+     *  @param mp 小程序平台类型["weixin","qq"]
+     *  @return openid 
+     */
     function login()
     {
         $code = self::GET('code', 'null');
@@ -86,10 +87,10 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
                     $this->export($openid);
                 }
             } else {
-                $this->export("兑换openId失败",500);
+                $this->export("兑换openId失败", 500);
             }
         } else {
-            $this->export("错误的code",500);
+            $this->export("错误的code", 500);
         }
     }
     // 获取文章点赞用户列表
@@ -109,14 +110,44 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
             $this->export("No one like");
         }
     }
-    // 获取文章页数
-    function getPageNum()
+    /**
+     * @method getSticky 获取置顶文章列表
+     * @return List post_list
+     */
+    function getSticky()
     {
-        $select =  $this->db->select('COUNT(cid) AS Num')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish');
-        $data = $this->db->fetchAll($select);
-        $Num = $data[0]['Num'] / $this->pageSize + 1;
-        $this->export((int) $Num);
+        // $cids = explode(",", $this->sticky);
+        // $select   = $this->db->select('cid', 'title')->from('table.contents')->where('cid IN ?', $cids);
+        // $posts  = $this->db->fetchAll($select);
+        $select   = "SELECT\n" .
+            "	typecho_contents.cid, \n" .
+            "	typecho_contents.title, \n" .
+            "	typecho_fields.str_value as 'thumb'\n" .
+            "FROM\n" .
+            "	typecho_contents,\n" .
+            "	typecho_fields\n" .
+            "WHERE\n" .
+            "	typecho_contents.cid = typecho_fields.cid AND\n" .
+            "	typecho_fields.`name` = 'thumb' AND\n" .
+            "   typecho_contents.cid IN (" . $this->sticky . ")";
+
+        $query = $this->db->query($select);
+        $post = $this->db->fetchAll($query);
+
+        // foreach ($posts as $post) {
+        //     $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb"));
+        //     $result[]    = $post;
+        // }
+        $this->export($post);
     }
+    // 获取文章页数
+    // function getPageNum()
+    // {
+    //     $select =  $this->db->select('COUNT(cid) AS Num')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish');
+    //     $data = $this->db->fetchAll($select);
+    //     $Num = $data[0]['Num'] / $this->pageSize + 1;
+    //     $this->export((int) $Num);
+    // }
     // 获取博客总览
     function getOverview()
     {
@@ -139,37 +170,20 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->export($lists);
     }
     // 获取最近post
-    function getRecentPost()
+    function post()
     {
         $page     = (int) self::GET('page', 1);
-        $offset   = $this->pageSize * ($page - 1);
-        $select   = $this->db->select('cid', 'title', 'authorId ', 'table.contents.created', 'slug', 'commentsNum', 'views', 'likes', 'screenName', 'url')->from('table.contents')->join('table.users', 'table.contents.authorId = table.users.uid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->where('table.contents.created < ?', time())->order('table.contents.created', Typecho_Db::SORT_DESC)->offset($offset)->limit($this->pageSize);
+        $select   = $this->db->select('cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->page($page, 10);
         $posts  = $this->db->fetchAll($select);
         foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
-            $thumb = $this->thumb;
-            $thumb2 = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb"));
-            $post['thumb'] = $thumb2 != null ? $thumb2 : array(array("str_value" => $thumb));
+            $post['category'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'category'));
+            $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb"));
+            $post['desc'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "desc"));
             $result[]    = $post;
         }
         $this->export($result);
     }
-     // 获取最近post
-     function post()
-     {
-         $page     = (int) self::GET('page', 1);
-         $offset   = $this->pageSize * ($page - 1);
-         $select   = $this->db->select('cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes', 'screenName', 'url')->from('table.contents')->join('table.users', 'table.contents.authorId = table.users.uid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->where('table.contents.created < ?', time())->order('table.contents.created', Typecho_Db::SORT_DESC)->offset($offset)->limit($this->pageSize);
-         $posts  = $this->db->fetchAll($select);
-         foreach ($posts as $post) {
-             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
-             $post['category'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'category'));
-             $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb"));
-             $post['desc'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "desc"));
-             $result[]    = $post;
-         }
-         $this->export($result);
-     }
     // 新增评论
     function addComment()
     {
@@ -197,7 +211,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     function getComment()
     {
         $cid = self::GET('cid', -1);
-        $comments = $this->db->fetchAll($this->db->select('cid', 'coid', 'created', 'text', 'parent', 'table.comments.openid AS openid', 'table.WeBlog_users.nickName AS nickName', 'table.WeBlog_users.avatarUrl AS avatarUrl', 'table.WeBlog_users.gender AS gender')->from('table.comments')->join('table.WeBlog_users', 'table.comments.openid = table.WeBlog_users.openid')->where('cid = ?', $cid)->where('status = ?', 'approved')->order('table.comments.created', Typecho_Db::SORT_DESC));
+        $comments = $this->db->fetchAll($this->db->select('cid', 'coid', 'created', 'text', 'parent', 'table.comments.openid AS openid', 'table.WeBlog_users.nickName AS nickName', 'table.WeBlog_users.avatarUrl AS avatarUrl', 'table.WeBlog_users.gender AS gender')->from('table.comments')->join('table.WeBlog_users', 'table.comments.openid = table.WeBlog_users.openid')->where('cid = ?', $cid)->where('parent = 0')->where('status = ?', 'approved')->order('table.comments.created', Typecho_Db::SORT_DESC));
         $result = array();
         //获取根评论
         foreach ($comments as $comment) {
@@ -230,13 +244,13 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->export($result);
     }
     // 获取关于页cid
-    function getAboutcid()
-    {
-        $cid = 'none';
-        $cid = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->aboutCid;
+    // function getAboutcid()
+    // {
+    //     $cid = 'none';
+    //     $cid = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->aboutCid;
 
-        $this->export($cid);
-    }
+    //     $this->export($cid);
+    // }
     // 通过cid获取post
     function getPostBycid()
     {
@@ -283,34 +297,30 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     function search()
     {
         $keyword = self::GET('keyWord', 'null');
-        $data = $this->db->fetchAll($this->db->query("SELECT\n".
-        "	typecho_contents.cid,\n".
-        "	typecho_contents.title,\n".
-        "	SUBSTRING(typecho_contents.text from 16 for 100) AS text \n".
-        "FROM\n".
-        "	typecho_contents \n".
-        "WHERE\n".
-        "	typecho_contents.type = \"post\" \n".
-        "	AND typecho_contents.`status` = \"publish\" \n".
-        "	AND (\n".
-        "		typecho_contents.text LIKE \"%".$keyword."%\" \n".
-        "	OR typecho_contents.title LIKE  \"%".$keyword."%\" \n".
-        "	)"));
-        $this->export($data);
+        $select   = $this->db->select('cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('table.contents.text LIKE ?', '%' . $keyword . '%')->order('table.contents.created', Typecho_Db::SORT_DESC);
+        $posts  = $this->db->fetchAll($select);
+        foreach ($posts as $post) {
+            $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
+            $post['category'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'category'));
+            $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb"));
+            $post['desc'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "desc"));
+            $result[]    = $post;
+        }
+        $this->export($result);
     }
     // 获取AccessToken
     private function getAccessToken()
     {
-    	//实例化redis
-		$redis = new Redis();
-		//连接
-		$redis->connect('127.0.0.1', 6379);
-		$redis->select(1);
-    	$access_token = $redis->get("access_token");
-    	if ($access_token && $redis->get("token_expire_time") > time()) {
-    		return $access_token;
+        //实例化redis
+        $redis = new Redis();
+        //连接
+        $redis->connect('127.0.0.1', 6379);
+        $redis->select(1);
+        $access_token = $redis->get("access_token");
+        if ($access_token && $redis->get("token_expire_time") > time()) {
+            return $access_token;
         } else {
-            $url = sprintf('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s', $this->weixinAppID,$this->weixinAppSecret);
+            $url = sprintf('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s', $this->weixinAppID, $this->weixinAppSecret);
             $res = json_decode(file_get_contents($url));
             $access_token = $res->access_token;
             $redis->set('access_token', $access_token);

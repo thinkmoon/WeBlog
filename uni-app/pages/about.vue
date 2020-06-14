@@ -1,11 +1,11 @@
 <template name="about">
   <view>
-    <view class="overView flex justify-between flex-direction weather rain" style="height: 500upx; width: 100%;">
-      <view class="flex justify-center align-center flex-direction margin-top-lg" style="height: 300upx; width: 100%;">
-        <image class="icon shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg" style="z-index: 99;"></image>
+    <view class="overView flex justify-between flex-direction weather rain">
+      <view class="flex justify-center align-center flex-direction margin-top-lg">
+        <image class="icon shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"></image>
         <view class="text-bold text-shadow text-lg">指尖魔法屋</view>
       </view>
-      <view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top" style="width: 100%;">
+      <view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top">
         <view class="margin-xs flex align-center flex-direction">
           <view>文章</view>
           <view>{{ Overview.posts[0].Num }}</view>
