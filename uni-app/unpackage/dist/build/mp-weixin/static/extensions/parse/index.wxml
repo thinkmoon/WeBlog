@@ -1,9 +1,0 @@
-<!--index.wxml-->
-
-<view style="background-color: #fff;padding-bottom: 60rpx;">
-	<!--使用towxml-->
-	<towxml nodes="{{article}}"/>
-</view>
-
-
-

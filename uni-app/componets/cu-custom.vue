@@ -25,8 +25,10 @@
     name: 'cu-custom',
     computed: {
       style() {
-        var StatusBar = this.StatusBar;
-        var CustomBar = this.CustomBar;
+        let {
+        	StatusBar,
+        	CustomBar,
+        } = this;
         var bgImage = this.bgImage;
         var style = `height:${CustomBar}px;padding-top:${StatusBar}px;`;
         if (this.bgImage) {
@@ -34,24 +36,6 @@
         }
         console.log(`this.bgColor ${this.bgColor}`)
         return style
-      }
-    },
-    created() {
-      try {
-        const res = wx.getSystemInfoSync()
-        // #ifdef MP-WEIXIN || MP-QQ
-        this.StatusBar = res.statusBarHeight;
-        let custom = wx.getMenuButtonBoundingClientRect();
-        this.Custom = custom;
-        this.CustomBar = custom.bottom + custom.top - res.statusBarHeight;
-        // #endif		
-
-        // #ifdef MP-ALIPAY
-        this.StatusBar = res.statusBarHeight;
-        this.CustomBar = res.statusBarHeight + res.titleBarHeight;
-        // #endif
-      } catch (e) {
-        // Do something when catch error
       }
     },
     props: {

@@ -5,7 +5,7 @@
  * 
  * @package WeBlog 
  * @author 醉月思
- * @version 0.2.0 dev
+ * @version 1.0.0 dev
  * @link https://github.com/thinkmoon/WeBlog
  */
 class WeBlog_Plugin implements Typecho_Plugin_Interface

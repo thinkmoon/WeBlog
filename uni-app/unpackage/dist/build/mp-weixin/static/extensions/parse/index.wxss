@@ -1,7 +1,0 @@
-@import './towxml/style/main.wxss';
-
-
-/**如果页面有动态主题切换，则需要将使用到的样式全部引入**/
-
-/**代码高亮样式**/
-@import './towxml/parse/highlight/style/github.wxss';

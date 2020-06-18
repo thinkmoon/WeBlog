@@ -297,7 +297,7 @@ class WeBlog_Action extends Typecho_Widget implements Widget_Interface_Do
     function search()
     {
         $keyword = self::GET('keyWord', 'null');
-        $select   = $this->db->select('cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('table.contents.text LIKE ?', '%' . $keyword . '%')->order('table.contents.created', Typecho_Db::SORT_DESC);
+        $select   = $this->db->select('cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('table.contents.text LIKE ?', '%' . $keyword . '%')->order('table.contents.created', Typecho_Db::SORT_DESC)->limit(20);
         $posts  = $this->db->fetchAll($select);
         foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));

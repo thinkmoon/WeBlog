@@ -11,10 +11,9 @@
   "window": {
     "navigationStyle": "custom"
   },
-  "style": "v2",
   "usingComponents": {
-    "cu-custom": "/common/componets/cu-custom",
-    "tm-footer": "/common/componets/tm-footer",
+    "cu-custom": "/componets/cu-custom",
+    "tm-footer": "/componets/tm-footer",
     "home": "/pages/index",
     "about": "/pages/about"
   },

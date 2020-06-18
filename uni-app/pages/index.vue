@@ -18,7 +18,7 @@
           </view>
         </swiper-item>
       </swiper>
-      <view class="flex justify-around bg-white padding margin-bottom-sm">
+      <view class="flex justify-around bg-white padding">
         <view class="flex-direction flex align-center">
           <span class="text-xxl text-blue"><text class="icon-newsfill"></text></span>
           <span class="text-sm">分类</span>
@@ -36,13 +36,13 @@
           <span class="text-sm">标签</span>
         </view>
       </view>
-      <view>
-        <view v-for="(item, index) in postData" :key="index" class="margin-sm list solid">
+      <view class="bg-white padding-top-sm margin-top-sm">
+        <view v-for="(item, index) in postData" :key="index" class="margin-sm list radius shadow-lg">
           <!-- #ifdef MP-QQ -->
           <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
           <!-- #endif -->
           <navigator hover-class="none" :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value"
-            class="list__item animation-slide-bottom bg-white shadow radius">
+            class="list__item animation-slide-bottom bg-white">
             <view class="image-container" v-if="item.thumb.length">
               <view class="overplay"></view>
               <image :src="item.thumb[0].str_value" mode="aspectFill" :lazy-load="true" class="image"></image>
@@ -254,7 +254,7 @@
   }
 
   .image-container {
-    height: 300upx;
+    height: 400upx;
     overflow: hidden;
   }
 
@@ -266,7 +266,7 @@
 
   .overplay {
     width: 100%;
-    height: 300upx;
+    height: 400upx;
     background: -webkit-linear-gradient(270deg, rgba(0, 0, 0, .01) 2%, rgba(0, 0, 0, .95) 100%);
     background: linear-gradient(180deg, rgba(0, 0, 0, .01) 2%, rgba(0, 0, 0, .95) 100%);
     position: absolute;

@@ -20,6 +20,31 @@ Vue.component("about", about);
 
 App.mpType = "app";
 
+let e = uni.getSystemInfoSync()
+console.log("uni.getSystemInfoSync()")
+
+// #ifndef MP
+Vue.prototype.StatusBar = e.statusBarHeight;
+if (e.platform == "android") {
+  Vue.prototype.CustomBar = e.statusBarHeight + 50;
+} else {
+  Vue.prototype.CustomBar = e.statusBarHeight + 45;
+}
+// #endif
+
+// #ifdef MP-WEIXIN
+Vue.prototype.StatusBar = e.statusBarHeight;
+let custom = wx.getMenuButtonBoundingClientRect();
+Vue.prototype.Custom = custom;
+Vue.prototype.CustomBar =
+  custom.bottom + custom.top - e.statusBarHeight;
+// #endif
+
+// #ifdef MP-ALIPAY
+Vue.prototype.StatusBar = e.statusBarHeight;
+Vue.prototype.CustomBar = e.statusBakrHeight + e.titleBarHeight;
+// #endif
+
 const app = new Vue({
   ...App,
 });
