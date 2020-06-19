@@ -7,13 +7,14 @@
           <view :adjust-position="false" type="text" placeholder="" confirm-type="search">请输入你想知道的内容</view>
         </view>
       </view>
-      <swiper class="card-swiper margin-bottom square-dot" :indicator-dots="false" :circular="true" :autoplay="true"
-        interval="5000" duration="1500" @change="cardSwiper">
-        <swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''" class="padding-0">
+      <swiper class="card-swiper margin-bottom square-dot" :indicator-dots="false" :circular="true" :autoplay="true" interval="5000" duration="1500" @change="cardSwiper">
+        <swiper-item v-for="(item, index) in swiperList" :key="index" :class="cardCur == index ? 'cur' : ''" class="padding-0">
           <view class="image swiper-item bg-white">
             <navigator hover-class="none" :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb">
-            <image :src="item.thumb" mode="widthFix" :lazy-load="true"></image>
-            <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view>
+              <view class="image-banner">
+                
+              </view>
+              <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view>
             </navigator>
           </view>
         </swiper-item>
@@ -41,8 +42,7 @@
           <!-- #ifdef MP-QQ -->
           <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
           <!-- #endif -->
-          <navigator hover-class="none" :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value"
-            class="list__item animation-slide-bottom bg-white">
+          <navigator hover-class="none" :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value" class="list__item animation-slide-bottom bg-white">
             <view class="image-container" v-if="item.thumb.length">
               <view class="overplay"></view>
               <image :src="item.thumb[0].str_value" mode="aspectFill" :lazy-load="true" class="image"></image>
@@ -50,17 +50,18 @@
               <!-- <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view> -->
             </view>
             <view class="flex align-center padding-xs post-entry-categories text-xs">
-              <view class="margin-left-xs" v-for="(tagItem,index) in item.tag" :key="index">{{ tagItem.name }}</view>
+              <view class="margin-left-xs" v-for="(tagItem, index) in item.tag" :key="index">{{ tagItem.name }}</view>
             </view>
             <view class="bg-white padding-left-sm title">{{ item.title }}</view>
-            <view class="desc padding-sm">
-              {{ item.desc.length ? item.desc[0].str_value : "" }}
-            </view>
+            <view class="desc padding-sm">{{ item.desc.length ? item.desc[0].str_value : '' }}</view>
             <view class="cu-list padding-lr-sm padding-bottom-xs">
               <view class="cu-item">
                 <view class="text-gray text-sm flex justify-between align-center">
                   <view>
-                    <text class=" margin-right-sm"> <text class="icon-file margin-right-xs"></text>{{ item.category[0].name }}</text>
+                    <text class=" margin-right-sm">
+                      <text class="icon-file margin-right-xs"></text>
+                      {{ item.category[0].name }}
+                    </text>
                     {{ formatTime(item.created) }}
                   </view>
                   <view class="text-gray">
@@ -79,198 +80,195 @@
       </view>
       <!-- <view @click="goTop" style="bottom:100px;position: fixed;">回到顶部</view> -->
       <view>
-        <view class="action">
-          <view class="cu-load load-icon" :class="isLoading ? 'loading' : 'over'"></view>
-        </view>
+        <view class="action"><view class="cu-load load-icon" :class="isLoading ? 'loading' : 'over'"></view></view>
       </view>
     </scroll-view>
   </block>
 </template>
 
 <script>
-  export default {
-    name: 'home',
-    data() {
-      return {
-        cardCur: 0,
-        swiperList: [],
-        isLoading: true,
-        curPage: 0,
-        postData: [],
-        cardCur: 0,
-        dotStyle: false,
-        towerStart: 0,
-        direction: ''
-      };
+export default {
+  name: 'home',
+  data() {
+    return {
+      cardCur: 0,
+      swiperList: [],
+      isLoading: true,
+      curPage: 0,
+      postData: [],
+      cardCur: 0,
+      dotStyle: false,
+      towerStart: 0,
+      direction: ''
+    };
+  },
+  methods: {
+    goTop() {
+      console.log('回到顶部');
+      uni.pageScrollTo({
+        scrollTop: 0,
+        duration: 300
+      });
     },
-    methods: {
-      goTop() {
-        console.log("回到顶部")
-        uni.pageScrollTo({
-          scrollTop: 0,
-          duration: 300
-        })
-      },
-      toSearch() {
-        uni.navigateTo({
-          url: './search/search'
-        });
-      },
-      // cardSwiper
-      cardSwiper(e) {
-        this.cardCur = e.detail.current;
-      },
-      formatTime(value) {
-        // return this.$moment.unix(value).fromNow()
-        return this.$moment.unix(value).fromNow();
-      },
-      async loadPost() {
-        this.isLoading = true;
-        // 每隔十页清空一下，避免内存溢出
-        if (this.postData.curPage % 10 == 0) {
-          this.postData = [];
-        }
-        let res = await this.$api.getPost({
-          page: this.curPage + 1
-        });
-        // this.loadProgress = 100
-        if (res != null && res.length > 0) {
-          this.postData = this.postData.concat(res);
-          this.curPage++;
-        }
-        this.isLoading = false;
-        uni.stopPullDownRefresh();
+    toSearch() {
+      uni.navigateTo({
+        url: './search/search'
+      });
+    },
+    // cardSwiper
+    cardSwiper(e) {
+      this.cardCur = e.detail.current;
+    },
+    formatTime(value) {
+      // return this.$moment.unix(value).fromNow()
+      return this.$moment.unix(value).fromNow();
+    },
+    async loadPost() {
+      this.isLoading = true;
+      // 每隔十页清空一下，避免内存溢出
+      if (this.postData.curPage % 10 == 0) {
+        this.postData = [];
       }
-    },
-    async onReady() {
-      await this.loadPost();
-      this._observer = wx.createIntersectionObserver(this);
-      this._observer
-        .relativeToViewport({
-          bottom: 600
-        })
-        .observe('.action', res => {
-          console.log(res);
-          this.loadPost();
-        });
-      this.$api.getSticky().then(res => {
-        this.swiperList = res
+      let res = await this.$api.getPost({
+        page: this.curPage + 1
+      });
+      // this.loadProgress = 100
+      if (res != null && res.length > 0) {
+        this.postData = this.postData.concat(res);
+        this.curPage++;
+      }
+      this.isLoading = false;
+      uni.stopPullDownRefresh();
+    }
+  },
+  async onReady() {
+    await this.loadPost();
+    this._observer = wx.createIntersectionObserver(this);
+    this._observer
+      .relativeToViewport({
+        bottom: 600
       })
-    },
-    pageLifetimes: {}
-  };
+      .observe('.action', res => {
+        console.log(res);
+        this.loadPost();
+      });
+    this.$api.getSticky().then(res => {
+      this.swiperList = res;
+    });
+  },
+  pageLifetimes: {}
+};
 </script>
 <style lang="less" scoped>
-  .post-entry-categories view:nth-child(5n) {
-    background-color: #4A4A4A
+.post-entry-categories view:nth-child(5n) {
+  background-color: #4a4a4a;
+}
+
+.post-entry-categories view:nth-child(5n + 1) {
+  background-color: #1ac756;
+}
+
+.post-entry-categories view:nth-child(5n + 2) {
+  background-color: #ffbb50;
+}
+
+.post-entry-categories view:nth-child(5n + 3) {
+  background-color: #ff5e5c;
+}
+
+.post-entry-categories view:nth-child(5n + 4) {
+  background-color: #19b5fe;
+}
+
+// .text-xxl {
+//   font-size: 64upx;
+// }
+
+.post-entry-categories {
+  background-color: #fff;
+
+  view {
+    line-height: 1;
+    color: #fff;
+    padding: 8upx;
   }
+}
 
-  .post-entry-categories view:nth-child(5n+1) {
-    background-color: #1ac756
-  }
+.title {
+  font-weight: bold;
+  font-size: 32rpx;
+  color: #333;
+}
 
-  .post-entry-categories view:nth-child(5n+2) {
-    background-color: #ffbb50
-  }
+.scroll-view {
+  height: 100vh;
+}
 
-  .post-entry-categories view:nth-child(5n+3) {
-    background-color: #ff5e5c
-  }
+// 博客内容的统计
+.intro {
+  width: 506rpx;
+  height: 112rpx;
+  position: relative;
+  color: #888;
+  background-color: #656565;
+}
 
-  .post-entry-categories view:nth-child(5n+4) {
-    background-color: #19B5FE
-  }
+// avatar的view容器
+.avatar-view {
+  height: 110rpx;
+}
 
-  // .text-xxl {
-  //   font-size: 64upx;
-  // }
+.ad {
+  background-color: #fff;
+  margin-bottom: 10px;
+}
 
-  .post-entry-categories {
-    background-color: #fff;
+// 头像
+.avatar {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  top: -100rpx;
+  margin: auto;
+  border: 5rpx #eee solid;
+}
 
-    view {
-      line-height: 1;
-      color: #fff;
-      padding: 8upx;
-    }
-  }
+.bg-img image {
+  width: 506rpx;
+  min-height: 200rpx;
+}
 
-  .title {
-    font-weight: bold;
-    font-size: 32rpx;
-    color: #333
-  }
+.about {
+  margin: auto;
+  text-align: center;
+  width: 506rpx;
+  background-color: #545454;
+  margin-top: 80%;
+}
 
+page {
+  // background-image: var(--gradualBlack);
+  width: 100vw;
+}
 
-  .scroll-view {
-    height: 100vh;
-  }
+.image-container {
+  height: 400upx;
+  overflow: hidden;
+}
 
-  // 博客内容的统计
-  .intro {
-    width: 506rpx;
-    height: 112rpx;
-    position: relative;
-    color: #888;
-    background-color: #656565;
-  }
+.image {
+  // object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
 
-  // avatar的view容器
-  .avatar-view {
-    height: 110rpx;
-  }
-
-  .ad {
-    background-color: #fff;
-    margin-bottom: 10px;
-  }
-
-  // 头像
-  .avatar {
-    width: 200rpx;
-    height: 200rpx;
-    border-radius: 50%;
-    top: -100rpx;
-    margin: auto;
-    border: 5rpx #eee solid;
-  }
-
-  .bg-img image {
-    width: 506rpx;
-    min-height: 200rpx;
-  }
-
-  .about {
-    margin: auto;
-    text-align: center;
-    width: 506rpx;
-    background-color: #545454;
-    margin-top: 80%;
-  }
-
-  page {
-    // background-image: var(--gradualBlack);
-    width: 100vw;
-  }
-
-  .image-container {
-    height: 400upx;
-    overflow: hidden;
-  }
-
-  .image {
-    // object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .overplay {
-    width: 100%;
-    height: 400upx;
-    background: -webkit-linear-gradient(270deg, rgba(0, 0, 0, .01) 2%, rgba(0, 0, 0, .95) 100%);
-    background: linear-gradient(180deg, rgba(0, 0, 0, .01) 2%, rgba(0, 0, 0, .95) 100%);
-    position: absolute;
-    opacity: 0.2;
-    z-index: 99;
-  }
+.overplay {
+  width: 100%;
+  height: 400upx;
+  background: -webkit-linear-gradient(270deg, rgba(0, 0, 0, 0.01) 2%, rgba(0, 0, 0, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.01) 2%, rgba(0, 0, 0, 0.95) 100%);
+  position: absolute;
+  opacity: 0.2;
+  z-index: 99;
+}
 </style>
