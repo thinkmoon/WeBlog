@@ -41,7 +41,7 @@
     >
       <div @click="like" class="padding-xs line-blue solid  margin-right">
         <text class="icon-appreciate padding-right-xs"></text>赞
-        {{ postData[0].likes | formatNum}}
+        {{ postData[0].likes | formatNum }}
       </div>
       <div @click="reward" class="padding-xs margin-right line-red solid">
         <text class="icon-redpacket padding-right-xs"></text>赏
@@ -157,7 +157,11 @@ videoAd.onClose(function(res) {
   console.log("videoAd onClose", res);
 });
 // #endif
+import parse from "@/componets/tm-parse";
 export default {
+  components: {
+    parse,
+  },
   data() {
     return {
       cid: null,
@@ -177,15 +181,14 @@ export default {
     };
   },
   filters: {
-    formatNum(value){
-      if(value > 1000000){
-        return (value / 1000000).toFixed(1) + "m"
+    formatNum(value) {
+      if (value > 1000000) {
+        return (value / 1000000).toFixed(1) + "m";
+      } else if (value > 1000) {
+        return (value / 1000).toFixed(1) + "k";
       }
-      else if(value > 1000){
-        return (value / 1000).toFixed(1) + "k"
-      }
-      return value
-    }
+      return value;
+    },
   },
   methods: {
     formatTime(value) {

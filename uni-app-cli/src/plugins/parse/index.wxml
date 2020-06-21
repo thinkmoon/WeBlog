@@ -1,6 +1,0 @@
-<!--index.wxml-->
-<towxml nodes="{{article}}"/>
-
-
-
-

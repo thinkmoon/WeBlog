@@ -6,10 +6,7 @@
     {
       "path": "pages/post",
       "style": {
-        "navigationBarTitleText": "文章内容",
-        "usingComponents": {
-          "parse": "../plugins/parse/index"
-        }
+        "navigationBarTitleText": "文章内容"
       }
     },
     {

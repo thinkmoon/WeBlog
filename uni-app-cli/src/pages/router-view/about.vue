@@ -49,8 +49,11 @@
 </template>
 
 <script>
+import parse from '@/componets/tm-parse'
 export default {
-  name: "about",
+  components:{
+    parse
+  },
   data() {
     return {
       cid: null,
@@ -59,12 +62,18 @@ export default {
       postData: {},
     };
   },
-  async onReady(query) {
-    this.postData = await this.$api.getPostBycid({
-      cid: "555",
+  mounted() {
+    this.$api
+      .getPostBycid({
+        cid: "2",
+      })
+      .then((res) => {
+        this.postData = res;
+        this.isLoading = false;
+      });
+    this.$api.getOverview().then((res) => {
+      this.Overview = res;
     });
-    this.isLoading = false;
-    this.Overview = await this.$api.getOverview();
   },
   onShow() {},
 };
