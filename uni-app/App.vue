@@ -77,7 +77,7 @@
   };
 </script>
 
-<style lang="less">
+<style lang="scss">
   /* 引入color UI wxss 库 */
   @import "./assets/css/main.wxss";
   @import "./assets/css/icon.wxss";

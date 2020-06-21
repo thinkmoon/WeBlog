@@ -5,18 +5,6 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = {
   configureWebpack: {
     plugins: [
-      new RemovePlugin({
-        after: {
-          root: path.join(__dirname, "./unpackage"),
-          include: [
-            path.join(
-              __dirname,
-              "unpackage/dist/dev/mp-weixin/sitemap.json"
-            ),
-          ],
-          trash: false,
-        },
-      }),
       new CopyWebpackPlugin([{
         from: path.join(__dirname, "plugins"),
         to: path.join(

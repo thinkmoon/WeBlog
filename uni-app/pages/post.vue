@@ -284,7 +284,7 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="scss">
   
  .like-list {
    width: 90%;

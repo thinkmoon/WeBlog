@@ -1,0 +1,235 @@
+/* 在colorUI上拓展的CSS */
+
+// $color-base       : #0081ff; //科技蓝
+// $color-base       : #39b54a; //自然绿
+// $color-base    : #000; //低调黑
+// $color-base : #f44444; // CSDN红
+// $color-base : #009A61; // 思否绿
+$color-base : #007fff; // 掘金蓝
+// $color-base : #ea6f5a; // 简书红
+// $color-base : #24292e; // github黑
+// $color-base : #0077e6; //知乎蓝
+
+$color-hover : saturate($color-base, 10%);
+$color-focus : desaturate($color-base, 10%);
+// $color-disable : lightness(desaturate($color-base, 100%), 30%);
+
+$color-complement : spin($color-base, 180);
+
+// 基色
+.color-base,
+.line-base {
+  color: $color-base;
+}
+
+.line-base::after {
+  border-color: $color-base;
+}
+
+.bg-base {
+  background-color: $color-base;
+}
+//补充色
+.color-complement,
+.line-complement {
+  color: $color-complement;
+}
+
+.line-complement::after {
+  border-color: $color-complement;
+}
+
+.bg-complement {
+  background-color: $color-complement;
+}
+
+// 主色调渐变
+.bg-gradual {
+  background: linear-gradient(0deg, $color-base, adjust-hue($color-base, -10));
+}
+
+.bg-radius::after {
+  width: 140%;
+  height: 100px;
+  position: absolute;
+  left: -20%;
+  top: 0;
+  z-index: -1;
+  content: '';
+  border-radius: 0 0 50% 50%;
+  background-color: $color-base;
+}
+
+@function contrast-color($color) {
+  @return if(lightness($color) < 55%, #fff, #000)
+}
+
+.color-contrast {
+  color: contrast-color($color-base);
+}
+
+.bg-contrast {
+  background-color: contrast-color($color-base);
+}
+
+/* 按钮样式的修改 */
+.cu-btn.xs {
+  padding: 0 20rpx;
+  font-size: 20rpx;
+  height: 48rpx;
+}
+
+.cu-btn.sm {
+  padding: 0 26rpx;
+  font-size: 28rpx;
+  height: 56rpx;
+}
+
+.real-solid {
+  border: 1rpx solid rgba($color: #000000, $alpha: 0.1);
+}
+
+/* 便签 */
+  .post-entry-categories view:nth-child(5n) {
+    background-color: #4A4A4A
+  }
+
+  .post-entry-categories view:nth-child(5n+1) {
+    background-color: #1ac756
+  }
+
+  .post-entry-categories view:nth-child(5n+2) {
+    background-color: #ffbb50
+  }
+
+  .post-entry-categories view:nth-child(5n+3) {
+    background-color: #ff5e5c
+  }
+
+  .post-entry-categories view:nth-child(5n+4) {
+    background-color: #19B5FE
+  }
+  .post-entry-categories {
+    background-color: #fff;
+
+    view {
+      line-height: 1;
+      color: #fff;
+      padding: 8upx;
+    }
+  }
+  
+/* 水平垂直居中 */
+.tm-every-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line-sub {
+  color: #a9a9a9;
+}
+
+/*正文样式*/
+.h2w-light {
+  color:#333;
+  background-color:white;
+}
+
+/**标题**/
+.h2w-light .h2w__h1,
+.h2w-light .h2w__h2 {
+    border-color:#eee;
+}
+
+
+/**表格**/
+.h2w-light .h2w__thead .h2w__tr {
+    background-color:#f6f8fa;
+}
+.h2w-light .h2w__table .h2w__tr:nth-child(2n){
+    background-color:#fbfcfd;
+}
+.h2w-light .h2w__th,
+.h2w-light .h2w__td {
+    border-color:#dfe2e5;
+}
+
+
+/**代码块**/
+.h2w-light .h2w__pre {
+    background-color:#f6f8fa;
+    border-color:#eaedf0;
+}
+
+.h2w-light .h2w__code {
+    background-color:#f6f8fa;
+    border-color:#eaedf0;
+}
+
+
+/**块元素**/
+.h2w-light .h2w__blockquote {
+    border-left-color:#dfe2e5;
+}
+
+/**内连元素**/
+.h2w-light .h2w__a {
+    color:$color-base;
+    border-color:#b9d9b8;
+}
+
+.h2w-light .h2w__hr {
+    background-color:#eee;
+}
+
+.h2w-light .h2w__mark {
+    background:yellow;
+    color:black;
+}
+
+.h2w-light .h2w__lineNum {
+    color:#ccc;
+}
+
+// 加载动画
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+.spinner {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 40vh auto;
+
+  border-radius: 100%;
+  -webkit-animation: scaleout 1s infinite ease-in-out;
+  animation: scaleout 1s infinite ease-in-out;
+}
+
+@-webkit-keyframes scaleout {
+  0% {
+    -webkit-transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes scaleout {
+  0% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    opacity: 0;
+  }
+}
+// 加载动画END
