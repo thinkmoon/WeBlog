@@ -160,29 +160,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.post-entry-categories view:nth-child(5n) {
-  background-color: #4a4a4a;
-}
-
-.post-entry-categories view:nth-child(5n + 1) {
-  background-color: #1ac756;
-}
-
-.post-entry-categories view:nth-child(5n + 2) {
-  background-color: #ffbb50;
-}
-
-.post-entry-categories view:nth-child(5n + 3) {
-  background-color: #ff5e5c;
-}
-
-.post-entry-categories view:nth-child(5n + 4) {
-  background-color: #19b5fe;
-}
-
-// .text-xxl {
-//   font-size: 64upx;
-// }
 
 .post-entry-categories {
   background-color: #fff;
