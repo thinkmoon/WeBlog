@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 
 // @ts-ignore
-import ComponentOptions from '@dcloudio/types'
+// import ComponentOptions from '@dcloudio/types'
 
 import "./plugins";
 
