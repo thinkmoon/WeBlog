@@ -72,15 +72,14 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->parseRequest();
     }
 
-    private static function getOpenId()
-    {
-        return $_SERVER['HTTP_OPENID'];
-    }
-
     public function action()
     {
     }
 
+    private static function getOpenId()
+    {
+        return $_SERVER['HTTP_OPENID'];
+    }
     /**
      * 发送跨域 HEADER
      *
@@ -190,19 +189,6 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         }
     }
 
-    /**
-     * show errors when accessing a disabled API
-     *
-     * @param string $route
-     * @return void
-     */
-    private function checkState($route)
-    {
-        $state = $this->config->$route;
-        if (!$state) {
-            $this->throwError('This API has been disabled.', 403);
-        }
-    }
 
     /**
      * 登录API
@@ -271,7 +257,6 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
     public function postsAction()
     {
         $this->lockMethod('get');
-        $this->checkState('posts');
 
         $pageSize = $this->getParams('pageSize', 5);
         $page = $this->getParams('page', 1);
@@ -312,38 +297,12 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
      */
     function getStickyAction()
     {
-        // $cids = explode(",", $this->sticky);
-        // $select   = $this->db->select('cid', 'title')->from('table.contents')->where('cid IN ?', $cids);
-        // $posts  = $this->db->fetchAll($select);
-        $select   = "SELECT\n" .
-            "	typecho_contents.cid, \n" .
-            "	typecho_contents.title, \n" .
-            "	typecho_fields.str_value as 'thumb'\n" .
-            "FROM\n" .
-            "	typecho_contents,\n" .
-            "	typecho_fields\n" .
-            "WHERE\n" .
-            "	typecho_contents.cid = typecho_fields.cid AND\n" .
-            "	typecho_fields.`name` = 'thumb' AND\n" .
-            "   typecho_contents.cid IN (" . $this->sticky . ")";
-
+        $select   = "SELECT typecho_contents.cid, typecho_contents.title,typecho_fields.str_value as 'thumb' FROM typecho_contents,typecho_fields WHERE typecho_contents.cid = typecho_fields.cid AND typecho_fields.`name` = 'thumb' AND typecho_contents.cid IN (" . $this->sticky . ")";
         $query = $this->db->query($select);
         $post = $this->db->fetchAll($query);
-
-        // foreach ($posts as $post) {
-        //     $post['thumb'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "thumb"));
-        //     $result[]    = $post;
-        // }
         $this->throwData($post);
     }
-    // 获取文章页数
-    // function getPageNum()
-    // {
-    //     $select =  $this->db->select('COUNT(cid) AS Num')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish');
-    //     $data = $this->db->fetchAll($select);
-    //     $Num = $data[0]['Num'] / $this->pageSize + 1;
-    //     $this->throwData((int) $Num);
-    // }
+
     // 获取博客总览
     function getOverviewAction()
     {
@@ -356,14 +315,6 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $select   = $this->db->select('COUNT(mid) AS Num')->from('table.metas')->where('type = ?', 'tag');
         $data['tags'] = $this->db->fetchAll($select);
         $this->throwData($data);
-    }
-    // 获取博客作者信息
-    function getAuthorInfoAction()
-    {
-        $select   = $this->db->select('*')->from('table.users');
-        $lists = $this->db->fetchAll($select);
-        $lists[0]['avatarUrl'] = $this->avatarUrl;
-        $this->throwData($lists);
     }
     // 新增评论
     function addCommentAction()
@@ -509,75 +460,6 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
             return $access_token;
         }
     }
-    /**
-     * 获取页面列表的接口
-     *
-     * @return void
-     */
-    public function pagesAction()
-    {
-        $this->lockMethod('get');
-        $this->checkState('pages');
-
-        $select = $this->db
-            ->select('cid', 'title', 'created', 'slug')
-            ->from('table.contents')
-            ->where('type = ?', 'page')
-            ->where('status = ?', 'publish')
-            ->where('created < ?', time())
-            ->where('password IS NULL')
-            ->order('order', Typecho_Db::SORT_ASC);
-
-        $result = $this->db->fetchAll($select);
-        $count = count($result);
-
-        $this->throwData(array(
-            'count' => $count,
-            'dataSet' => $result,
-        ));
-    }
-
-    /**
-     * 获取分类列表的接口
-     *
-     * @return void
-     */
-    public function categoriesAction()
-    {
-        $this->lockMethod('get');
-        $this->checkState('categories');
-        $categories = $this->widget('Widget_Metas_Category_List');
-
-        if (isset($categories->stack)) {
-            $this->throwData($categories->stack);
-        } else {
-            $reflect = new ReflectionObject($categories);
-            $map = $reflect->getProperty('_map');
-            $map->setAccessible(true);
-            $this->throwData(array_merge($map->getValue($categories)));
-        }
-    }
-
-    /**
-     * 获取标签列表的接口
-     *
-     * @return void
-     */
-    public function tagsAction()
-    {
-        $this->lockMethod('get');
-        $this->checkState('tags');
-
-        $this->widget('Widget_Metas_Tag_Cloud')->to($tags);
-
-        if ($tags->have()) {
-            while ($tags->next()) {
-                $this->throwData($tags->stack);
-            }
-        }
-
-        $this->throwError('no tag', 404);
-    }
 
     /**
      * 获取设置项的接口
@@ -587,7 +469,6 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
     public function settingsAction()
     {
         $this->lockMethod('get');
-        $this->checkState('settings');
 
         $key = trim($this->getParams('key', ''));
         $allowed = array_merge(explode(',', $this->config->allowedOptions), array(

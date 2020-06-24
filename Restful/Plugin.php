@@ -3,12 +3,12 @@ if (!defined('__TYPECHO_ROOT_DIR__')) {
     exit;
 }
 /**
- * Typecho Restful 插件
+ * Typecho WeBlog Restful 插件
  *
  * @package Restful
- * @author MoeFront Studio
- * @version 1.2.0
- * @link https://moefront.github.io
+ * @author 醉月思
+ * @version 1.0.0
+ * @link https://thinkmoon.cn
  */
 class Restful_Plugin implements Typecho_Plugin_Interface
 {
@@ -27,7 +27,6 @@ class Restful_Plugin implements Typecho_Plugin_Interface
         foreach ($routes as $route) {
             Helper::addRoute($route['name'], $route['uri'], self::ACTION_CLASS, $route['action']);
         }
-        Typecho_Plugin::factory('Widget_Feedback')->comment = array(__CLASS__, 'comment');
 
         Helper::addPanel(1, 'WeBlog/Manage.php', 'WeBlog', '管理', 'administrator');
 
@@ -130,14 +129,6 @@ class Restful_Plugin implements Typecho_Plugin_Interface
         $origin = new Typecho_Widget_Helper_Form_Element_Textarea('origin', null, null, _t('域名列表'), _t('一行一个<br>以下是例子qwq<br>http://localhost:8080<br>https://blog.example.com<br>若不限制跨域域名，请使用通配符 *。'));
         $form->addInput($origin);
 
-        /* custom field privacy */
-        $fieldsPrivacy = new Typecho_Widget_Helper_Form_Element_Text('fieldsPrivacy', null, null, _t('自定义字段过滤'), _t('过滤掉不希望在获取文章信息时显示的自定义字段名称。使用半角英文逗号分隔，例如 fields1,fields2 .'));
-        $form->addInput($fieldsPrivacy);
-
-        /* allowed options attribute */
-        $allowedOptions = new Typecho_Widget_Helper_Form_Element_Text('allowedOptions', null, null, _t('自定义设置项白名单'), _t('默认情况下 /api/settings 只会返回一些安全的站点设置信息。若有需要你可以在这里指定允许返回的存在于 typecho_options 表中的字段，并通过 ?key= 参数请求。使用半角英文逗号分隔每个 key, 例如 keywords,theme .'));
-        $form->addInput($allowedOptions);
-
         /* CSRF token salt */
         $csrfSalt = new Typecho_Widget_Helper_Form_Element_Text('csrfSalt', null, '05faabd6637f7e30c797973a558d4372', _t('CSRF加密盐'), _t('请务必修改本参数，以防止跨站攻击。'));
         $form->addInput($csrfSalt);
@@ -152,9 +143,7 @@ class Restful_Plugin implements Typecho_Plugin_Interface
         $form->addInput($qqAppSecret);
         $sticky = new Typecho_Widget_Helper_Form_Element_Text('sticky', NULL, '1,2,3', _t('置顶文章cid'),  _t('显示在轮播图中'));
         $form->addInput($sticky);
-        $apiSecret = new Typecho_Widget_Helper_Form_Element_Text('apiSecret', NULL, 'xxx', _t('你的接口密钥'),  _t('你可以设置一个不容易被他人猜出来的随机字符串'));
-        $form->addInput($apiSecret);
-
+      
         $prefix = defined('__TYPECHO_RESTFUL_PREFIX__') ? __TYPECHO_RESTFUL_PREFIX__ : '/api/';
         /* API switcher */
         $routes = call_user_func(array(self::ACTION_CLASS, 'getRoutes'));
@@ -181,22 +170,5 @@ class Restful_Plugin implements Typecho_Plugin_Interface
      */
     public static function personalConfig(Typecho_Widget_Helper_Form $form)
     {
-    }
-
-    /**
-     * 构造评论真实IP
-     *
-     * @return array
-     */
-    public static function comment($comment, $post)
-    {
-        $request = Typecho_Request::getInstance();
-
-        $customIp = $request->getServer('HTTP_X_TYPECHO_RESTFUL_IP');
-        if ($customIp != null) {
-            $comment['ip'] = $customIp;
-        }
-
-        return $comment;
     }
 }
