@@ -6,7 +6,7 @@ var fly = new Fly();
 fly.config.baseURL =
   process.env.NODE_ENV === "production"
     ? "https://www.thinkmoon.cn/WeBlog/api/"
-    : "http://192.168.99.201/WeBlog/api/";
+    : "http://172.16.4.97/api/";
 
 fly.config.headers = {
   openid: uni.getStorageSync("openid") || "xxx",
