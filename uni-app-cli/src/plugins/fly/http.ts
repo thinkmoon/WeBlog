@@ -5,7 +5,7 @@ var fly = new Fly();
 
 fly.config.baseURL =
   process.env.NODE_ENV === "production"
-    ? "https://www.thinkmoon.cn/WeBlog/api/"
+    ? "https://www.thinkmoon.cn/api/"
     : "http://172.16.4.97/api/";
 
 fly.config.headers = {
@@ -15,20 +15,14 @@ fly.config.headers = {
 
 fly.interceptors.response.use(
   (response: any) => {
-    //只将请求结果的data字段返回
-    let res = response.data;
-    if (res.status == "200") {
-      return res.data;
-    } else {
-      uni.showModal({
-        title: "API请求出错:" + res.status,
-        content: "错误信息:" + res.data,
-      });
-    }
     return response.data.data;
   },
   (err: any) => {
     console.error(err);
+    uni.showModal({
+      title: err.request.url + "接口状态" + err.status,
+      content: "错误原因:" + err.engine.response.message
+    })
     return Promise.reject(err);
   }
 );

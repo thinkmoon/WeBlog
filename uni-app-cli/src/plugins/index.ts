@@ -4,7 +4,8 @@ import { API } from "./fly/api";
 declare module "vue/types/vue" {
   // 3. 声明为 Vue 补充的东西
   interface Vue {
-    $api: any;
+    $api: any,
+    $moment:any
   }
 }
 Vue.prototype.$api = API;

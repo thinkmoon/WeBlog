@@ -1,96 +1,34 @@
 <template name="home">
   <block>
     <cu-custom bgColor="bg-gradual" title="主页"></cu-custom>
-    <scroll-view
-      scroll-y
-      class="cu-card case scroll-view"
-      :scroll-into-view="top"
-    >
-      <!-- <swiper class="card-swiper margin-bottom square-dot" :indicator-dots="false" :circular="true" interval="5000"
-        duration="1500" @change="cardSwiper">
-        <swiper-item v-for="(item, index) in swiperList" :key="index" :class="cardCur == index ? 'cur' : ''" class="padding-0">
-          <view class="image swiper-item bg-white">
-            <navigator hover-class="none" :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb">
-              <view class="image-banner" :style="'background: url('+ item.thumb +');background-size: cover;background-position: center center;'">
-
-              </view>
-              <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view>
-            </navigator>
-          </view>
-        </swiper-item>
-      </swiper> -->
-      <!-- <view class="flex justify-around bg-white padding">
-        <view class="flex-direction flex align-center">
-          <span class="text-xxl text-blue"><text class="icon-newsfill"></text></span>
-          <span class="text-sm">分类</span>
-        </view>
-        <view class="flex-direction flex align-center">
-          <span class="text-xxl text-red"><text class="icon-rankfill"></text></span>
-          <span class="text-sm">排行</span>
-        </view>
-        <view class="flex-direction flex align-center">
-          <span class="text-xxl text-cyan"><text class="icon-calendar"></text></span>
-          <span class="text-sm">归档</span>
-        </view>
-        <view class="flex-direction flex align-center">
-          <span class="text-xxl  text-orange"><text class="icon-tagfill"></text></span>
-          <span class="text-sm">标签</span>
-        </view>
-      </view> -->
+    <scroll-view scroll-y class="cu-card case scroll-view" :scroll-into-view="top">
+      <div class="tab-list">
+        <div class="tab-item" v-for="(item,index) in categoryList" :key="index">{{ item.name }}</div>
+      </div>
       <view class="bg-white padding-top-sm">
-        <view
-          v-for="(item, index) in postData"
-          :key="index"
-          class="artcle-container list radius shadow"
-        >
+        <view v-for="(item, index) in postData" :key="index" class="artcle-container list radius shadow">
           <!-- #ifdef MP-QQ -->
-          <ad
-            unit-id="750221a1c0d4c6f021ab39df00a40ae7"
-            type="feeds"
-            v-if="index % 4 == 3"
-            class="ad"
-          ></ad>
+          <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
           <!-- #endif -->
           <navigator
             hover-class="none"
-            :url="
-              '/pages/post?cid=' +
-                item.cid +
-                '&thumb=' +
-                item.thumb[0].str_value
-            "
+            :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value"
             class="list__item bg-white"
           >
             <view class="image-container" v-if="item.thumb.length">
               <view class="overplay"></view>
-              <image
-                :src="item.thumb[0].str_value"
-                mode="aspectFill"
-                :lazy-load="true"
-                class="image"
-              ></image>
+              <image :src="item.thumb[0].str_value" mode="aspectFill" :lazy-load="true" class="image"></image>
               <!-- <view class="cu-tag bg-blue">置顶</view> -->
               <!-- <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view> -->
             </view>
-            <view
-              class="flex align-center padding-xs post-entry-categories text-xs"
-            >
-              <view
-                class="margin-left-xs"
-                v-for="(tagItem, index) in item.tag"
-                :key="index"
-                >{{ tagItem.name }}</view
-              >
+            <view class="flex align-center padding-xs post-entry-categories text-xs">
+              <view class="margin-left-xs" v-for="(tagItem, index) in item.tag" :key="index">{{ tagItem.name }}</view>
             </view>
             <view class="bg-white padding-left-sm title">{{ item.title }}</view>
-            <view class="desc padding-sm">{{
-              item.desc.length ? item.desc[0].str_value : ""
-            }}</view>
+            <view class="desc padding-sm">{{ item.desc.length ? item.desc[0].str_value : "" }}</view>
             <view class="cu-list padding-lr-sm padding-bottom-xs">
               <view class="cu-item">
-                <view
-                  class="text-gray text-sm flex justify-between align-center"
-                >
+                <view class="text-gray text-sm flex justify-between align-center">
                   <view>
                     <text class=" margin-right-sm">
                       <text class="icon-file margin-right-xs"></text>
@@ -115,30 +53,26 @@
       <!-- <view @click="goTop" style="bottom:100px;position: fixed;">回到顶部</view> -->
       <view>
         <view class="action">
-          <view
-            class="cu-load load-icon"
-            :class="isLoading ? 'loading' : 'over'"
-          ></view>
+          <view class="cu-load load-icon" :class="isLoading ? 'loading' : 'over'"></view>
         </view>
       </view>
     </scroll-view>
   </block>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+
+let observer: any;
+
+export default Vue.extend({
   name: "home",
   data() {
     return {
-      cardCur: 0,
-      swiperList: [],
       isLoading: true,
       curPage: 0,
       postData: [],
-      cardCur: 0,
-      dotStyle: false,
-      towerStart: 0,
-      direction: "",
+      categoryList: [],
     };
   },
   methods: {
@@ -154,20 +88,12 @@ export default {
         url: "./search/search",
       });
     },
-    // cardSwiper
-    cardSwiper(e) {
-      this.cardCur = e.detail.current;
-    },
-    formatTime(value) {
+    formatTime(value: string): string {
       // return this.$moment.unix(value).fromNow()
       return this.$moment.unix(value).fromNow();
     },
     async loadPost() {
       this.isLoading = true;
-      // 每隔十页清空一下，避免内存溢出
-      if (this.postData.curPage % 10 == 0) {
-        this.postData = [];
-      }
       let res = await this.$api.getPost({
         page: this.curPage + 1,
       });
@@ -177,26 +103,24 @@ export default {
         this.curPage++;
       }
       this.isLoading = false;
-      uni.stopPullDownRefresh();
     },
   },
   async mounted() {
-    await this.loadPost();
-    this._observer = wx.createIntersectionObserver(this);
-    this._observer
+    observer = wx.createIntersectionObserver(this);
+    observer
       .relativeToViewport({
         bottom: 600,
       })
-      .observe(".action", (res) => {
+      .observe(".action", (res: any) => {
         console.log(res);
         this.loadPost();
       });
-    this.$api.getSticky().then((res) => {
-      this.swiperList = res;
+    this.$api.getCategories().then((res: any) => {
+      this.categoryList = res;
     });
+    await this.loadPost();
   },
-  pageLifetimes: {},
-};
+});
 </script>
 <style lang="scss" scoped>
 .artcle-container {
@@ -247,24 +171,9 @@ export default {
   background-color: #656565;
 }
 
-// avatar的view容器
-.avatar-view {
-  height: 110rpx;
-}
-
 .ad {
   background-color: #fff;
   margin-bottom: 10px;
-}
-
-// 头像
-.avatar {
-  width: 200rpx;
-  height: 200rpx;
-  border-radius: 50%;
-  top: -100rpx;
-  margin: auto;
-  border: 5rpx #eee solid;
 }
 
 .bg-img image {
@@ -299,16 +208,7 @@ page {
 .overplay {
   width: 710rpx;
   height: 400upx;
-  background: -webkit-linear-gradient(
-    270deg,
-    rgba(0, 0, 0, 0.01) 2%,
-    rgba(0, 0, 0, 0.95) 100%
-  );
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.01) 2%,
-    rgba(0, 0, 0, 0.95) 100%
-  );
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.01) 2%, rgba(0, 0, 0, 0.95) 100%);
   position: absolute;
   opacity: 0.2;
   z-index: 99;

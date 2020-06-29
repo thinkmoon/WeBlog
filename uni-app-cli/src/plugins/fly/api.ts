@@ -11,7 +11,7 @@ export const API = {
   },
   // 获取最近文章
   getPost(params: any): any {
-    return GET("post", params);
+    return GET("posts", params);
   },
   // 通过cid获取文章
   getPostBycid(params: any): any {
@@ -19,6 +19,12 @@ export const API = {
   },
   getSticky(params: any): any {
     return GET("getSticky", params);
+  },
+  getCategories(params: any): any {
+    return GET("categories", params);
+  },
+  getTags(params: any): any {
+    return GET("tags", params);
   },
   // 获取总览
   getOverview(params: any): any {

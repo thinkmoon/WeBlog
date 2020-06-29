@@ -196,8 +196,9 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
      *  @param mp 小程序平台类型["weixin","qq"]
      *  @return openid 
      */
-    function loginAction()
+    public function loginAction()
     {
+        $this->lockMethod('get');
         $code = $this->getParams('code', 'null');
         $mp = $this->getParams('mp', null);
         if ($code != 'null') {
@@ -260,6 +261,7 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
 
         $pageSize = $this->getParams('pageSize', 5);
         $page = $this->getParams('page', 1);
+        $mid = $this->getParams('mid', 1);
 
         $select   = $this->db->select('cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->page($page, 10);
         $posts  = $this->db->fetchAll($select);
@@ -326,6 +328,11 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
 
         $select = $this->db->select('nickName')->from('table.WeBlog_users')->where('openid = ?', $openid);
         $data = $this->db->fetchAll($select);
+
+        if(sizeof($data) <= 0){
+            $this->throwError("未找到用户");
+            return 0;
+        }
 
         $coid = $this->db->query($this->db->insert('table.comments')->rows(array(
             'cid' => $cid, 'created' => time(), 'openid' => $openid, 'authorId' => '0', 'author' => $data[0]["nickName"],
@@ -438,6 +445,19 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
             $post['desc'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "desc"));
             $result[]    = $post;
         }
+        $this->throwData($result);
+    }
+    // 获取标签
+    function tagsAction()
+    {
+        $select   = $this->db->select('mid','name','count')->from('table.metas')->where('type = ?', 'tag')->order('order', Typecho_Db::SORT_DESC);
+        $result = $this->db->fetchAll($select);
+        $this->throwData($result);
+    }
+    // 获取分类
+    function categoriesAction(){
+        $select   = $this->db->select('mid','name','count')->from('table.metas')->where('type = ?', 'category')->order('order', Typecho_Db::SORT_DESC);
+        $result = $this->db->fetchAll($select);
         $this->throwData($result);
     }
     // 获取AccessToken
