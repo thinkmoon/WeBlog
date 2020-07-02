@@ -192,7 +192,7 @@ export default {
   },
   methods: {
     formatTime(value) {
-      return this.$moment.unix(value).format("YYYY年MM月DD日");
+      return this._$moment.unix(value).format("YYYY年MM月DD日");
     },
     async comment() {
       if (!this.isLogin) {

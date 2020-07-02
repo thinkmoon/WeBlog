@@ -89,8 +89,8 @@ export default Vue.extend({
       });
     },
     formatTime(value: string): string {
-      // return this.$moment.unix(value).fromNow()
-      return this.$moment.unix(value).fromNow();
+      // @ts-ignore：这行傻逼了，禁掉
+      return this.$moment.unix(value).fromNow()
     },
     async loadPost() {
       this.isLoading = true;
