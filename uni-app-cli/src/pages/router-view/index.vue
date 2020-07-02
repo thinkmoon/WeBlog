@@ -2,11 +2,11 @@
   <block>
     <cu-custom bgColor="bg-gradual" title="主页"></cu-custom>
     <scroll-view scroll-y class="cu-card case scroll-view" :scroll-into-view="top">
-      <div class="tab-list">
-        <div class="tab-item" v-for="(item,index) in categoryList" :key="index">{{ item.name }}</div>
-      </div>
+      <scroll-view scroll-x class="tab-list flex bg-white">
+        <div class="tab-item padding-sm" v-for="(item, index) in categoryList" :key="index">{{ item.name }}</div>
+      </scroll-view>
       <view class="bg-white padding-top-sm">
-        <view v-for="(item, index) in postData" :key="index" class="artcle-container list radius shadow">
+        <view v-for="(item, index) in postData" :key="index" class="article-container list radius shadow">
           <!-- #ifdef MP-QQ -->
           <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
           <!-- #endif -->
@@ -123,7 +123,15 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss" scoped>
-.artcle-container {
+.tab-list {
+  width: 100%;
+  white-space: nowrap;
+}
+.tab-item {
+  display: inline-block;
+}
+
+.article-container {
   width: 710rpx;
   margin: 16rpx auto;
 }
