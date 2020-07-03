@@ -132,6 +132,10 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
      */
     private function getParams($key, $default = null)
     {
+        if ($_SERVER['HTTP_APISECRET'] != $this->config->apiSecret) {
+            $this->throwError("接口密钥不正确", 403);
+            return 0;
+        }
         if ($this->request->isGet()) {
             return $this->request->get($key, $default);
         }

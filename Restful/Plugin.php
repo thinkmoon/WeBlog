@@ -133,6 +133,9 @@ class Restful_Plugin implements Typecho_Plugin_Interface
         $csrfSalt = new Typecho_Widget_Helper_Form_Element_Text('csrfSalt', null, '05faabd6637f7e30c797973a558d4372', _t('CSRF加密盐'), _t('请务必修改本参数，以防止跨站攻击。'));
         $form->addInput($csrfSalt);
 
+        $apiSecret = new Typecho_Widget_Helper_Form_Element_Text('apiSecret', NULL, 'xxx', _t('接口密钥'),  _t('必须与客户端的保持一致'));
+        $form->addInput($apiSecret);
+
         $weixinAppID = new Typecho_Widget_Helper_Form_Element_Text('weixinAppID', NULL, 'xxx', _t('微信小程序的APPID'),  _t('小程序的APP ID'));
         $form->addInput($weixinAppID);
         $weixinAppSecret = new Typecho_Widget_Helper_Form_Element_Text('weixinAppSecret', NULL, 'xxx', _t('微信小程序的secret'),  _t('微信小程序的secret'));
