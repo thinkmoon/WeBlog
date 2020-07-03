@@ -1406,6 +1406,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@miniprogram-component-plus/vtabs@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/@miniprogram-component-plus/vtabs/download/@miniprogram-component-plus/vtabs-1.0.0.tgz#c6fe232bcf16108e02089fcd934c079183bd7648"
+  integrity sha1-xv4jK88WEI4CCJ/Nk0wHkYO9dkg=
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.npm.taobao.org/@mrmlnc/readdir-enhanced/download/@mrmlnc/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -7167,14 +7172,9 @@ module-alias@^2.1.0:
   resolved "https://registry.npm.taobao.org/module-alias/download/module-alias-2.2.2.tgz#151cdcecc24e25739ff0aa6e51e1c5716974c0e0"
   integrity sha1-FRzc7MJOJXOf8KpuUeHFcWl0wOA=
 
-moment@^2.24.0:
+moment@^2.24.0, moment@^2.27.0:
   version "2.27.0"
   resolved "https://registry.npm.taobao.org/moment/download/moment-2.27.0.tgz?cache=0&sync_timestamp=1592516081697&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmoment%2Fdownload%2Fmoment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
-  integrity sha1-i/9OPiaiNiIN/j423nVrbrqgEF0=
-
-moment@^2.27.0:
-  version "2.27.0"
-  resolved "https://registry.npm.taobao.org/moment/download/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
   integrity sha1-i/9OPiaiNiIN/j423nVrbrqgEF0=
 
 move-concurrently@^1.0.1:

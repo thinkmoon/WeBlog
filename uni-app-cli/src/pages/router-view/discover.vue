@@ -7,81 +7,53 @@
     <view class="cu-bar tm-search bg-white">
       <view class="tm-search-input search-form">
         <text class="icon-search"></text>
-        <input
-          @confirm="onSearch"
-          :adjust-position="false"
-          type="text"
-          placeholder="搜索文章,标签,分类"
-          confirm-type="search"
-        />
+        <input @confirm="onSearch" :adjust-position="false" type="text" placeholder="请输入你想知道的内容" confirm-type="search" />
       </view>
     </view>
-    <view class="flex solid-bottom justify-between">
-      <view class="padding-xs margin-xs radius text-black">搜索历史</view>
-      <view @click="cleanHistory" class="margin-xs shadow-blur">
-        <text class="icon-delete"></text>
-        清空搜索历史
-      </view>
-    </view>
-    <view class="padding">
-      <view v-if="searchHistory.length == 0">暂无搜索历史</view>
-      <view
-        @click="searchString(item.value)"
-        v-for="(item, index) in searchHistory"
-        :key="index"
-        class="cu-btn text-black margin-xs"
-      >
-        {{ item.value }}
-      </view>
+    <view class="padding bottom-holder bg-white">
+      <view v-for="(item, index) in tagList" :key="index" class="cu-btn text-black margin-xs" @click="searchTag(item.mid)"> {{ item.name }} ({{ item.count }}) </view>
     </view>
   </view>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
   data() {
     return {
       searchHistory: [],
+      tagList: [],
     };
   },
   methods: {
     // 点击搜索历史
-    searchString(key) {
+    searchTag(mid: number) {
+      console.log(`寻找mid为${mid}的文章`)
       uni.navigateTo({
-        url: "./search/searchResult?keyWord=" + key,
+        url: "./search/searchResult?mid=" + mid,
       });
     },
     // 开始搜索
-    onSearch(e) {
+    onSearch(e: any) {
+      console.log(e)
       if (e.detail.value == "") {
         return;
       }
-      uni.getStorageSync("searchHistory")
-        ? (this.searchHistory = uni.getStorageSync("searchHistory"))
-        : (this.searchHistory = []);
-      this.searchHistory.push(e.detail);
-      uni.setStorage({
-        key: "searchHistory",
-        data: this.searchHistory,
-      });
       uni.navigateTo({
-        url: "searchResult?keyWord=" + e.detail.value,
+        url: "./search/searchResult?keyWord=" + e.detail.value,
       });
-    },
-    // 清除搜索历史
-    cleanHistory() {
-      this.searchHistory = [];
-      uni.removeStorageSync("searchHistory");
-    },
+    }
   },
   mounted() {
-    uni.getStorage({
-      key: "searchHistory",
-      success: (res) => {
-        this.searchHistory = res.data;
-      },
+    this.$Api.getTags().then((res: any) => {
+      this.tagList = res;
     });
   },
-};
+});
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.bottom-holder {
+  padding-bottom: 10vh;
+}
+</style>

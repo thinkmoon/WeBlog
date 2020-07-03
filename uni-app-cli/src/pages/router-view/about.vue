@@ -63,7 +63,7 @@ export default {
     };
   },
   mounted() {
-    this.$api
+    this.$Api
       .getPostBycid({
         cid: "2",
       })
@@ -71,7 +71,7 @@ export default {
         this.postData = res;
         this.isLoading = false;
       });
-    this.$api.getOverview().then((res) => {
+    this.$Api.getOverview().then((res) => {
       this.Overview = res;
     });
   },

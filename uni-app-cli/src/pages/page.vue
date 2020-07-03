@@ -42,7 +42,4 @@ export default {
 </script>
 
 <style>
-.hidden {
-  visibility: hidden;
-}
 </style>

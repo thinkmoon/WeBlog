@@ -31,10 +31,8 @@
       };
     },
     async onLoad(options) {
-      this.keyWord = options.keyWord
-      this.articleList = await this.$api.search({
-        "keyWord": this.keyWord
-      })
+      console.log(options)
+      this.articleList = await this.$Api.search(options)
     }
   }
 </script>

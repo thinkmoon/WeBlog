@@ -80,12 +80,12 @@ export default Vue.extend({
                         code: res.code,
                       };
                       Object.assign(data, Info.userInfo);
-                      let openid = await this.$api.login(data);
+                      let openid = await this.$Api.login(data);
                       uni.setStorageSync("openid", openid);
                     },
                   });
                 } else {
-                  let openid = await this.$api.login({
+                  let openid = await this.$Api.login({
                     code: res.code,
                   });
                   uni.setStorageSync("openid", openid);

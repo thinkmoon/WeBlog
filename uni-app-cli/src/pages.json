@@ -4,14 +4,10 @@
       "path": "pages/page"
     },
     {
-      "path": "pages/post",
-      "style": {
-        "navigationBarTitleText": "文章内容"
-      }
+      "path": "pages/post"
     },
     {
-      "path": "pages/search/searchResult",
-      "style": {}
+      "path": "pages/search/searchResult"
     }
   ],
   "globalStyle": {

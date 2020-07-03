@@ -192,7 +192,7 @@ export default {
   },
   methods: {
     formatTime(value) {
-      return this._$moment.unix(value).format("YYYY年MM月DD日");
+      return this.$moment.unix(value).format("YYYY年MM月DD日");
     },
     async comment() {
       if (!this.isLogin) {
@@ -205,7 +205,7 @@ export default {
       if (this.commentText == null) {
         return;
       }
-      let coid = await this.$api.addComment({
+      let coid = await this.$Api.addComment({
         cid: this.cid,
         text: this.commentText,
       });
@@ -238,12 +238,12 @@ export default {
                         code: res.code,
                       };
                       Object.assign(data, Info.userInfo);
-                      let openid = await this.$api.login(data);
+                      let openid = await this.$Api.login(data);
                       uni.setStorageSync("openid", openid);
                     },
                   });
                 } else {
-                  let openid = await this.$api.login({
+                  let openid = await this.$Api.login({
                     code: res.code,
                   });
                   uni.setStorageSync("openid", openid);
@@ -264,7 +264,7 @@ export default {
         });
         return;
       }
-      this.$api.likePost({
+      this.$Api.likePost({
         cid: this.cid,
       });
       this.isLike = true;
@@ -301,7 +301,7 @@ export default {
   async onLoad(query) {
     this.cid = query.cid;
     this.thumb = query.thumb;
-    this.postData = await this.$api.getPostBycid({
+    this.postData = await this.$Api.getPostBycid({
       cid: query.cid,
     });
     this.isLoading = false;
@@ -315,18 +315,18 @@ export default {
         }
       },
     });
-    let data = await this.$api.getPostLikeStatus({
+    let data = await this.$Api.getPostLikeStatus({
       cid: this.cid,
     });
     console.log("获取点赞状态", data);
     this.isLike = JSON.parse(data);
-    // data = await this.$api.getLikeUsers({
+    // data = await this.$Api.getLikeUsers({
     //   cid: this.cid
     // });
     // console.log('文章点赞用户列表', data);
     // this.likeUsers = data;
     // #ifndef APP-PLUS
-    data = await this.$api.getComment({
+    data = await this.$Api.getComment({
       cid: this.cid,
     });
     this.commentList = data;

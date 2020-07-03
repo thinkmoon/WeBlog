@@ -1,5 +1,5 @@
 <template>
-  <view class="cu-bar tabbar bg-white shadow-blur foot">
+  <view class="cu-bar tabbar bg-white shadow-blur foot" :style="style">
     <view
       class="action"
       @click="changeTab(index)"
@@ -41,6 +41,12 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    style() {
+      let { safeBottom } = this;
+      return `padding-bottom:${safeBottom}px`;
+    }
   },
   methods: {
     changeTab(index) {

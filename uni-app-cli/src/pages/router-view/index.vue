@@ -3,7 +3,16 @@
     <cu-custom bgColor="bg-gradual" title="主页"></cu-custom>
     <scroll-view scroll-y class="cu-card case scroll-view" :scroll-into-view="top">
       <scroll-view scroll-x class="tab-list flex bg-white">
-        <div class="tab-item padding-sm" v-for="(item, index) in categoryList" :key="index">{{ item.name }}</div>
+        <div class="tab-item padding-sm" :class="mid == '0' ? 'act' : ''" @click="changeCate('0')">全部</div>
+        <div
+          class="tab-item padding-sm"
+          v-for="(item, index) in categoryList"
+          :key="index"
+          :class="mid == item.mid ? 'act' : ''"
+          @click="changeCate(item.mid)"
+        >
+          {{ item.name }}
+        </div>
       </scroll-view>
       <view class="bg-white padding-top-sm">
         <view v-for="(item, index) in postData" :key="index" class="article-container list radius shadow">
@@ -62,20 +71,28 @@
 
 <script lang="ts">
 import Vue from "vue";
-
 let observer: any;
 
 export default Vue.extend({
   name: "home",
   data() {
     return {
+      mid: "0",
       isLoading: true,
       curPage: 0,
       postData: [],
       categoryList: [],
+      requesting: false,
     };
   },
   methods: {
+    changeCate(mid = "") {
+      this.mid = mid;
+      this.curPage = 0;
+      this.postData = [];
+      this.loadPost()
+      console.log("change mid:", mid);
+    },
     goTop() {
       console.log("回到顶部");
       uni.pageScrollTo({
@@ -83,26 +100,27 @@ export default Vue.extend({
         duration: 300,
       });
     },
-    toSearch() {
-      uni.navigateTo({
-        url: "./search/search",
-      });
-    },
     formatTime(value: string): string {
       // @ts-ignore：这行傻逼了，禁掉
-      return this.$moment.unix(value).fromNow()
+      return this.$moment.unix(value).fromNow();
     },
-    async loadPost() {
+    loadPost() {
       this.isLoading = true;
-      let res = await this.$api.getPost({
-        page: this.curPage + 1,
-      });
-      // this.loadProgress = 100
-      if (res != null && res.length > 0) {
-        this.postData = this.postData.concat(res);
-        this.curPage++;
-      }
-      this.isLoading = false;
+      if (this.requesting) return;
+      this.requesting = true;
+      this.$Api
+        .getPost({
+          page: this.curPage + 1,
+          mid: this.mid,
+        })
+        .then((res: any) => {
+          if (res != null && res.length > 0) {
+            this.postData = this.postData.concat(res);
+            this.curPage++;
+          }
+          this.requesting = false;
+          this.isLoading = false;
+        });
     },
   },
   async mounted() {
@@ -115,10 +133,10 @@ export default Vue.extend({
         console.log(res);
         this.loadPost();
       });
-    this.$api.getCategories().then((res: any) => {
+    this.$Api.getCategories().then((res: any) => {
       this.categoryList = res;
     });
-    await this.loadPost();
+    this.loadPost();
   },
 });
 </script>
@@ -133,7 +151,7 @@ export default Vue.extend({
 
 .article-container {
   width: 710rpx;
-  margin: 16rpx auto;
+  margin: 32rpx auto;
 }
 .shadow {
   box-shadow: 40rpx 40rpx 40rpx 40rpx rgba(0, 0, 0, 0.07);

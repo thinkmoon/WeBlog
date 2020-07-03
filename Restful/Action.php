@@ -165,11 +165,11 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
      * @param mixed $data 要返回给用户的内容
      * @return void
      */
-    private function throwData($data)
+    private function throwData($data, $message = "成功请求")
     {
         $this->response->throwJson(array(
             'status' => 'success',
-            'message' => '',
+            'message' => $message,
             'data' => $data,
             'success' => true
         ));
@@ -259,11 +259,13 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
     {
         $this->lockMethod('get');
 
-        $pageSize = $this->getParams('pageSize', 5);
         $page = $this->getParams('page', 1);
-        $mid = $this->getParams('mid', 1);
+        $mid = $this->getParams('mid', 0);
 
-        $select   = $this->db->select('cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->page($page, 10);
+        $select   = $this->db->select('table.contents.cid as cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->join('table.relationships', 'table.contents.cid = table.relationships.cid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->page($page, 10);
+        if ($mid != 0) {
+            $select = $select->where('mid = ?', $mid);
+        }
         $posts  = $this->db->fetchAll($select);
         foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
@@ -329,7 +331,7 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $select = $this->db->select('nickName')->from('table.WeBlog_users')->where('openid = ?', $openid);
         $data = $this->db->fetchAll($select);
 
-        if(sizeof($data) <= 0){
+        if (sizeof($data) <= 0) {
             $this->throwError("未找到用户");
             return 0;
         }
@@ -436,7 +438,14 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
     function searchAction()
     {
         $keyword = $this->getParams('keyWord', 'null');
-        $select   = $this->db->select('cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->where('type = ?', 'post')->where('status = ?', 'publish')->where('table.contents.text LIKE ?', '%' . $keyword . '%')->order('table.contents.created', Typecho_Db::SORT_DESC)->limit(20);
+        $mid = $this->getParams('mid', 'null');
+        $select   = $this->db->select('table.contents.cid AS cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->join('table.relationships', 'table.contents.cid = table.relationships.cid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->limit(20);
+        if ($keyword != 'null') {
+            $select = $select->where('table.contents.text LIKE ?', '%' . $keyword . '%');
+        }
+        if ($mid != 'null') {
+            $select = $select->where('mid = ?', $mid);
+        }
         $posts  = $this->db->fetchAll($select);
         foreach ($posts as $post) {
             $post['tag'] = $this->db->fetchAll($this->db->select('name')->from('table.metas')->join('table.relationships', 'table.metas.mid = table.relationships.mid', Typecho_DB::LEFT_JOIN)->where('table.relationships.cid = ?', $post['cid'])->where('table.metas.type = ?', 'tag'));
@@ -445,18 +454,19 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
             $post['desc'] = $this->db->fetchAll($this->db->select('str_value')->from('table.fields')->where('cid = ?', $post['cid'])->where('name = ?', "desc"));
             $result[]    = $post;
         }
-        $this->throwData($result);
+        $this->throwData($result,"搜索:".$keyword.", mid:".$mid);
     }
     // 获取标签
     function tagsAction()
     {
-        $select   = $this->db->select('mid','name','count')->from('table.metas')->where('type = ?', 'tag')->order('order', Typecho_Db::SORT_DESC);
+        $select   = $this->db->select('mid', 'name', 'count')->from('table.metas')->where('type = ?', 'tag')->order('order', Typecho_Db::SORT_DESC);
         $result = $this->db->fetchAll($select);
         $this->throwData($result);
     }
     // 获取分类
-    function categoriesAction(){
-        $select   = $this->db->select('mid','name','count')->from('table.metas')->where('type = ?', 'category')->order('order', Typecho_Db::SORT_DESC);
+    function categoriesAction()
+    {
+        $select   = $this->db->select('mid', 'name', 'count')->from('table.metas')->where('type = ?', 'category')->order('order', Typecho_Db::SORT_DESC);
         $result = $this->db->fetchAll($select);
         $this->throwData($result);
     }

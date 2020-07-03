@@ -1,9 +1,9 @@
 import Vue from "vue";
 // 引入API
-import { API } from "./fly/api";
-Vue.prototype.$api = API;
+import API from "./fly/api";
+Vue.prototype.$Api = new API();
 // 引入moment
-import * as moment from 'moment'
+import * as moment from "moment";
 import "moment/locale/zh-cn";
 moment.locale("zh-cn");
 Vue.prototype.$moment = moment;

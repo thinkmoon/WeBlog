@@ -126,6 +126,12 @@ $color-complement : spin($color-base, 180);
   justify-content: center;
 }
 
+.tab-item.act {
+  font-weight: bold;
+  font-size: 32upx;
+  color: #000;
+}
+
 .line-sub {
   color: #a9a9a9;
 }
