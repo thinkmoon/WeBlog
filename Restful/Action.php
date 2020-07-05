@@ -213,9 +213,9 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
             $gender = $this->getParams('gender', 'null');
             $province = $this->getParams('province', 'null');
             if ($mp == "weixin") {
-                $url = sprintf('https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code', $this->weixinAppID, $this->weixinAppSecret, $code);
+                $url = sprintf('https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code', $this->config->weixinAppID, $this->config->weixinAppSecret, $code);
             } else if ($mp == "qq") {
-                $url = sprintf('https://api.q.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code', $this->qqAppID, $this->qqAppSecret, $code);
+                $url = sprintf('https://api.q.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code', $this->config->qqAppID, $this->config->qqAppSecret, $code);
             }
             $info = file_get_contents($url);
             $json = json_decode($info); //对json数据解码
@@ -266,7 +266,7 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $page = $this->getParams('page', 1);
         $mid = $this->getParams('mid', 0);
 
-        $select   = $this->db->select('table.contents.cid as cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->join('table.relationships', 'table.contents.cid = table.relationships.cid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->page($page, 10);
+        $select   = $this->db->select('distinct table.contents.cid as cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->join('table.relationships', 'table.contents.cid = table.relationships.cid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->page($page, 10);
         if ($mid != 0) {
             $select = $select->where('mid = ?', $mid);
         }
@@ -443,7 +443,7 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
     {
         $keyword = $this->getParams('keyWord', 'null');
         $mid = $this->getParams('mid', 'null');
-        $select   = $this->db->select('table.contents.cid AS cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->join('table.relationships', 'table.contents.cid = table.relationships.cid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->limit(20);
+        $select = $this->db->select('table.contents.cid AS cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->join('table.relationships', 'table.contents.cid = table.relationships.cid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->limit(20);
         if ($keyword != 'null') {
             $select = $select->where('table.contents.text LIKE ?', '%' . $keyword . '%');
         }
@@ -463,14 +463,15 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
     // 获取标签
     function tagsAction()
     {
-        $select   = $this->db->select('mid', 'name', 'count')->from('table.metas')->where('type = ?', 'tag')->order('order', Typecho_Db::SORT_DESC);
+        $sql = "SELECT mid,name,count FROM typecho_metas WHERE type = 'tag'";
+        $select = $this->db->query($sql);
         $result = $this->db->fetchAll($select);
         $this->throwData($result);
     }
     // 获取分类
     function categoriesAction()
     {
-        $select   = $this->db->select('mid', 'name', 'count')->from('table.metas')->where('type = ?', 'category')->order('order', Typecho_Db::SORT_DESC);
+        $select = $this->db->select('mid', 'name', 'count')->from('table.metas')->where('type = ?', 'category')->order('order', Typecho_Db::SORT_DESC);
         $result = $this->db->fetchAll($select);
         $this->throwData($result);
     }

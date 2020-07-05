@@ -43,24 +43,18 @@ export default Vue.extend({
       Vue.prototype.StatusBar = e.statusBarHeight;
       let custom = wx.getMenuButtonBoundingClientRect();
       Vue.prototype.Custom = custom;
-      Vue.prototype.CustomBar =
-        custom.bottom + custom.top - (e.statusBarHeight ?? 0);
+      Vue.prototype.CustomBar = custom.bottom + custom.top - (e.statusBarHeight ?? 0);
       // #endif
 
       // #ifdef MP-ALIPAY
       Vue.prototype.StatusBar = e.statusBarHeight;
-      Vue.prototype.CustomBar =
-        (e.statusBarHeight ?? 0) + (e.titleBarHeight ?? 0);
+      Vue.prototype.CustomBar = (e.statusBarHeight ?? 0) + (e.titleBarHeight ?? 0);
       // #endif
 
       //底部安全距离
-      Vue.prototype.safeBottom =
-        (e.windowHeight ?? 0) -
-        (e.safeArea?.height ?? 0) -
-        (e?.safeArea?.top ?? 0);
-      Vue.prototype.$ifWebp = ["android", "devtools"].includes(
-        e.platform ?? ""
-      );
+      // @ts-ignore
+      Vue.prototype.safeBottom = e.windowHeight - e.safeArea.height - e.safeArea.top;
+      Vue.prototype.$ifWebp = ["android", "devtools"].includes(e.platform ?? "");
     },
     login() {
       uni.login({
