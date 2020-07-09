@@ -1,5 +1,5 @@
 import { GET } from "./http";
-export default class Api{
+export default class Api {
   /**
    * 登录接口
    * @param params code
@@ -22,6 +22,9 @@ export default class Api{
   }
   getSticky(params: object): any {
     return GET("getSticky", params);
+  }
+  getAboutCid(params = {}): any {
+    return GET("getAboutCid", params);
   }
   /**
    * 获取所有分类
@@ -61,7 +64,9 @@ export default class Api{
   getLikeUsers(params: object): any {
     return GET("getLikeUsers", params);
   }
-  /** 发表评论 */
+  /**
+   * 发表评论
+   */
   addComment(params: object): any {
     return GET("addComment", params);
   }

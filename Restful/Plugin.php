@@ -144,13 +144,14 @@ class Restful_Plugin implements Typecho_Plugin_Interface
         $form->addInput($qqAppID);
         $qqAppSecret = new Typecho_Widget_Helper_Form_Element_Text('qqAppSecret', NULL, 'xxx', _t('QQ小程序的secret'),  _t('小程序的secret'));
         $form->addInput($qqAppSecret);
-        $sticky = new Typecho_Widget_Helper_Form_Element_Text('sticky', NULL, '1,2,3', _t('置顶文章cid'),  _t('显示在轮播图中'));
-        $form->addInput($sticky);
+        $aboutCid = new Typecho_Widget_Helper_Form_Element_Text('sticky', NULL, '1,2,3', _t('置顶文章cid'),  _t('显示在轮播图中'));
+        $form->addInput($aboutCid);
       
         $prefix = defined('__TYPECHO_RESTFUL_PREFIX__') ? __TYPECHO_RESTFUL_PREFIX__ : '/api/';
         /* API switcher */
         $routes = call_user_func(array(self::ACTION_CLASS, 'getRoutes'));
         echo '<h3>API 状态设置</h3>';
+        echo '<h4>API BASE_URL'.$prefix.'</h4>';
 
         foreach ($routes as $route) {
             if ($route['shortName'] == 'upgrade') {

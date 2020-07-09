@@ -389,13 +389,13 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->throwData($result);
     }
     // 获取关于页cid
-    // function getAboutcid()
-    // {
-    //     $cid = 'none';
-    //     $cid = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->aboutCid;
+    function getAboutcidAction()
+    {
+        $cid = 'none';
+        $cid = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->aboutCid;
 
-    //     $this->throwData($cid);
-    // }
+        $this->throwData($cid);
+    }
     // 通过cid获取post
     function getPostBycidAction()
     {

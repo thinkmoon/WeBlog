@@ -5,7 +5,7 @@ fly.config.baseURL = process.env.NODE_ENV === "production" ? "https://www.thinkm
 
 fly.config.headers = {
   openid: uni.getStorageSync("openid") || "xxx",
-  apisecret: "05faabd6637f7e30c797973a558d",
+  apisecret: "xxx",
 };
 
 fly.interceptors.response.use(
