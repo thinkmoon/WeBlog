@@ -2,9 +2,14 @@
 
 <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 
-typecho博客的小程序版, 支持微信小程序，QQ小程序。
+typecho博客的小程序版1.x, 支持微信小程序，QQ小程序。
 
 > 有建议欢迎提issue
+
+## 从0.x迁移到1.x
+
+1. 将原缩略图字段`thumb2`改为`thumb`
+2. 经用并删除原WeBlog插件，启用新版插件，由`typecho-plugin-Restful`修改
 
 ## 特性
 
@@ -26,20 +31,23 @@ typecho博客的小程序版, 支持微信小程序，QQ小程序。
 
 ### 小程序端
 
-#### 自行编译(适用于有前端基础的同学)
+#### 自行编译(需要nodejs环境)
 
-1. 下载Hbuilderx
-2. 将文件夹 `uni-app` 导入项目
-3. 发行至微信小程序
+1. 下载nodejs环境
+2. 打开小程序项目文件夹uni-app-cli,执行`npm install`
+```bash
+cd uni-app-cli
+npm install
+npm run build
+```
+3. 打开微信开发者工具，导入项目文件夹`uni-app-cli/dist/build/mp-weixn`
 
-#### 不编译直接使用(适用于零基础或基础较差的同学)
+> 注意：如需修改关于小程序项目配置，建议直接修改`manifest.json`文件
 
-1. 打开[uni-app/unpackage/dist/build/mp-weixin](https://github.com/thinkmoon/WeBlog/tree/master/uni-app/unpackage/dist/build/mp-weixin)目录导入小程序开发者工具
-2. ~~激活插件后，修改请求链接文件 `@/static/utils/api.js` 中的baseUrl, 将域名更换为你的域名。~~ 请修改文件`@/common/vendor.js`,搜索`www.thinkmoon.cn`替换为你的域名。
 
 ### Typecho插件端
 
-复制 `WeBlog` 到插件目录， 在后台激活并设置
+复制 `Restful` 到插件目录， 在后台激活并设置
 
 ## 特别鸣谢
 
@@ -51,8 +59,9 @@ typecho博客的小程序版, 支持微信小程序，QQ小程序。
 * [Moment](https://momentjs.com/)
 * [flyio](https://github.com/wendux/fly)
 * [towxml](https://github.com/sbfkcel/towxml)
+* [typecho-plugin-Restful](https://github.com/moefront/typecho-plugin-Restful)
 
-> 感谢各位开源作者优秀的作品！
+> 感谢各位开源作者优秀的作品！还有些库没有列出，都可在package.json中查看引入情况
 
 ## 意见反馈
 

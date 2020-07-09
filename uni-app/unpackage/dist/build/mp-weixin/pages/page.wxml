@@ -1,1 +1,0 @@
-<view style="width:750rpx;"><cu-custom vue-id="e76dce04-1" bgColor="bg-gradual" bind:__l="__l" vue-slots="{{['content']}}"><view slot="content">{{navigation[PageCur]}}</view></cu-custom><block wx:if="{{PageCur=='home'}}"><home vue-id="e76dce04-2" bind:__l="__l"></home></block><block wx:if="{{PageCur=='about'}}"><about vue-id="e76dce04-3" bind:__l="__l"></about></block></view>
