@@ -1,11 +1,11 @@
 var Fly = require("flyio/dist/npm/wx");
 var fly = new Fly();
 
-fly.config.baseURL = process.env.NODE_ENV === "production" ? "https://www.thinkmoon.cn/api/" : "http://localhost/api/";
+fly.config.baseURL = process.env.VUE_APP_BASE_URL;
 
 fly.config.headers = {
   openid: uni.getStorageSync("openid") || "xxx",
-  apisecret: "xxx",
+  apisecret: process.env.VUE_APP_SECRET,
 };
 
 fly.interceptors.response.use(
