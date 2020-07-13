@@ -1,6 +1,6 @@
 {
-  "name": "uni-app-cli",
-  "version": "0.1.0",
+  "name": "weblog",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "serve": "yarn run dev:mp-weixin",
