@@ -235,6 +235,7 @@ export default {
             cid: this.cid,
           })
           .then((res) => {
+            this.postData[0].likes++;
             this.isLike = true;
           });
       }
