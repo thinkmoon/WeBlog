@@ -2,7 +2,7 @@
   <block>
     <cu-custom bgColor="bg-gradual" title="主页"></cu-custom>
     <scroll-view scroll-y class="cu-card case scroll-view" :scroll-into-view="top">
-      <scroll-view scroll-x class="tab-list flex bg-white">
+      <scroll-view scroll-x class="tab-list flex bg-white solid-bottom">
         <div class="tab-item padding-sm" :class="mid == '0' ? 'act' : ''" @click="changeCate('0')">全部</div>
         <div
           class="tab-item padding-sm"
@@ -14,7 +14,7 @@
           {{ item.name }}
         </div>
       </scroll-view>
-      <view class="bg-white padding-top-sm">
+      <view class="bg-white article-list">
         <view v-for="(item, index) in postData" :key="index" class="article-container list radius shadow">
           <!-- #ifdef MP-QQ -->
           <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
@@ -149,6 +149,12 @@ export default Vue.extend({
   display: inline-block;
 }
 
+.article-list {
+  padding-top: 16rpx;
+}
+.article-list .article-container:first-child {
+  margin-top: 0;
+}
 .article-container {
   width: 710rpx;
   margin: 32rpx auto;

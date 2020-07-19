@@ -6,14 +6,10 @@
     </cu-custom>
     <view class="cu-bar bg-white padding-top">
       <view class="action">
-        <text class="text-xxl text-bold text-black">{{
-          postData[0].title
-        }}</text>
+        <text class="text-xxl text-bold text-black">{{ postData[0].title }}</text>
       </view>
     </view>
-    <view
-      class="bg-white flex bg-white solid-bottom padding-bottom-sm padding-top-sm justify-around text-sm"
-    >
+    <view class="bg-white flex bg-white solid-bottom padding-bottom-sm padding-top-sm justify-around text-sm">
       <view>
         <text class="icon-time padding-right-xs"></text>
         {{ formatTime(postData[0].created) }}
@@ -35,23 +31,14 @@
     <ad unit-id="53bfa608c0f8bfad5ef40eddb665f864" class="ad"></ad>
     <!-- #endif -->
     <parse :content="postData[0].text" v-if="postData[0].text"></parse>
-    <view
-      class="operation-area solid-top bg-white tm-every-center padding-top"
-      v-if="!isLoading"
-    >
+    <view class="operation-area solid-top bg-white tm-every-center padding-top" v-if="!isLoading">
       <div @click="like" class="padding-xs line-blue solid  margin-right">
         <text class="icon-appreciate padding-right-xs"></text>赞
         {{ postData[0].likes | formatNum }}
       </div>
-      <div @click="reward" class="padding-xs margin-right line-red solid">
-        <text class="icon-redpacket padding-right-xs"></text>赏
-      </div>
-      <div @click="reward" class="padding-xs margin-right line-orange solid">
-        <text class="icon-favor padding-right-xs"></text>收藏
-      </div>
-      <div class="padding-xs line-green solid">
-        <text class="icon-share padding-right-xs"></text>分享
-      </div>
+      <div @click="reward" class="padding-xs margin-right line-red solid"><text class="icon-redpacket padding-right-xs"></text>赏</div>
+      <div @click="reward" class="padding-xs margin-right line-orange solid"><text class="icon-favor padding-right-xs"></text>收藏</div>
+      <div class="padding-xs line-green solid"><text class="icon-share padding-right-xs"></text>分享</div>
     </view>
     <view class="comment-area padding-sm bg-white" v-if="!isLoading">
       <view class="text-lg">
@@ -59,34 +46,19 @@
         <text class="text-bold">发表看法</text>
       </view>
       <!-- #ifndef MP-QQ -->
-      <textarea
-        v-model="commentText"
-        placeholder="(已开启评论审核模式,评论审核通过后方能显示)"
-        class="solid padding margin-top-sm"
-      />
+      <textarea v-model="commentText" placeholder="(已开启评论审核模式,评论审核通过后方能显示)" class="solid padding margin-top-sm" />
       <!-- #endif -->
       <view class="margin-top-sm flex justify-between">
         <view v-if="!isLogin">
-          <button
-            v-if="canIUse"
-            open-type="getUserInfo"
-            @getuserinfo="loadUserInfo"
-            class="cu-btn bg-base"
-          >
+          <button v-if="canIUse" open-type="getUserInfo" @getuserinfo="loadUserInfo" class="cu-btn bg-base">
             <text class="line-white">授权登录</text>
           </button>
           <view v-else>请升级微信版本</view>
         </view>
-        <view class="text-bold" v-else
-          ><open-data type="userNickName" class="line-base"></open-data
-        ></view>
+        <view class="text-bold" v-else><open-data type="userNickName" class="line-base"></open-data></view>
         <view>
           <!-- #ifndef MP-QQ -->
-          <button
-            style="width: 100%;"
-            class="cu-btn line-base"
-            @click="comment"
-          >
+          <button style="width: 100%;" class="cu-btn line-base" @click="comment">
             发表
           </button>
           <!-- #endif -->
@@ -100,29 +72,18 @@
         <text class="text-bold">精彩评论</text>
       </view>
       <view class="comment-area bg-white margin-top padding-xs">
-        <view
-          v-for="(item, index) in commentList"
-          :key="index"
-          class="margin-bottom"
-        >
+        <view v-for="(item, index) in commentList" :key="index" class="margin-bottom">
           <view class="flex align-center">
-            <view
-              class="cu-avatar sm round"
-              :style="'background-image:url(' + item.avatarUrl + ')'"
-            >
+            <view class="cu-avatar sm round" :style="'background-image:url(' + item.avatarUrl + ')'">
               <view
                 class="cu-tag badge"
-                :class="
-                  item.gender == 2 ? 'icon-female bg-pink' : 'icon-male bg-blue'
-                "
+                :class="item.gender == 2 ? 'icon-female bg-pink' : 'icon-male bg-blue'"
                 style="font-size: 18rpx; width: 24rpx; height: 24rpx;"
               ></view>
             </view>
             <view class="solid-bottom padding-bottom-xs margin-left-xs">
               <text class="text-grey text-sm">{{ item.nickName }}</text>
-              <text class="text-grey text-sm margin-left-xs">{{
-                formatTime(item.created)
-              }}</text>
+              <text class="text-grey text-sm margin-left-xs">{{ formatTime(item.created) }}</text>
             </view>
           </view>
           <view class="padding-left-lg">
@@ -136,9 +97,7 @@
     <ad unit-id="35cc08ee6d98e478f658c5acd1c2c11c" type="card"></ad>
     <!-- #endif -->
     <tm-footer></tm-footer>
-    <view class="modal bg-white" v-if="isLoading"
-      ><view class="spinner bg-base"></view
-    ></view>
+    <view class="modal bg-white" v-if="isLoading"><view class="spinner bg-base"></view></view>
   </view>
 </template>
 
@@ -264,10 +223,22 @@ export default {
         });
         return;
       }
-      this.$Api.likePost({
-        cid: this.cid,
-      });
-      this.isLike = true;
+      if (this.isLike) {
+        uni.showToast({
+          icon: "none",
+          title: "你已为该文章点过赞啦~",
+        });
+        return;
+      } else {
+        this.$Api
+          .likePost({
+            cid: this.cid,
+          })
+          .then((res) => {
+            this.postData[0].likes++;
+            this.isLike = true;
+          });
+      }
     },
     // #ifdef MP-WEIXIN
     reward() {
@@ -315,22 +286,21 @@ export default {
         }
       },
     });
-    let data = await this.$Api.getPostLikeStatus({
-      cid: this.cid,
-    });
-    console.log("获取点赞状态", data);
-    this.isLike = JSON.parse(data);
-    // data = await this.$Api.getLikeUsers({
-    //   cid: this.cid
-    // });
-    // console.log('文章点赞用户列表', data);
-    // this.likeUsers = data;
-    // #ifndef APP-PLUS
-    data = await this.$Api.getComment({
-      cid: this.cid,
-    });
-    this.commentList = data;
-    // #endif
+    this.$Api
+      .getPostLikeStatus({
+        cid: this.cid,
+      })
+      .then((res) => {
+        console.log("获取点赞状态", res);
+        this.isLike = JSON.parse(res);
+      });
+    this.$Api
+      .getComment({
+        cid: this.cid,
+      })
+      .then((res) => {
+        this.commentList = res;
+      });
   },
   onShareAppMessage() {
     return {

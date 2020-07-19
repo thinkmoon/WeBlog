@@ -33,9 +33,9 @@ export default Vue.extend({
       // #ifndef MP
       Vue.prototype.StatusBar = e.statusBarHeight;
       if (e.platform == "android") {
-        Vue.prototype.CustomBar = (e.statusBarHeight ?? 0) + 50;
+        Vue.prototype.CustomBar = (e.statusBarHeight || 0) + 50;
       } else {
-        Vue.prototype.CustomBar = (e.statusBarHeight ?? 0) + 45;
+        Vue.prototype.CustomBar = (e.statusBarHeight || 0) + 45;
       }
       // #endif
 
@@ -43,18 +43,18 @@ export default Vue.extend({
       Vue.prototype.StatusBar = e.statusBarHeight;
       let custom = wx.getMenuButtonBoundingClientRect();
       Vue.prototype.Custom = custom;
-      Vue.prototype.CustomBar = custom.bottom + custom.top - (e.statusBarHeight ?? 0);
+      Vue.prototype.CustomBar = custom.bottom + custom.top - (e.statusBarHeight || 0);
       // #endif
 
       // #ifdef MP-ALIPAY
       Vue.prototype.StatusBar = e.statusBarHeight;
-      Vue.prototype.CustomBar = (e.statusBarHeight ?? 0) + (e.titleBarHeight ?? 0);
+      Vue.prototype.CustomBar = (e.statusBarHeight || 0) + (e.titleBarHeight || 0);
       // #endif
 
       //底部安全距离
       // @ts-ignore
       Vue.prototype.safeBottom = e.windowHeight - e.safeArea.height - e.safeArea.top;
-      Vue.prototype.$ifWebp = ["android", "devtools"].includes(e.platform ?? "");
+      Vue.prototype.$ifWebp = ["android", "devtools"].includes(e.platform || "");
     },
     login() {
       uni.login({

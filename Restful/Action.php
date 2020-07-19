@@ -281,24 +281,6 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
 
         $this->throwData($result);
     }
-
-    // 获取文章点赞用户列表
-    function getLikeUsersAction()
-    {
-        $cid = $this->getParams('cid', 'null');
-        if ($cid != 'null') {
-            $openids = $this->db->fetchAll($this->db->select('openid')->from('table.WeBlog_like')->where('cid = ?', $cid));
-            foreach ($openids as $openid) {
-                $temp = $this->db->fetchAll($this->db->select('nickName', 'avatarUrl')->from('table.WeBlog_users')->where('openid = ?', $openid));
-                if (sizeof($temp) > 0) {
-                    $likeinfo[] = $temp[0];
-                }
-            }
-            $this->throwData($likeinfo);
-        } else {
-            $this->throwData("No one like");
-        }
-    }
     /**
      * @method getSticky 获取置顶文章列表
      * @return List post_list
@@ -311,7 +293,10 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->throwData($post);
     }
 
-    // 获取博客总览
+    /**
+     * 获取博客数据总览
+     * 
+     * */ 
     function getOverviewAction()
     {
         $select   = $this->db->select('COUNT(cid) AS Num')->from('table.contents')->where('type = ?', 'post');
@@ -324,7 +309,9 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $data['tags'] = $this->db->fetchAll($select);
         $this->throwData($data);
     }
-    // 新增评论
+    /**
+     * 新增评论
+     */
     function addCommentAction()
     {
         $cid = $this->getParams('cid', -1);
@@ -352,7 +339,9 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         }
         $this->throwData($coid);
     }
-    // 获取评论
+    /**
+     * 获取评论
+     */
     function getCommentAction()
     {
         $cid = $this->getParams('cid', -1);
@@ -388,15 +377,16 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         // }
         $this->throwData($result);
     }
-    // 获取关于页cid
-    // function getAboutcid()
-    // {
-    //     $cid = 'none';
-    //     $cid = Typecho_Widget::widget('Widget_Options')->plugin('WeBlog')->aboutCid;
-
-    //     $this->throwData($cid);
-    // }
-    // 通过cid获取post
+    /**
+     * 获取关于页cid
+     */
+    function getAboutCidAction()
+    {
+        $this->throwData($this->config->aboutCid);
+    }
+    /**
+     * 通过cid获取post
+     */
     function getPostBycidAction()
     {
         if (isset($_GET['cid'])) {
@@ -414,7 +404,9 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
             $this->throwData($result);
         }
     }
-    // 文章点赞
+    /**
+     * 给文章点赞
+     */
     function likePostAction()
     {
         $cid = $this->getParams('cid', -1);
@@ -426,7 +418,9 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $this->db->query($this->db->insert('table.WeBlog_like')->rows(array('openid' => $openid, 'cid' => $cid)));
         $this->throwData(true);
     }
-    // 获取用户点赞信息
+    /**
+     * 判断用户是否点赞指定文章
+     */
     function getPostLikeStatusAction()
     {
         $openid = self::getOpenId();
@@ -438,7 +432,9 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
             $this->throwData(true);
         }
     }
-    // 搜索关键字
+    /**
+     * 搜索
+     */
     function searchAction()
     {
         $keyword = $this->getParams('keyWord', 'null');
@@ -460,7 +456,9 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         }
         $this->throwData($result,"搜索:".$keyword.", mid:".$mid);
     }
-    // 获取标签
+    /**
+     * 获取博客的所有标签
+     */
     function tagsAction()
     {
         $sql = "SELECT mid,name,count FROM typecho_metas WHERE type = 'tag'";
@@ -468,7 +466,9 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
         $result = $this->db->fetchAll($select);
         $this->throwData($result);
     }
-    // 获取分类
+    /**
+     * 获取博客的所有分类
+     */
     function categoriesAction()
     {
         $select = $this->db->select('mid', 'name', 'count')->from('table.metas')->where('type = ?', 'category')->order('order', Typecho_Db::SORT_DESC);
@@ -494,39 +494,6 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
             $redis->set('token_expire_time', time() + 7000);
             return $access_token;
         }
-    }
-
-    /**
-     * 获取设置项的接口
-     *
-     * @return void
-     */
-    public function settingsAction()
-    {
-        $this->lockMethod('get');
-
-        $key = trim($this->getParams('key', ''));
-        $allowed = array_merge(explode(',', $this->config->allowedOptions), array(
-            'title', 'description', 'keywords', 'timezone',
-        ));
-
-        if (!empty($key)) {
-            if (in_array($key, $allowed)) {
-                $query = $this->db->select('*')
-                    ->from('table.options')
-                    ->where('name = ?', $key);
-                $this->throwData($this->db->fetchAll($query));
-            } else {
-                $this->throwError('The options key you requested is therefore not allowed.', 403);
-            }
-        }
-
-        $this->throwData(array(
-            'title' => $this->options->title,
-            'description' => $this->options->description,
-            'keywords' => $this->options->keywords,
-            'timezone' => $this->options->timezone,
-        ));
     }
     /**
      * 生成 CSRF Token

@@ -42,7 +42,9 @@
                 ]
             },
             "ios" : {},
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "ad" : {}
+            }
         },
         "nvueLaunchMode" : "",
         "renderer" : "native"
@@ -79,7 +81,7 @@
         }
     },
     "uniStatistics" : {
-        "enable" : false 
+        "enable" : false
     },
     "h5" : {
         "optimization" : {

@@ -2,18 +2,11 @@
   <view>
     <cu-custom bgColor="bg-gradual" title="关于"></cu-custom>
     <view class="overView flex justify-between flex-direction weather rain">
-      <view
-        class="flex justify-center align-center flex-direction margin-top-lg"
-      >
-        <image
-          class="icon shadow"
-          src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"
-        ></image>
+      <view class="flex justify-center align-center flex-direction margin-top-lg">
+        <image class="icon shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"></image>
         <view class="text-bold text-shadow text-lg">指尖魔法屋</view>
       </view>
-      <view
-        class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top"
-      >
+      <view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top">
         <view class="margin-xs flex align-center flex-direction">
           <view>文章</view>
           <view>{{ Overview.posts[0].Num }}</view>
@@ -48,11 +41,14 @@
   </view>
 </template>
 
-<script>
-import parse from '@/componets/tm-parse'
-export default {
-  components:{
-    parse
+<script lang="ts">
+import Vue from "vue";
+
+import parse from "@/componets/tm-parse.vue";
+
+export default Vue.extend({
+  components: {
+    parse,
   },
   data() {
     return {
@@ -64,19 +60,27 @@ export default {
   },
   mounted() {
     this.$Api
-      .getPostBycid({
-        cid: "2",
+      .getAboutCid()
+      .then((res: Response) => {
+        return res;
       })
-      .then((res) => {
-        this.postData = res;
-        this.isLoading = false;
+      .then((data: any) => {
+        this.$Api
+          .getPostBycid({
+            cid: data,
+          })
+          .then((res: any) => {
+            this.postData = res;
+            this.isLoading = false;
+          });
       });
-    this.$Api.getOverview().then((res) => {
+
+    this.$Api.getOverview().then((res: any) => {
       this.Overview = res;
     });
   },
   onShow() {},
-};
+});
 </script>
 
 <style>
