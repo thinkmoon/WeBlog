@@ -9,7 +9,7 @@ typecho博客的小程序版1.x, 支持微信小程序，QQ小程序。
 ## 从0.x迁移到1.x
 
 1. 将原缩略图字段`thumb2`改为`thumb`
-2. 经用并删除原WeBlog插件，启用新版插件，由`typecho-plugin-Restful`修改
+2. 禁用并删除原WeBlog插件，启用新版插件，由`typecho-plugin-Restful`修改
 
 ## 特性
 
