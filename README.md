@@ -4,18 +4,18 @@
 
 typecho博客的小程序版1.x, 支持微信小程序，QQ小程序。
 
+## 特性
+
+1. 支持Aplayer插件播放audio/音乐 [详情](https://www.thinkmoon.cn/20191122/cid=555.html#article-header-1)
+2. 基于uni-app开发，支持多端编译 [详情](https://www.thinkmoon.cn/20191122/cid=555.html#article-header-2)
+3. 采用互补色彩设计原则，支持一键修改主题色 [详情](https://www.thinkmoon.cn/20191122/cid=555.html#article-header-3)
+
 > 有建议欢迎提issue
 
 ## 从0.x迁移到1.x
 
 1. 将原缩略图字段`thumb2`改为`thumb`
 2. 禁用并删除原WeBlog插件，启用新版插件，由`typecho-plugin-Restful`修改
-
-## 特性
-
-1. 支持Aplayer插件播放audio/音乐 [详情](https://www.thinkmoon.cn/20191122/cid=555.html#article-header-1)
-2. 基于uni-app开发，支持多端编译 [详情](https://www.thinkmoon.cn/20191122/cid=555.html#article-header-2)
-3. 采用互补色彩设计原则，支持一键修改主题色 [详情](https://www.thinkmoon.cn/20191122/cid=555.html#article-header-3)
 
 ## 小程序二维码
 
@@ -31,19 +31,7 @@ typecho博客的小程序版1.x, 支持微信小程序，QQ小程序。
 
 ### 小程序端
 
-#### 自行编译(需要nodejs环境)
-
-1. 下载nodejs环境
-2. 打开小程序项目文件夹uni-app-cli,执行`npm install`
-```bash
-cd uni-app-cli
-npm install
-npm run build
-```
-3. 打开微信开发者工具，导入项目文件夹`uni-app-cli/dist/build/mp-weixn`
-
-> 注意：如需修改关于小程序项目配置，建议直接修改`manifest.json`文件
-
+[点击阅读](https://github.com/thinkmoon/WeBlog/tree/v1.x/uni-app-cli)
 
 ### Typecho插件端
 
@@ -75,7 +63,8 @@ npm run build
 
 ## 开发计划，更新日志
 
-[WIKI](https://github.com/thinkmoon/WeBlog/wiki) [更多](https://www.thinkmoon.cn/20191122/cid=555.html)
+[WIKI](https://github.com/thinkmoon/WeBlog/wiki) 
+[更多](https://www.thinkmoon.cn/20191122/cid=555.html)
 
   [2]: https://blog.cdn.thinkmoon.cn/blog/typecho/2019-11-22T07:58:08.png
   [3]: https://blog.cdn.thinkmoon.cn/blog/typecho/2576c006617a8efb2218a1e9145646a4.png
