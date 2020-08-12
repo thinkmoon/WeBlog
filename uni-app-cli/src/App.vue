@@ -27,34 +27,6 @@ export default Vue.extend({
     },
     // 初始化
     init() {
-      let e = uni.getSystemInfoSync();
-      console.log("getSystemInfoSync", e);
-
-      // #ifndef MP
-      Vue.prototype.StatusBar = e.statusBarHeight;
-      if (e.platform == "android") {
-        Vue.prototype.CustomBar = (e.statusBarHeight || 0) + 50;
-      } else {
-        Vue.prototype.CustomBar = (e.statusBarHeight || 0) + 45;
-      }
-      // #endif
-
-      // #ifdef MP-WEIXIN || MP-QQ
-      Vue.prototype.StatusBar = e.statusBarHeight;
-      let custom = wx.getMenuButtonBoundingClientRect();
-      Vue.prototype.Custom = custom;
-      Vue.prototype.CustomBar = custom.bottom + custom.top - (e.statusBarHeight || 0);
-      // #endif
-
-      // #ifdef MP-ALIPAY
-      Vue.prototype.StatusBar = e.statusBarHeight;
-      Vue.prototype.CustomBar = (e.statusBarHeight || 0) + (e.titleBarHeight || 0);
-      // #endif
-
-      //底部安全距离
-      // @ts-ignore
-      Vue.prototype.safeBottom = e.windowHeight - e.safeArea.height - e.safeArea.top;
-      Vue.prototype.$ifWebp = ["android", "devtools"].includes(e.platform || "");
     },
     login() {
       uni.login({
