@@ -32,7 +32,7 @@
     },
     async onLoad(options) {
       console.log(options)
-      this.articleList = await this.$Api.search(options)
+      this.articleList = await this.$api.search(options)
     }
   }
 </script>

@@ -74,12 +74,12 @@ export default Vue.extend({
                         code: res.code,
                       };
                       Object.assign(data, Info.userInfo);
-                      let openid = await this.$Api.login(data);
+                      let openid = await this.$api.login(data);
                       uni.setStorageSync("openid", openid);
                     },
                   });
                 } else {
-                  let openid = await this.$Api.login({
+                  let openid = await this.$api.login({
                     code: res.code,
                   });
                   uni.setStorageSync("openid", openid);
@@ -109,8 +109,8 @@ export default Vue.extend({
 <style lang="scss">
 /* 引入color UI wxss 库 */
 @import "../assets/css/main.css";
-@import "../assets/css/icon.wxss";
-@import "../assets/css/animation.wxss";
+@import "../assets/css/icon.css";
+@import "../assets/css/animation.css";
 /* ------------------ */
 /* 引入自定义 less 库 */
 @import "../assets/css/tmui.scss";

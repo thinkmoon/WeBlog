@@ -10,19 +10,19 @@
       </view>
     </view>
     <view class="bg-white flex bg-white solid-bottom padding-bottom-sm padding-top-sm justify-around text-sm">
-      <view>
+      <view class="flex align-center">
         <text class="icon-time padding-right-xs"></text>
         {{ formatTime(postData[0].created) }}
       </view>
-      <view>
+      <view class="flex align-center">
         <text class="icon-file padding-right-xs"></text>
         {{ postData[0].category[0]["name"] }}
       </view>
-      <view>
+      <view class="flex align-center">
         <text class="icon-like padding-right-xs"></text>
         点赞({{ postData[0].likes }})
       </view>
-      <view>
+      <view class="flex align-center">
         <text class="icon-comment padding-right-xs"></text>
         评论({{ postData[0].commentsNum }})
       </view>
@@ -116,7 +116,7 @@ videoAd.onClose(function(res) {
   console.log("videoAd onClose", res);
 });
 // #endif
-import parse from "@/componets/tm-parse";
+import parse from "@/wxcomponents/tm-parse/index";
 export default {
   components: {
     parse,
@@ -164,7 +164,7 @@ export default {
       if (this.commentText == null) {
         return;
       }
-      let coid = await this.$Api.addComment({
+      let coid = await this.$api.addComment({
         cid: this.cid,
         text: this.commentText,
       });
@@ -197,12 +197,12 @@ export default {
                         code: res.code,
                       };
                       Object.assign(data, Info.userInfo);
-                      let openid = await this.$Api.login(data);
+                      let openid = await this.$api.login(data);
                       uni.setStorageSync("openid", openid);
                     },
                   });
                 } else {
-                  let openid = await this.$Api.login({
+                  let openid = await this.$api.login({
                     code: res.code,
                   });
                   uni.setStorageSync("openid", openid);
@@ -230,7 +230,7 @@ export default {
         });
         return;
       } else {
-        this.$Api
+        this.$api
           .likePost({
             cid: this.cid,
           })
@@ -272,7 +272,7 @@ export default {
   async onLoad(query) {
     this.cid = query.cid;
     this.thumb = query.thumb;
-    this.postData = await this.$Api.getPostBycid({
+    this.postData = await this.$api.getPostBycid({
       cid: query.cid,
     });
     this.isLoading = false;
@@ -286,7 +286,7 @@ export default {
         }
       },
     });
-    this.$Api
+    this.$api
       .getPostLikeStatus({
         cid: this.cid,
       })
@@ -294,7 +294,7 @@ export default {
         console.log("获取点赞状态", res);
         this.isLike = JSON.parse(res);
       });
-    this.$Api
+    this.$api
       .getComment({
         cid: this.cid,
       })

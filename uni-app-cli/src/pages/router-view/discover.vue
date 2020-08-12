@@ -48,7 +48,7 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.$Api.getTags().then((res: any) => {
+    this.$api.getTags().then((res: any) => {
       this.tagList = res;
     });
   },
