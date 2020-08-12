@@ -37,8 +37,10 @@
         {{ postData[0].likes | formatNum }}
       </div>
       <div @click="reward" class="padding-xs margin-right line-red solid"><text class="icon-redpacket padding-right-xs"></text>赏</div>
-      <div @click="reward" class="padding-xs margin-right line-orange solid"><text class="icon-favor padding-right-xs"></text>收藏</div>
-      <div @click="share" class="padding-xs line-green solid"><text class="icon-share padding-right-xs"></text>分享</div>
+      <!-- <div @click="reward" class="padding-xs margin-right line-orange solid"><text class="icon-favor padding-right-xs"></text>收藏</div> -->
+      <div @click="share" class="padding-xs line-green solid">
+        <text class="icon-attentionfill padding-right-xs"></text>阅读 {{ postData[0].views | formatNum }}
+      </div>
     </view>
     <view class="comment-area padding-sm bg-white" v-if="!isLoading">
       <view class="text-lg">
@@ -150,12 +152,6 @@ export default {
     },
   },
   methods: {
-    share() {
-      uni.showShareMenu({
-        withShareTicket: true,
-        menus: ["shareAppMessage", "shareTimeline"],
-      });
-    },
     formatTime(value) {
       return this.$moment.unix(value).format("YYYY年MM月DD日");
     },
@@ -168,6 +164,10 @@ export default {
         return;
       }
       if (this.commentText == null) {
+        uni.showToast({
+          icon: "none",
+          title: "请先输入内容",
+        });
         return;
       }
       let coid = await this.$api.addComment({

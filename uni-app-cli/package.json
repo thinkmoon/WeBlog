@@ -1,6 +1,6 @@
 {
   "name": "weblog",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "serve": "yarn run dev:mp-weixin",
