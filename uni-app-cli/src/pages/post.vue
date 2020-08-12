@@ -38,7 +38,7 @@
       </div>
       <div @click="reward" class="padding-xs margin-right line-red solid"><text class="icon-redpacket padding-right-xs"></text>赏</div>
       <div @click="reward" class="padding-xs margin-right line-orange solid"><text class="icon-favor padding-right-xs"></text>收藏</div>
-      <div class="padding-xs line-green solid"><text class="icon-share padding-right-xs"></text>分享</div>
+      <div @click="share" class="padding-xs line-green solid"><text class="icon-share padding-right-xs"></text>分享</div>
     </view>
     <view class="comment-area padding-sm bg-white" v-if="!isLoading">
       <view class="text-lg">
@@ -150,6 +150,12 @@ export default {
     },
   },
   methods: {
+    share() {
+      uni.showShareMenu({
+        withShareTicket: true,
+        menus: ["shareAppMessage", "shareTimeline"],
+      });
+    },
     formatTime(value) {
       return this.$moment.unix(value).format("YYYY年MM月DD日");
     },
@@ -311,6 +317,12 @@ export default {
         this.$qs.stringify(this.$mp.query, {
           encode: false,
         }),
+      imageUrl: this.thumb,
+    };
+  },
+  onShareTimeline() {
+    return {
+      title: this.postData[0].title,
       imageUrl: this.thumb,
     };
   },

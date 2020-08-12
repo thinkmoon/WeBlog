@@ -130,7 +130,6 @@ export default Vue.extend({
         bottom: 600,
       })
       .observe(".action", (res: any) => {
-        console.log(res);
         this.loadPost();
       });
     this.$api.getCategories().then((res: any) => {

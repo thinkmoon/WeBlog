@@ -35,7 +35,6 @@ Component({
   },
   lifetimes: {
     attached: function() {
-      console.log(this.data)
       let content = this.data.content
       // 处理meting
       let text = content.replace(

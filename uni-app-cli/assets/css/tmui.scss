@@ -181,7 +181,7 @@ $color-complement : spin($color-base, 180);
 
 /**内连元素**/
 .h2w-light .h2w__a {
-    color:$color-base;
+    color:$color-base !important;
     border-color:#b9d9b8;
 }
 
