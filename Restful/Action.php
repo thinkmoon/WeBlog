@@ -391,7 +391,7 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
     {
         if (isset($_GET['cid'])) {
             $cid = $this->getParams('cid');
-            $select = $this->db->select('cid', 'title', 'created', 'type', 'slug', 'likes', 'text', 'commentsNum')->from('table.contents')->where('status = ?', 'publish')->where('created < ?', time())->where('cid = ?', $cid);
+            $select = $this->db->select('cid', 'title', 'created', 'type', 'slug', 'views', 'likes', 'text', 'commentsNum')->from('table.contents')->where('status = ?', 'publish')->where('created < ?', time())->where('cid = ?', $cid);
             //更新点击量数据库
             $row = $this->db->fetchRow($this->db->select('views')->from('table.contents')->where('cid = ?', $cid));
             $this->db->query($this->db->update('table.contents')->rows(array('views' => (int) $row['views'] + 1))->where('cid = ?', $cid));
@@ -439,7 +439,7 @@ class Restful_Action extends Typecho_Widget implements Widget_Interface_Do
     {
         $keyword = $this->getParams('keyWord', 'null');
         $mid = $this->getParams('mid', 'null');
-        $select = $this->db->select('distinct table.contents.cid AS cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->join('table.relationships', 'table.contents.cid = table.relationships.cid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->limit(20);
+        $select = $this->db->select('table.contents.cid AS cid', 'title', 'table.contents.created', 'commentsNum', 'views', 'likes')->from('table.contents')->join('table.relationships', 'table.contents.cid = table.relationships.cid', Typecho_DB::LEFT_JOIN)->where('type = ?', 'post')->where('status = ?', 'publish')->order('table.contents.created', Typecho_Db::SORT_DESC)->limit(20);
         if ($keyword != 'null') {
             $select = $select->where('table.contents.text LIKE ?', '%' . $keyword . '%');
         }

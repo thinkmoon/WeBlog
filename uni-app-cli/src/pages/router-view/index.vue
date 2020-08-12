@@ -108,7 +108,7 @@ export default Vue.extend({
       this.isLoading = true;
       if (this.requesting) return;
       this.requesting = true;
-      this.$Api
+      this.$api
         .getPost({
           page: this.curPage + 1,
           mid: this.mid,
@@ -130,10 +130,9 @@ export default Vue.extend({
         bottom: 600,
       })
       .observe(".action", (res: any) => {
-        console.log(res);
         this.loadPost();
       });
-    this.$Api.getCategories().then((res: any) => {
+    this.$api.getCategories().then((res: any) => {
       this.categoryList = res;
     });
     this.loadPost();

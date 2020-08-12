@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import tab from "@/componets/tm-tab";
+import tab from "@/components/tm-tab";
 import home from "./router-view/index.vue";
 import discover from "./router-view/discover.vue";
 import about from "./router-view/about.vue";

@@ -10,19 +10,19 @@
       </view>
     </view>
     <view class="bg-white flex bg-white solid-bottom padding-bottom-sm padding-top-sm justify-around text-sm">
-      <view>
+      <view class="flex align-center">
         <text class="icon-time padding-right-xs"></text>
         {{ formatTime(postData[0].created) }}
       </view>
-      <view>
+      <view class="flex align-center">
         <text class="icon-file padding-right-xs"></text>
         {{ postData[0].category[0]["name"] }}
       </view>
-      <view>
+      <view class="flex align-center">
         <text class="icon-like padding-right-xs"></text>
         点赞({{ postData[0].likes }})
       </view>
-      <view>
+      <view class="flex align-center">
         <text class="icon-comment padding-right-xs"></text>
         评论({{ postData[0].commentsNum }})
       </view>
@@ -37,8 +37,10 @@
         {{ postData[0].likes | formatNum }}
       </div>
       <div @click="reward" class="padding-xs margin-right line-red solid"><text class="icon-redpacket padding-right-xs"></text>赏</div>
-      <div @click="reward" class="padding-xs margin-right line-orange solid"><text class="icon-favor padding-right-xs"></text>收藏</div>
-      <div class="padding-xs line-green solid"><text class="icon-share padding-right-xs"></text>分享</div>
+      <!-- <div @click="reward" class="padding-xs margin-right line-orange solid"><text class="icon-favor padding-right-xs"></text>收藏</div> -->
+      <div @click="share" class="padding-xs line-green solid">
+        <text class="icon-attentionfill padding-right-xs"></text>阅读 {{ postData[0].views | formatNum }}
+      </div>
     </view>
     <view class="comment-area padding-sm bg-white" v-if="!isLoading">
       <view class="text-lg">
@@ -116,7 +118,7 @@ videoAd.onClose(function(res) {
   console.log("videoAd onClose", res);
 });
 // #endif
-import parse from "@/componets/tm-parse";
+import parse from "@/wxcomponents/tm-parse/index";
 export default {
   components: {
     parse,
@@ -162,9 +164,13 @@ export default {
         return;
       }
       if (this.commentText == null) {
+        uni.showToast({
+          icon: "none",
+          title: "请先输入内容",
+        });
         return;
       }
-      let coid = await this.$Api.addComment({
+      let coid = await this.$api.addComment({
         cid: this.cid,
         text: this.commentText,
       });
@@ -197,12 +203,12 @@ export default {
                         code: res.code,
                       };
                       Object.assign(data, Info.userInfo);
-                      let openid = await this.$Api.login(data);
+                      let openid = await this.$api.login(data);
                       uni.setStorageSync("openid", openid);
                     },
                   });
                 } else {
-                  let openid = await this.$Api.login({
+                  let openid = await this.$api.login({
                     code: res.code,
                   });
                   uni.setStorageSync("openid", openid);
@@ -230,7 +236,7 @@ export default {
         });
         return;
       } else {
-        this.$Api
+        this.$api
           .likePost({
             cid: this.cid,
           })
@@ -272,7 +278,7 @@ export default {
   async onLoad(query) {
     this.cid = query.cid;
     this.thumb = query.thumb;
-    this.postData = await this.$Api.getPostBycid({
+    this.postData = await this.$api.getPostBycid({
       cid: query.cid,
     });
     this.isLoading = false;
@@ -286,7 +292,7 @@ export default {
         }
       },
     });
-    this.$Api
+    this.$api
       .getPostLikeStatus({
         cid: this.cid,
       })
@@ -294,7 +300,7 @@ export default {
         console.log("获取点赞状态", res);
         this.isLike = JSON.parse(res);
       });
-    this.$Api
+    this.$api
       .getComment({
         cid: this.cid,
       })
@@ -311,6 +317,12 @@ export default {
         this.$qs.stringify(this.$mp.query, {
           encode: false,
         }),
+      imageUrl: this.thumb,
+    };
+  },
+  onShareTimeline() {
+    return {
+      title: this.postData[0].title,
       imageUrl: this.thumb,
     };
   },

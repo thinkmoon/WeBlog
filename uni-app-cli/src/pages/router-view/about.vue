@@ -44,7 +44,8 @@
 <script lang="ts">
 import Vue from "vue";
 
-import parse from "@/componets/tm-parse.vue";
+// @ts-ignore
+import parse from "@/wxcomponents/tm-parse/index";
 
 export default Vue.extend({
   components: {
@@ -59,13 +60,10 @@ export default Vue.extend({
     };
   },
   mounted() {
-    this.$Api
+    this.$api
       .getAboutCid()
-      .then((res: Response) => {
-        return res;
-      })
       .then((data: any) => {
-        this.$Api
+        this.$api
           .getPostBycid({
             cid: data,
           })
@@ -75,7 +73,7 @@ export default Vue.extend({
           });
       });
 
-    this.$Api.getOverview().then((res: any) => {
+    this.$api.getOverview().then((res: any) => {
       this.Overview = res;
     });
   },

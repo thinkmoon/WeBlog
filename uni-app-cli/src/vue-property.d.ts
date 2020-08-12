@@ -4,7 +4,7 @@ import Api from "./plugins/fly/api";
 declare module "vue/types/vue" {
   interface Vue {
     $moment: Moment,
-    $Api:Api
+    $api:Api
   }
 }
 

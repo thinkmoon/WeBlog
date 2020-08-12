@@ -27,34 +27,6 @@ export default Vue.extend({
     },
     // 初始化
     init() {
-      let e = uni.getSystemInfoSync();
-      console.log("getSystemInfoSync", e);
-
-      // #ifndef MP
-      Vue.prototype.StatusBar = e.statusBarHeight;
-      if (e.platform == "android") {
-        Vue.prototype.CustomBar = (e.statusBarHeight || 0) + 50;
-      } else {
-        Vue.prototype.CustomBar = (e.statusBarHeight || 0) + 45;
-      }
-      // #endif
-
-      // #ifdef MP-WEIXIN || MP-QQ
-      Vue.prototype.StatusBar = e.statusBarHeight;
-      let custom = wx.getMenuButtonBoundingClientRect();
-      Vue.prototype.Custom = custom;
-      Vue.prototype.CustomBar = custom.bottom + custom.top - (e.statusBarHeight || 0);
-      // #endif
-
-      // #ifdef MP-ALIPAY
-      Vue.prototype.StatusBar = e.statusBarHeight;
-      Vue.prototype.CustomBar = (e.statusBarHeight || 0) + (e.titleBarHeight || 0);
-      // #endif
-
-      //底部安全距离
-      // @ts-ignore
-      Vue.prototype.safeBottom = e.windowHeight - e.safeArea.height - e.safeArea.top;
-      Vue.prototype.$ifWebp = ["android", "devtools"].includes(e.platform || "");
     },
     login() {
       uni.login({
@@ -74,12 +46,12 @@ export default Vue.extend({
                         code: res.code,
                       };
                       Object.assign(data, Info.userInfo);
-                      let openid = await this.$Api.login(data);
+                      let openid = await this.$api.login(data);
                       uni.setStorageSync("openid", openid);
                     },
                   });
                 } else {
-                  let openid = await this.$Api.login({
+                  let openid = await this.$api.login({
                     code: res.code,
                   });
                   uni.setStorageSync("openid", openid);
@@ -109,8 +81,8 @@ export default Vue.extend({
 <style lang="scss">
 /* 引入color UI wxss 库 */
 @import "../assets/css/main.css";
-@import "../assets/css/icon.wxss";
-@import "../assets/css/animation.wxss";
+@import "../assets/css/icon.css";
+@import "../assets/css/animation.css";
 /* ------------------ */
 /* 引入自定义 less 库 */
 @import "../assets/css/tmui.scss";

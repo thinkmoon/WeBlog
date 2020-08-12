@@ -15,6 +15,10 @@
       "transparentTitle": "always",
       "allowsBounceVertical": "NO"
     },
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "指尖魔法屋",
+    "navigationBarBackgroundColor": "#007fff",
+    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "light"
   }
 }
