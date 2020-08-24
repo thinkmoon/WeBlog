@@ -1,15 +1,24 @@
 # WeBlog小程序端
 
-# 快速开始
+## 安装环境
 
 1. 下载nodejs环境
 2. 打开小程序项目文件夹uni-app-cli,执行`npm install`
 ```bash
 cd uni-app-cli
 npm install
-npm run build
 ```
-3. 打开微信开发者工具，导入项目文件夹`uni-app-cli/dist/build/mp-weixn`
+3. 默认运行`npm run build`会编译到微信小程序平台
+
+## 编译到微信小程序
+
+1. 运行`npm run build:mp-weixin`
+2. 打开微信开发者工具，导入项目文件夹`uni-app-cli/dist/build/mp-weixin`
+
+## 编译到QQ小程序
+
+1. 运行`npm run build:mp-qq`
+2. 打开微信开发者工具，导入项目文件夹`uni-app-cli/dist/build/mp-qq`
 
 ## 小程序项目配置
 
