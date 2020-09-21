@@ -22,14 +22,28 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         
-      - name: Create a Release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Create a Release
+#         id: create_release
+#         uses: actions/create-release@v1.1.4
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           # The name of the tag. This should come from the webhook payload, `github.GITHUB_REF` when a user pushes a new tag
+#           tag_name:  ${{ github.ref }}
+#           # The name of the release. For example, `Release v1.0.1`
+#           release_name: Release  ${{ github.ref }}
+#           # Text describing the contents of the tag.
+#           body: 测试持续发布
+          
+      - name: Zip Release
+        # You may pin to the exact commit or the version.
+       # uses: TheDoctor0/zip-release@a1afcab9c664c9976ac398fa831eac67bed1eb0e
+        uses: TheDoctor0/zip-release@0.4.1
         with:
-          # The name of the tag. This should come from the webhook payload, `github.GITHUB_REF` when a user pushes a new tag
-          tag_name:  ${{ github.ref }}
-          # The name of the release. For example, `Release v1.0.1`
-          release_name: Release  ${{ github.ref }}
-          # Text describing the contents of the tag.
-          body: 测试持续发布
+          # Filename for archive
+          filename: typecho插件.zip
+          # Base path for archive files
+          path: Restful
+      
+      - name: cmd
+        run: ls
