@@ -45,5 +45,15 @@ jobs:
           # Base path for archive files
           path: Restful
       
+      - name: Zip Release
+        # You may pin to the exact commit or the version.
+       # uses: TheDoctor0/zip-release@a1afcab9c664c9976ac398fa831eac67bed1eb0e
+        uses: TheDoctor0/zip-release@0.4.1
+        with:
+          # Filename for archive
+          filename: uni-app小程序端.zip
+          # Base path for archive files
+          path: uni-app-cli
+      
       - name: cmd
         run: ls
