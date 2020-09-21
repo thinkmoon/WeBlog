@@ -6,8 +6,6 @@ name: CI
 # events but only for the v1.x branch
 on:
   push:
-    branches:
-      - v1.x
     # Sequence of patterns matched against refs/tags
     tags:
     - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
