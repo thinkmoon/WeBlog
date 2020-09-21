@@ -22,27 +22,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v1.4.3
-      
-      - name: Setup Project environment
-        run: |
-          cd uni-app-cli
-          npm i
-          
-      - name: Build to Weixin
-        run: |
-          cd uni-app-cli
-          npm run build:mp-weixin
-      
-      - name: Build to QQ
-        run: |
-          cd uni-app-cli
-          npm run build:mp-qq
-          
       - name: Create a Release
         uses: actions/create-release@v1.1.4
         with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           # The name of the tag. This should come from the webhook payload, `github.GITHUB_REF` when a user pushes a new tag
           tag_name: testCI
           # The name of the release. For example, `Release v1.0.1`
