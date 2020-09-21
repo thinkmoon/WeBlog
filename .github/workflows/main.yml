@@ -39,3 +39,13 @@ jobs:
         run: |
           cd uni-app-cli
           npm run build:mp-qq
+          
+      - name: Create a Release
+        uses: actions/create-release@v1.1.4
+        with:
+          # The name of the tag. This should come from the webhook payload, `github.GITHUB_REF` when a user pushes a new tag
+          tag_name: testCI
+          # The name of the release. For example, `Release v1.0.1`
+          release_name: Release testCI
+          # Text describing the contents of the tag.
+          body: 测试持续发布
