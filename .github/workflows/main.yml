@@ -29,3 +29,9 @@ jobs:
         run: |
           cd uni-app-cli
           npm i
+          
+      - name: Build to Weixin
+        run: npm run build:mp-weixin
+      
+      - name: Build to QQ
+        run: npm run build:mp-qq
