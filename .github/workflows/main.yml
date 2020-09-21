@@ -6,9 +6,9 @@ name: CI
 # events but only for the v1.x branch
 on:
   push:
-    branches: [ v1.x ]
-  pull_request:
-    branches: [ v1.x ]
+    # Sequence of patterns matched against refs/tags
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -32,8 +32,6 @@ jobs:
           tag_name:  ${{ github.ref }}
           # The name of the release. For example, `Release v1.0.1`
           release_name: Release  ${{ github.ref }}
-          # Text describing the contents of the tag.
-          body: 测试持续发布
           
       - name: 归档插件
         # You may pin to the exact commit or the version.
@@ -58,7 +56,7 @@ jobs:
       - name: cmd
         run: ls
         
-      - name: Upload a Release Asset
+      - name: Upload a uni-app
         uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -67,10 +65,88 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           # The path to the asset you want to upload
           asset_path: ./uni-app小程序端.zip
-        # The name of the asset you want to upload
-          asset_name: uni-app小程序端.zip
+          # The name of the asset you want to upload
+          asset_name: uni-app.zip
           # The content-type of the asset you want to upload. See the supported Media Types here: https://www.iana.org/assignments/media-types/media-types.xhtml for more information
           asset_content_type: application/zip
       
+      - name: Upload a plugin
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # The URL for uploading assets to the release
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # The path to the asset you want to upload
+          asset_path: ./typecho插件.zip
+          # The name of the asset you want to upload
+          asset_name: plugins.zip
+          # The content-type of the asset you want to upload. See the supported Media Types here: https://www.iana.org/assignments/media-types/media-types.xhtml for more information
+          asset_content_type: application/zip
       
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1.4.3
+      
+      - name: Setup Project environment
+        run: |
+          cd uni-app-cli
+          npm i
+          
+      - name: Build to Weixin
+        run: |
+          cd uni-app-cli
+          npm run build:mp-weixin
+      
+      - name: Build to QQ
+        run: |
+          cd uni-app-cli
+          npm run build:mp-qq
+      
+      - name: Archive weixin
+        # You may pin to the exact commit or the version.
+       # uses: TheDoctor0/zip-release@a1afcab9c664c9976ac398fa831eac67bed1eb0e
+        uses: TheDoctor0/zip-release@0.4.1
+        with:
+          # Filename for archive
+          filename: mp-weixin-vApp.zip
+          # Base path for archive files
+          path: uni-app-cli/dist/build/mp-weixin
+      
+      - name: Archive qq
+        # You may pin to the exact commit or the version.
+       # uses: TheDoctor0/zip-release@a1afcab9c664c9976ac398fa831eac67bed1eb0e
+        uses: TheDoctor0/zip-release@0.4.1
+        with:
+          # Filename for archive
+          filename: mp-qq-vApp.zip
+          # Base path for archive files
+          path: uni-app-cli/dist/build/mp-qq
+        
+      - name: Upload a mp-weixin
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # The URL for uploading assets to the release
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # The path to the asset you want to upload
+          asset_path: ./mp-weixin-vApp.zip
+          # The name of the asset you want to upload
+          asset_name: mp-weixin-vApp.zip
+          # The content-type of the asset you want to upload. See the supported Media Types here: https://www.iana.org/assignments/media-types/media-types.xhtml for more information
+          asset_content_type: application/zip
+      
+      - name: Upload a mp-qq
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # The URL for uploading assets to the release
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # The path to the asset you want to upload
+          asset_path: ./mp-qq-vApp.zip
+          # The name of the asset you want to upload
+          asset_name: mp-qq-vApp.zip
+          # The content-type of the asset you want to upload. See the supported Media Types here: https://www.iana.org/assignments/media-types/media-types.xhtml for more information
+          asset_content_type: application/zip
       
