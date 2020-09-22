@@ -1,9 +1,5 @@
 <template>
   <view class="bg-gray content">
-    <cu-custom bgColor="bg-gradual" :isBack="true">
-      <block slot="backText"><text class="icon-back"></text></block>
-      <block slot="content">搜索结果</block>
-    </cu-custom>
     <view>
       <navigator :url='"/pages/post?cid=" + item.cid' v-for="(item,index) in articleList" :key="index" class="margin padding bg-white">
         <view class="image-container" v-if="item.thumb.length">

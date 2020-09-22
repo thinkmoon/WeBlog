@@ -1,9 +1,5 @@
 <template>
   <view class="bg-white">
-    <cu-custom bgColor="bg-gradual" :isBack="true">
-      <block slot="backText"><text class="icon-home"></text></block>
-      <block slot="content">文章详情</block>
-    </cu-custom>
     <view class="cu-bar bg-white padding-top">
       <view class="action">
         <text class="text-xxl text-bold text-black">{{ postData[0].title }}</text>
@@ -96,7 +92,8 @@
     </view>
     <!-- #endif -->
     <!-- #ifdef MP-QQ -->
-    <ad unit-id="35cc08ee6d98e478f658c5acd1c2c11c" type="card"></ad>
+    <ad unit-id="35cc08ee6d98e478f658c5acd1c2c11c" type="card" style="margin-bottom:10px;
+"></ad>
     <!-- #endif -->
     <tm-footer></tm-footer>
     <view class="modal bg-white" v-if="isLoading"><view class="spinner bg-base"></view></view>
@@ -359,6 +356,7 @@ export default {
 }
 .ad {
   background-color: #fff;
-  padding-top: 10upx;
+  margin-top:10upx;
+
 }
 </style>

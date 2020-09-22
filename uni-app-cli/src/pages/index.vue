@@ -1,8 +1,7 @@
 <template name="home">
   <block>
-    <cu-custom bgColor="bg-gradual" title="主页"></cu-custom>
-    <scroll-view scroll-y class="cu-card case scroll-view" :scroll-into-view="top">
-      <scroll-view scroll-x class="tab-list flex bg-white solid-bottom">
+    <scroll-view scroll-y class="cu-card case scroll-view" :scroll-into-view="top" @scrolltolower="loadPost" enhanced enable-back-to-top>
+      <scroll-view scroll-x class="tab-list flex bg-white solid-bottom" enable-flex="flex-box">
         <div class="tab-item padding-sm" :class="mid == '0' ? 'act' : ''" @click="changeCate('0')">全部</div>
         <div
           class="tab-item padding-sm"
@@ -16,12 +15,9 @@
       </scroll-view>
       <view class="bg-white article-list">
         <view v-for="(item, index) in postData" :key="index" class="article-container list radius shadow">
-          <!-- #ifdef MP-QQ -->
-          <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 3" class="ad"></ad>
-          <!-- #endif -->
           <navigator
             hover-class="none"
-            :url="'/pages/post?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value"
+            :url="'/pages/post/index?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value"
             class="list__item bg-white"
           >
             <view class="image-container" v-if="item.thumb.length">
@@ -57,6 +53,9 @@
               </view>
             </view>
           </navigator>
+          <!-- #ifdef MP-QQ -->
+          <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 0" class="ad"></ad>
+          <!-- #endif -->
         </view>
       </view>
       <!-- <view @click="goTop" style="bottom:100px;position: fixed;">回到顶部</view> -->
@@ -71,7 +70,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-let observer: any;
 
 export default Vue.extend({
   name: "home",
@@ -90,7 +88,7 @@ export default Vue.extend({
       this.mid = mid;
       this.curPage = 0;
       this.postData = [];
-      this.loadPost()
+      this.loadPost();
       console.log("change mid:", mid);
     },
     goTop() {
@@ -123,15 +121,7 @@ export default Vue.extend({
         });
     },
   },
-  async mounted() {
-    observer = wx.createIntersectionObserver(this);
-    observer
-      .relativeToViewport({
-        bottom: 600,
-      })
-      .observe(".action", (res: any) => {
-        this.loadPost();
-      });
+  mounted() {
     this.$api.getCategories().then((res: any) => {
       this.categoryList = res;
     });
@@ -141,7 +131,7 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .tab-list {
-  width: 100%;
+  height: 36px;
   white-space: nowrap;
 }
 .tab-item {

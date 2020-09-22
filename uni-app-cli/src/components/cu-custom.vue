@@ -26,6 +26,8 @@ export default {
   name: "cu-custom",
   computed: {
     style() {
+    console.log("computer")
+
       var bgImage = this.bgImage;
       var style = `height:${this.CustomBar}px;padding-top:${this.StatusBar}px;`;
       if (this.bgImage) {
@@ -35,6 +37,7 @@ export default {
     },
   },
   created() {
+    console.log("created")
     uni.getSystemInfo({
       success: e => {
         // #ifndef MP

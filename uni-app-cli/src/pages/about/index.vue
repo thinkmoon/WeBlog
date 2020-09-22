@@ -1,6 +1,6 @@
 <template name="about">
   <view>
-    <cu-custom bgColor="bg-gradual" title="关于"></cu-custom>
+    <!-- <cu-custom bgColor="bg-gradual" title="关于"></cu-custom> -->
     <view class="overView flex justify-between flex-direction weather rain">
       <view class="flex justify-center align-center flex-direction margin-top-lg">
         <image class="icon shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"></image>
@@ -35,9 +35,10 @@
       <view class="spinner bg-base"></view>
     </view>
     <!-- #ifdef MP-QQ -->
-    <ad unit-id="01a084f529176b8df06deaa2274f6721" type="card"></ad>
+    <ad unit-id="01a084f529176b8df06deaa2274f6721" type="card" style="margin-bottom:10px"></ad>
     <!-- #endif -->
     <tm-footer></tm-footer>
+    <!-- <tab @onTabChange="tabChange" active="2"></tab> -->
   </view>
 </template>
 
@@ -46,10 +47,12 @@ import Vue from "vue";
 
 // @ts-ignore
 import parse from "@/wxcomponents/tm-parse/index";
+import tab from "@/components/tm-tab.vue";
 
 export default Vue.extend({
   components: {
     parse,
+    tab
   },
   data() {
     return {
@@ -82,6 +85,9 @@ export default Vue.extend({
 </script>
 
 <style>
+page {
+  background: #fff
+}
 @import "@/../assets/css/weather.css";
 /*引入天气的css*/
 

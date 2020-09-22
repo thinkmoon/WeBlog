@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 
-import "./plugins";
+import "./utils";
 
 // 由于uni-app的component实现差异，Vue.componet的使用只能在当前文件下生效
 // -----------------------------------------------------------------------

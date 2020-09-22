@@ -1,9 +1,5 @@
 <template>
   <view class="bg-white content">
-    <cu-custom bgColor="bg-gradual">
-      <block slot="backText"><text class="icon-back"></text></block>
-      <block slot="content">发现</block>
-    </cu-custom>
     <view class="cu-bar tm-search bg-white">
       <view class="tm-search-input search-form">
         <text class="icon-search"></text>
@@ -15,13 +11,18 @@
         {{ item.name }} ({{ item.count }})
       </view>
     </view>
+    <!-- <tab @onTabChange="tabChange" active="1"></tab> -->
   </view>
 </template>
 
 <script lang="ts">
+import tab from "@/components/tm-tab.vue";
 import Vue from "vue";
 
 export default Vue.extend({
+  components: {
+    tab,
+  },
   data() {
     return {
       searchHistory: [],
@@ -33,7 +34,7 @@ export default Vue.extend({
     searchTag(mid: number) {
       console.log(`寻找mid为${mid}的文章`);
       uni.navigateTo({
-        url: "./search/searchResult?mid=" + mid,
+        url: "/pages/search/searchResult?mid=" + mid,
       });
     },
     // 开始搜索
@@ -43,7 +44,7 @@ export default Vue.extend({
         return;
       }
       uni.navigateTo({
-        url: "./search/searchResult?keyWord=" + e.detail.value,
+        url: "/pages/search/searchResult?keyWord=" + e.detail.value,
       });
     },
   },

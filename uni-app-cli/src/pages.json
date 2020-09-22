@@ -1,10 +1,19 @@
 {
   "pages": [
     {
-      "path": "pages/page"
+      "path": "pages/index",
+      "style": {
+        "onReachBottomDistance": 600
+      }
     },
     {
-      "path": "pages/post"
+      "path": "pages/discover/index"
+    },
+    {
+      "path": "pages/about/index"
+    },
+    {
+      "path": "pages/post/index"
     },
     {
       "path": "pages/search/searchResult"
@@ -15,10 +24,36 @@
       "transparentTitle": "always",
       "allowsBounceVertical": "NO"
     },
-    "navigationStyle": "custom",
+    "backgroundColor": "#eee",
     "navigationBarTitleText": "指尖魔法屋",
     "navigationBarBackgroundColor": "#007fff",
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "white",
     "backgroundTextStyle": "light"
-  }
+  },
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#007fff",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index",
+        "text": "主页",
+        "iconPath": "static/img/home.png",
+        "selectedIconPath": "static/img/home-a.png"
+      },
+      {
+        "pagePath": "pages/discover/index",
+        "text": "发现",
+        "iconPath": "static/img/search.png",
+        "selectedIconPath": "static/img/search-a.png"
+      },
+      {
+        "pagePath": "pages/about/index",
+        "text": "关于",
+        "iconPath": "static/img/code.png",
+        "selectedIconPath": "static/img/code-a.png"
+      }
+    ]
+  },
+  "usingComponents": {}
 }

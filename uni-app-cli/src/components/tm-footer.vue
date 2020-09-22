@@ -52,7 +52,7 @@ export default {
 			this.time = time
 		}
 	},
-	created() {
+	mounted() {
 		var a = moment([2017, 4, 12])
 		var b = moment()
 		let seconds = b.diff(a, 'seconds')

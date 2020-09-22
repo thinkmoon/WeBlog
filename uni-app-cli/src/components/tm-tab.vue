@@ -11,9 +11,11 @@
 
 <script>
 export default {
+  props: {
+    active: 0,
+  },
   data() {
     return {
-      active: 0,
       safeBottom: 0,
       tabList: [
         {
@@ -49,9 +51,10 @@ export default {
   },
   methods: {
     changeTab(index) {
-      this.active = index;
-      this.$emit("onTabChange", {
-        name: this.tabList[index].name,
+      console.log(index);
+      let path = ["/pages/index", "/pages/discover/index", "/pages/about/index"];
+      uni.switchTab({
+        url: path[index],
       });
     },
   },
