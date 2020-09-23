@@ -32,7 +32,7 @@
         <text class="icon-appreciate padding-right-xs"></text>赞
         {{ postData[0].likes | formatNum }}
       </div>
-      <div @click="reward" class="padding-xs margin-right line-red solid"><text class="icon-redpacket padding-right-xs"></text>赏</div>
+      <!-- <div @click="reward" class="padding-xs margin-right line-red solid"><text class="icon-redpacket padding-right-xs"></text>赏</div> -->
       <!-- <div @click="reward" class="padding-xs margin-right line-orange solid"><text class="icon-favor padding-right-xs"></text>收藏</div> -->
       <div @click="share" class="padding-xs line-green solid">
         <text class="icon-attentionfill padding-right-xs"></text>阅读 {{ postData[0].views | formatNum }}

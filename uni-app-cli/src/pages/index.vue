@@ -54,7 +54,7 @@
             </view>
           </navigator>
           <!-- #ifdef MP-QQ -->
-          <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 4 == 0" class="ad"></ad>
+          <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 10 == 0" class="ad"></ad>
           <!-- #endif -->
         </view>
       </view>
