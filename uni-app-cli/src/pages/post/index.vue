@@ -2,40 +2,40 @@
   <view class="bg-white">
     <view class="cu-bar bg-white padding-top">
       <view class="action">
-        <text class="text-xxl text-bold text-black">{{ postData[0].title }}</text>
+        <text class="text-xxl text-bold text-black">{{ postData.title }}</text>
       </view>
     </view>
     <view class="bg-white flex bg-white solid-bottom padding-bottom-sm padding-top-sm justify-around text-sm">
       <view class="flex align-center">
         <text class="icon-time padding-right-xs"></text>
-        {{ formatTime(postData[0].created) }}
+        {{ formatTime(postData.created) }}
       </view>
       <view class="flex align-center">
         <text class="icon-file padding-right-xs"></text>
-        {{ postData[0].category[0]["name"] }}
+        {{ postData.category[0]["name"] }}
       </view>
       <view class="flex align-center">
         <text class="icon-like padding-right-xs"></text>
-        点赞({{ postData[0].likes }})
+        点赞({{ postData.likes }})
       </view>
       <view class="flex align-center">
         <text class="icon-comment padding-right-xs"></text>
-        评论({{ postData[0].commentsNum }})
+        评论({{ postData.commentsNum }})
       </view>
     </view>
     <!-- #ifdef MP-QQ -->
     <ad unit-id="53bfa608c0f8bfad5ef40eddb665f864" class="ad"></ad>
     <!-- #endif -->
-    <parse :content="postData[0].text" v-if="postData[0].text"></parse>
+    <parse :content="postData.text" v-if="!isLoading"></parse>
     <view class="operation-area solid-top bg-white tm-every-center padding-top" v-if="!isLoading">
-      <div @click="like" class="padding-xs line-blue solid  margin-right">
+      <div @click="like" class="padding-xs line-blue solid margin-right">
         <text class="icon-appreciate padding-right-xs"></text>赞
-        {{ postData[0].likes | formatNum }}
+        {{ postData.likes | formatNum }}
       </div>
       <!-- <div @click="reward" class="padding-xs margin-right line-red solid"><text class="icon-redpacket padding-right-xs"></text>赏</div> -->
       <!-- <div @click="reward" class="padding-xs margin-right line-orange solid"><text class="icon-favor padding-right-xs"></text>收藏</div> -->
       <div @click="share" class="padding-xs line-green solid">
-        <text class="icon-attentionfill padding-right-xs"></text>阅读 {{ postData[0].views | formatNum }}
+        <text class="icon-attentionfill padding-right-xs"></text>阅读 {{ postData.views | formatNum }}
       </div>
     </view>
     <view class="comment-area padding-sm bg-white" v-if="!isLoading">
@@ -92,8 +92,12 @@
     </view>
     <!-- #endif -->
     <!-- #ifdef MP-QQ -->
-    <ad unit-id="35cc08ee6d98e478f658c5acd1c2c11c" type="card" style="margin-bottom:10px;
-"></ad>
+    <ad
+      unit-id="35cc08ee6d98e478f658c5acd1c2c11c"
+      type="card"
+      style="margin-bottom:10px;
+"
+    ></ad>
     <!-- #endif -->
     <tm-footer></tm-footer>
     <view class="modal bg-white" v-if="isLoading"><view class="spinner bg-base"></view></view>
@@ -238,7 +242,7 @@ export default {
             cid: this.cid,
           })
           .then((res) => {
-            this.postData[0].likes++;
+            this.postData.likes++;
             this.isLike = true;
           });
       }
@@ -272,13 +276,17 @@ export default {
     },
     // #endif
   },
-  async onLoad(query) {
+  onLoad(query) {
     this.cid = query.cid;
     this.thumb = query.thumb;
-    this.postData = await this.$api.getPostBycid({
-      cid: query.cid,
-    });
-    this.isLoading = false;
+    this.$api
+      .getPostBycid({
+        cid: query.cid,
+      })
+      .then((res) => {
+        this.postData = res[0];
+        this.isLoading = false;
+      });
   },
   async onShow() {
     wx.getSetting({
@@ -307,7 +315,7 @@ export default {
   },
   onShareAppMessage() {
     return {
-      title: this.postData[0].title,
+      title: this.postData.title,
       path:
         this.$mp.page.route +
         "?" +
@@ -319,7 +327,7 @@ export default {
   },
   onShareTimeline() {
     return {
-      title: this.postData[0].title,
+      title: this.postData.title,
       imageUrl: this.thumb,
     };
   },
@@ -356,7 +364,6 @@ export default {
 }
 .ad {
   background-color: #fff;
-  margin-top:10upx;
-
+  margin-top: 10upx;
 }
 </style>

@@ -24,6 +24,7 @@
       "transparentTitle": "always",
       "allowsBounceVertical": "NO"
     },
+    "initialRenderingCache": "dynamic",
     "backgroundColor": "#eee",
     "navigationBarTitleText": "指尖魔法屋",
     "navigationBarBackgroundColor": "#007fff",

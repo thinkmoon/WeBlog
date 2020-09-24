@@ -35,7 +35,7 @@ Component({
   },
   lifetimes: {
     attached: function() {
-      let content = this.data.content
+      let content = this.data.content;
       // 处理meting
       let text = content.replace(
         /\[Meting\].*?\[Music.*?title="(.*?)".*?author="(.*?)".*?url="(.*?)".*?pic="(.*?)".*?\/\].*?\[\/Meting\]/s,
@@ -46,15 +46,13 @@ Component({
         events: {
           // 为元素绑定的事件方法
           tap: (e) => {
-            console.log(e);
             this.tap(e);
           },
         },
       });
       // 更新解析数据
       this.setData({
-        article:result,
-        isLoading: false
+        article: result,
       });
     },
   },
