@@ -1,7 +1,7 @@
 <template>
   <view class="bg-gray content">
     <view>
-      <navigator :url='"/pages/post?cid=" + item.cid' v-for="(item,index) in articleList" :key="index" class="margin padding bg-white">
+      <navigator :url='"/pages/post/index?cid=" + item.cid' v-for="(item,index) in articleList" :key="index" class="margin padding bg-white">
         <view class="image-container" v-if="item.thumb.length">
           <view class="overplay"></view>
           <image :src="item.thumb[0].str_value" mode="aspectFill" :lazy-load="true" class="image"></image>

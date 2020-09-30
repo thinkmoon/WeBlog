@@ -4,7 +4,6 @@ var fly = new Fly();
 fly.config.baseURL = process.env.VUE_APP_BASE_URL;
 
 fly.config.headers = {
-  openid: uni.getStorageSync("openid") || "xxx",
   apisecret: process.env.VUE_APP_SECRET,
 };
 
@@ -23,6 +22,11 @@ fly.interceptors.response.use(
 );
 
 function GET(url: string, params = {}) {
-  return fly.get(url, params);
+  let options = {
+    headers: {
+      openid: uni.getStorageSync("openid"),
+    },
+  };
+  return fly.get(url, params, options);
 }
 export { GET };
