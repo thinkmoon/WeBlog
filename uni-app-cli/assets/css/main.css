@@ -150,7 +150,7 @@ radio::before, checkbox::before {
   font-size: 32rpx;
   line-height: 16px;
   pointer-events: none;
-  transform: scale(1, 1);
+  transform: scale(0.8, 0.8);
   transition: all 0.3s ease-in-out 0s;
   z-index: 9;
 }

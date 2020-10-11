@@ -26,8 +26,7 @@ export default Vue.extend({
       });
     },
     // 初始化
-    init() {
-    },
+    init() {},
     login() {
       uni.login({
         success: async (res) => {
@@ -89,5 +88,8 @@ export default Vue.extend({
 
 .content {
   height: 100vh;
+}
+checkbox .wx-checkbox-input {
+   transform: scale(0.8, 0.8);
 }
 </style>
