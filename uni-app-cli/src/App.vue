@@ -1,8 +1,5 @@
 <script lang="ts">
 import Vue from "vue";
-// 引入query-string
-import qs from "query-string";
-
 export default Vue.extend({
   methods: {
     // 更新提示
@@ -66,7 +63,6 @@ export default Vue.extend({
   },
   mounted() {
     console.log("APP onLaunch");
-
     this.update();
     this.init();
     this.login();

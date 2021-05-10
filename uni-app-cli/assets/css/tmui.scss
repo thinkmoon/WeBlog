@@ -179,6 +179,9 @@ $color-complement : spin($color-base, 180);
 .h2w-light .h2w__blockquote {
     border-left-color:#dfe2e5;
 }
+.h2w__navigatorParent {
+  display: inline;
+}
 
 /**内连元素**/
 .h2w-light .h2w__a {
