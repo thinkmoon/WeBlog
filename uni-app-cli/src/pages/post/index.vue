@@ -26,6 +26,9 @@
     <!-- #ifdef MP-QQ -->
     <ad unit-id="53bfa608c0f8bfad5ef40eddb665f864" class="ad"></ad>
     <!-- #endif -->
+    <!-- #ifdef MP-WEIXIN -->
+    <ad unit-id="adunit-177073f05d52fdd3" class="ad"></ad>
+    <!-- #endif -->
     <parse :content="postData.text" v-if="!isLoading"></parse>
     <view class="operation-area solid-top bg-white tm-every-center padding-top" v-if="!isLoading">
       <div @click="like" class="padding-xs line-blue solid margin-right">
@@ -97,6 +100,14 @@
       type="card"
       style="margin-bottom:10px;
 "
+    ></ad>
+    <!-- #endif -->
+    <!-- #ifdef MP-WEIXIN -->
+    <ad
+        unit-id="adunit-ec07e753eb4e9dc8"
+        ad-theme="white"
+        ad-type="video"
+        style="margin-bottom:10px;"
     ></ad>
     <!-- #endif -->
     <tm-footer></tm-footer>

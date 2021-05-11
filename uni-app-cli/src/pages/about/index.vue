@@ -4,7 +4,7 @@
     <view class="overView flex justify-between flex-direction weather rain">
       <view class="flex justify-center align-center flex-direction margin-top-lg">
         <image class="icon shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"></image>
-        <view class="text-bold text-shadow text-lg">指尖魔法屋</view>
+        <view class="text-bold text-shadow text-lg" style="color:#fff">指尖魔法屋</view>
       </view>
       <view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top">
         <view class="margin-xs flex align-center flex-direction">
@@ -88,9 +88,6 @@ export default Vue.extend({
 page {
   background: #fff
 }
-@import "@/../assets/css/weather.css";
-/*引入天气的css*/
-
 /* // 头像 */
 .icon {
   width: 200rpx;
@@ -101,7 +98,7 @@ page {
 }
 
 .overView {
-  background-image: url("https://www.thinkmoon.cn/usr/themes/armx/img/about_bg.png");
+  background-color: dimgrey;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }

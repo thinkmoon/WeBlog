@@ -54,8 +54,12 @@
             </view>
           </navigator>
           <!-- #ifdef MP-QQ -->
-          <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 10 == 0" class="ad"></ad>
+          <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 10 === 0" class="ad"></ad>
           <!-- #endif -->
+          <!-- #ifdef MP-WEIXIN -->
+          <ad unit-id="adunit-2b1e70c8891057dd"  v-if="index % 10 === 0" class="ad"></ad>
+          <!-- #endif -->
+
         </view>
       </view>
       <!-- <view @click="goTop" style="bottom:100px;position: fixed;">回到顶部</view> -->
