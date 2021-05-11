@@ -314,7 +314,7 @@ export default {
       });
   },
   onShareAppMessage() {
-    return {
+    let shareData = {
       title: this.postData.title,
       path:
         this.$mp.page.route +
@@ -324,6 +324,8 @@ export default {
         }),
       imageUrl: this.thumb,
     };
+    console.log("分享Data",shareData)
+    return shareData
   },
   onShareTimeline() {
     return {

@@ -13,11 +13,11 @@ Component({
       console.log("点击", element);
       if (element.tag == "img") {
         wx.previewImage({
-          current: element.attr.src, // 当前显示图片的http链接
-          urls: [element.attr.src], // 需要预览的图片http链接列表
+          current: element.attrs.src, // 当前显示图片的http链接
+          urls: [element.attrs.src], // 需要预览的图片http链接列表
         });
       } else if (element.tag == "navigator") {
-        console.log(element.attr.href);
+        console.log(element.attrs.href);
         wx.showModal({
           title: "外部链接提示",
           content: "这是一个外部链接,需要复制到浏览器中打开. 是否复制?",
@@ -25,7 +25,7 @@ Component({
           success: (res) => {
             if (res.confirm) {
               wx.setClipboardData({
-                data: element.attr.href,
+                data: element.attrs.href,
               });
             }
           },

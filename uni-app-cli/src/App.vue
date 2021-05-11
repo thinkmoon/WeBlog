@@ -1,8 +1,5 @@
 <script lang="ts">
 import Vue from "vue";
-// 引入query-string
-import qs from "query-string";
-
 export default Vue.extend({
   methods: {
     // 更新提示
@@ -26,8 +23,7 @@ export default Vue.extend({
       });
     },
     // 初始化
-    init() {
-    },
+    init() {},
     login() {
       uni.login({
         success: async (res) => {
@@ -67,7 +63,6 @@ export default Vue.extend({
   },
   mounted() {
     console.log("APP onLaunch");
-
     this.update();
     this.init();
     this.login();
@@ -89,5 +84,8 @@ export default Vue.extend({
 
 .content {
   height: 100vh;
+}
+checkbox .wx-checkbox-input {
+   transform: scale(0.8, 0.8);
 }
 </style>
