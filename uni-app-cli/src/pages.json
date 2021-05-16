@@ -13,7 +13,12 @@
       "path": "pages/about/index"
     },
     {
-      "path": "pages/post/index"
+      "path": "pages/post/index",
+      "style": {
+        "usingComponents": {
+          "parse": "../../wxcomponents/tm-parse/index"
+        }
+      }
     },
     {
       "path": "pages/search/searchResult"
@@ -24,7 +29,6 @@
       "transparentTitle": "always",
       "allowsBounceVertical": "NO"
     },
-    "initialRenderingCache": "dynamic",
     "backgroundColor": "#eee",
     "navigationBarTitleText": "指尖魔法屋",
     "navigationBarBackgroundColor": "#007fff",

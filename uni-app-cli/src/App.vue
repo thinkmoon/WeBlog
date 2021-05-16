@@ -1,6 +1,7 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
+  mpType: 'app',
   methods: {
     // 更新提示
     update() {
@@ -61,11 +62,11 @@ export default Vue.extend({
       });
     },
   },
-  mounted() {
+  created() {
     console.log("APP onLaunch");
     this.update();
     this.init();
-    this.login();
+    // this.login();
   },
   onHide() {
     console.log("App Hide");
@@ -81,6 +82,8 @@ export default Vue.extend({
 /* ------------------ */
 /* 引入自定义 less 库 */
 @import "../assets/css/tmui.scss";
+@import "static/highlight/atom-one-dark.min.css";
+@import "assets/css/post.scss";
 
 .content {
   height: 100vh;

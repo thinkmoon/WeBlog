@@ -1,0 +1,42 @@
+.article-content {
+  padding: 6px 8px;
+  color: var(--black);
+
+  h1 {
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    border-bottom: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 10px 0;
+  }
+
+  h3 {
+    margin: 16px 0;
+  }
+
+  p {
+    margin-top: 0;
+    font-size: 14px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-bottom: 10px;
+    color: #333;
+    word-wrap: break-word;
+  }
+
+  blockquote {
+    background: #eee;
+    margin: 0;
+    padding: 12px;
+
+    p {
+      margin-bottom: 5px;
+    }
+  }
+
+  img {
+    width: 100%;
+  }
+}

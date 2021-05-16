@@ -1,14 +1,14 @@
 <template name="home">
   <block>
-    <scroll-view scroll-y class="cu-card case scroll-view" :scroll-into-view="top" @scrolltolower="loadPost" enhanced enable-back-to-top>
+    <scroll-view scroll-y class="cu-card case scroll-view" @scrolltolower="loadPost" enhanced enable-back-to-top>
       <scroll-view scroll-x class="tab-list flex bg-white solid-bottom" enable-flex="flex-box">
         <div class="tab-item padding-sm" :class="mid == '0' ? 'act' : ''" @click="changeCate('0')">全部</div>
         <div
-          class="tab-item padding-sm"
-          v-for="(item, index) in categoryList"
-          :key="index"
-          :class="mid == item.mid ? 'act' : ''"
-          @click="changeCate(item.mid)"
+            class="tab-item padding-sm"
+            v-for="(item, index) in categoryList"
+            :key="index"
+            :class="mid == item.mid ? 'act' : ''"
+            @click="changeCate(item.mid)"
         >
           {{ item.name }}
         </div>
@@ -17,7 +17,7 @@
         <view v-for="(item, index) in postData" :key="index" class="article-container list radius shadow">
           <navigator
             hover-class="none"
-            :url="'/pages/post/index?cid=' + item.cid + '&thumb=' + item.thumb[0].str_value"
+            :url="`/pages/post/index?cid=${item.cid}&thumb=${item.thumb.length ? item.thumb[0].str_value:''}`"
             class="list__item bg-white"
           >
             <view class="image-container" v-if="item.thumb.length">
@@ -30,7 +30,7 @@
               <view class="margin-left-xs" v-for="(tagItem, index) in item.tag" :key="index">{{ tagItem.name }}</view>
             </view>
             <view class="bg-white padding-left-sm title">{{ item.title }}</view>
-            <view class="desc padding-sm">{{ item.desc.length ? item.desc[0].str_value : "" }}</view>
+            <view class="desc padding-sm">{{ item.desc.length ? item.desc[0].str_value : '' }}</view>
             <view class="cu-list padding-lr-sm padding-bottom-xs">
               <view class="cu-item">
                 <view class="text-gray text-sm flex justify-between align-center">
@@ -57,7 +57,7 @@
           <ad unit-id="750221a1c0d4c6f021ab39df00a40ae7" type="feeds" v-if="index % 10 === 0" class="ad"></ad>
           <!-- #endif -->
           <!-- #ifdef MP-WEIXIN -->
-          <ad unit-id="adunit-2b1e70c8891057dd"  v-if="index % 10 === 0" class="ad"></ad>
+          <ad unit-id="adunit-2b1e70c8891057dd" v-if="index % 10 === 0" class="ad"></ad>
           <!-- #endif -->
 
         </view>
@@ -111,21 +111,21 @@ export default Vue.extend({
       if (this.requesting) return;
       this.requesting = true;
       this.$api
-        .getPost({
-          page: this.curPage + 1,
-          mid: this.mid,
-        })
-        .then((res: any) => {
-          if (res != null && res.length > 0) {
-            this.postData = this.postData.concat(res);
-            this.curPage++;
-          }
-          this.requesting = false;
-          this.isLoading = false;
-        });
+          .getPost({
+            page: this.curPage + 1,
+            mid: this.mid,
+          })
+          .then((res: any) => {
+            if (res != null && res.length > 0) {
+              this.postData = this.postData.concat(res);
+              this.curPage++;
+            }
+            this.requesting = false;
+            this.isLoading = false;
+          });
     },
   },
-  mounted() {
+  created() {
     this.$api.getCategories().then((res: any) => {
       this.categoryList = res;
     });
@@ -138,32 +138,37 @@ export default Vue.extend({
   height: 36px;
   white-space: nowrap;
 }
+
 .tab-item {
   display: inline-block;
 }
 
 .article-list {
-  padding-top: 16rpx;
+  padding-top: 16 rpx;
 }
+
 .article-list .article-container:first-child {
   margin-top: 0;
 }
+
 .article-container {
-  width: 710rpx;
-  margin: 32rpx auto;
+  width: 710 rpx;
+  margin: 32 rpx auto;
 }
+
 .shadow {
-  box-shadow: 40rpx 40rpx 40rpx 40rpx rgba(0, 0, 0, 0.07);
+  box-shadow: 40 rpx 40 rpx 40 rpx 40 rpx rgba(0, 0, 0, 0.07);
 }
+
 .image-banner {
-  height: 260upx;
+  height: 260 upx;
 }
 
 .swiper-title {
-  height: 60rpx;
+  height: 60 rpx;
   display: flex;
   align-items: center;
-  padding-left: 10rpx;
+  padding-left: 10 rpx;
   color: #000;
 }
 
@@ -173,13 +178,13 @@ export default Vue.extend({
   view {
     line-height: 1;
     color: #fff;
-    padding: 8upx;
+    padding: 8 upx;
   }
 }
 
 .title {
   font-weight: bold;
-  font-size: 32rpx;
+  font-size: 32 rpx;
   color: #333;
 }
 
@@ -189,8 +194,8 @@ export default Vue.extend({
 
 // 博客内容的统计
 .intro {
-  width: 506rpx;
-  height: 112rpx;
+  width: 506 rpx;
+  height: 112 rpx;
   position: relative;
   color: #888;
   background-color: #656565;
@@ -202,14 +207,14 @@ export default Vue.extend({
 }
 
 .bg-img image {
-  width: 506rpx;
-  min-height: 200rpx;
+  width: 506 rpx;
+  min-height: 200 rpx;
 }
 
 .about {
   margin: auto;
   text-align: center;
-  width: 506rpx;
+  width: 506 rpx;
   background-color: #545454;
   margin-top: 80%;
 }
@@ -220,7 +225,7 @@ page {
 }
 
 .image-container {
-  height: 400upx;
+  height: 400 upx;
   overflow: hidden;
 }
 
@@ -231,8 +236,8 @@ page {
 }
 
 .overplay {
-  width: 710rpx;
-  height: 400upx;
+  width: 710 rpx;
+  height: 400 upx;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.01) 2%, rgba(0, 0, 0, 0.95) 100%);
   position: absolute;
   opacity: 0.2;

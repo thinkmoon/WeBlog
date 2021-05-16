@@ -12,4 +12,19 @@ module.exports = {
       ]),
     ],
   },
+  devServer:{
+    host:'0.0.0.0',
+    disableHostCheck: true,
+    port:'8080',
+    // https:false,
+    open:false,
+    //以上的ip和端口是我们本机的;下面为需要跨域的
+    proxy:{ //配置跨域
+      '/api':{
+        target:'https://www.thinkmoon.cn',
+        ws:true,
+        changeOrigin:true,//允许跨域
+      }
+    }
+  }
 };

@@ -13,6 +13,7 @@
             "autoclose" : true,
             "delay" : 0
         },
+        "nvueStyleCompiler": "uni-app",
         "modules" : {},
         "distribute" : {
             "android" : {
@@ -68,7 +69,6 @@
     "mp-qq" : {
         "appid" : "1109992579",
         "setting" : {
-            "es6" : true,
             "urlCheck" : false,
             "postcss" : false,
             "newFeature" : true,
@@ -82,12 +82,5 @@
     },
     "uniStatistics" : {
         "enable" : false
-    },
-    "h5" : {
-        "optimization" : {
-            "treeShaking" : {
-                "enable" : true
-            }
-        }
     }
 }
