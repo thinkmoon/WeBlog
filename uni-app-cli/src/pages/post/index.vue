@@ -125,6 +125,7 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
 import {marked} from "@/utils/marked/index";
 // #ifdef MP-QQ
 let videoAd = qq.createRewardedVideoAd({
@@ -141,7 +142,7 @@ videoAd.onClose(function (res) {
 });
 // #endif
 
-export default {
+export default Vue.extend({
   data() {
     return {
       cid: null,
@@ -270,16 +271,14 @@ export default {
             });
       }
     },
-    // #ifdef MP-WEIXIN
     reward() {
+      // #ifdef MP-WEIXIN
       wx.previewImage({
         current: 'https://www.thinkmoon.cn/usr/themes/armx/img/weixinpay.jpg', // 当前显示图片的http链接
         urls: ['https://www.thinkmoon.cn/usr/themes/armx/img/weixinpay.jpg'], // 需要预览的图片http链接列表
       });
-    },
-    // #endif
-    // #ifdef MP-QQ
-    reward() {
+      // #endif
+      // #ifdef MP-QQ
       videoAd
           .load()
           .then(() => {
@@ -289,28 +288,28 @@ export default {
                 .then(() => {
                   console.log('激励视频 广告显示成功');
                 })
-                .catch((err) => {
+                .catch((err:any) => {
                   console.log('激励视频 广告显示失败');
                 });
           })
-          .catch((err) => {
+          .catch((err:any) => {
             console.log('激励视频加载失败');
           });
+      // #endif
     },
-    // #endif
   },
-  onLoad(query) {
+  onLoad(query:any) {
     this.cid = query.cid;
     this.thumb = query.thumb;
     this.$api
         .getPostBycid({
           cid: query.cid,
         })
-        .then((res) => {
+        .then((res:any) => {
           this.postData = res[0];
           this.isLoading = false;
           this.$nextTick(() => {
-            hljs.highlightAll();
+            windows.hljs.highlightAll();
           });
         });
   },
@@ -329,7 +328,7 @@ export default {
         .getPostLikeStatus({
           cid: this.cid,
         })
-        .then((res) => {
+        .then((res:any) => {
           console.log('获取点赞状态', res);
           this.isLike = JSON.parse(res);
         });
@@ -337,7 +336,7 @@ export default {
         .getComment({
           cid: this.cid,
         })
-        .then((res) => {
+        .then((res:any) => {
           this.commentList = res;
         });
   },
@@ -361,7 +360,7 @@ export default {
       imageUrl: this.thumb,
     };
   },
-};
+});
 </script>
 <style lang="scss">
 

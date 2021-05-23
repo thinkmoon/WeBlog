@@ -16,28 +16,28 @@
       <view class="bg-white article-list">
         <view v-for="(item, index) in postData" :key="index" class="article-container list radius shadow">
           <navigator
-            hover-class="none"
-            :url="`/pages/post/index?cid=${item.cid}&thumb=${item.thumb.length ? item.thumb[0].str_value:''}`"
-            class="list__item bg-white"
+              hover-class="none"
+              :url="`/pages/post/index?cid=${item.cid}&thumb=${item.thumb}`"
+              class="list__item bg-white"
           >
-            <view class="image-container" v-if="item.thumb.length">
+            <view class="image-container">
               <view class="overplay"></view>
-              <image :src="item.thumb[0].str_value" mode="aspectFill" :lazy-load="true" class="image"></image>
+              <image :src="item.thumb" mode="aspectFill" :lazy-load="true" class="image"></image>
               <!-- <view class="cu-tag bg-blue">置顶</view> -->
               <!-- <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view> -->
             </view>
             <view class="flex align-center padding-xs post-entry-categories text-xs">
-              <view class="margin-left-xs" v-for="(tagItem, index) in item.tag" :key="index">{{ tagItem.name }}</view>
+              <view class="margin-left-xs" v-for="(tagItem, index) in item.tag" :key="index">{{ tagItem }}</view>
             </view>
             <view class="bg-white padding-left-sm title">{{ item.title }}</view>
-            <view class="desc padding-sm">{{ item.desc.length ? item.desc[0].str_value : '' }}</view>
+            <view class="desc padding-sm">{{ item.desc }}</view>
             <view class="cu-list padding-lr-sm padding-bottom-xs">
               <view class="cu-item">
                 <view class="text-gray text-sm flex justify-between align-center">
                   <view>
                     <text class=" margin-right-sm">
                       <text class="icon-file margin-right-xs"></text>
-                      {{ item.category[0].name }}
+                      {{ item.category }}
                     </text>
                     {{ formatTime(item.created) }}
                   </view>
@@ -115,9 +115,15 @@ export default Vue.extend({
             page: this.curPage + 1,
             mid: this.mid,
           })
-          .then((res: any) => {
-            if (res != null && res.length > 0) {
-              this.postData = this.postData.concat(res);
+          .then((res:any) => {
+            let records = res.records
+            if (records != null && records.length > 0) {
+              this.postData = this.postData.concat(records.map((item:any) => {
+                return {
+                  ...item,
+                  tag: item?.tag?.split(',') || [],
+                }
+              }));
               this.curPage++;
             }
             this.requesting = false;

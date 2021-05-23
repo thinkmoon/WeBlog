@@ -14,7 +14,7 @@ export default class Api {
   }
   // 获取最近文章
   getPost(params: object): any {
-    return GET("posts", params);
+    return GET("post/list", params);
   }
   // 通过cid获取文章
   getPostBycid(params: object): any {
@@ -30,7 +30,7 @@ export default class Api {
    * 获取所有分类
    */
   getCategories(): any {
-    return GET("categories");
+    return GET("category/list");
   }
   /**
    * 获取所有标签

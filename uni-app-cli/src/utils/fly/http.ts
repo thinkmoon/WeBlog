@@ -1,5 +1,5 @@
-var Fly = require("flyio/dist/npm/wx");
-var fly = new Fly();
+const Fly = require("flyio/dist/npm/wx");
+const fly = new Fly();
 
 fly.config.baseURL = process.env.VUE_APP_BASE_URL;
 
