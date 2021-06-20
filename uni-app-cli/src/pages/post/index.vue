@@ -12,7 +12,7 @@
       </view>
       <view class="flex align-center">
         <text class="icon-file padding-right-xs"></text>
-        {{ postData.category.length ? postData.category[0]['name'] : '' }}
+        {{ postData.category }}
       </view>
       <view class="flex align-center">
         <text class="icon-like padding-right-xs"></text>
@@ -124,7 +124,7 @@
   </view>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Vue from 'vue';
 import {marked} from "@/utils/marked/index";
 // #ifdef MP-QQ
@@ -149,8 +149,9 @@ export default Vue.extend({
       thumb: '',
       postData: {
         created: 0,
-        category: [],
+        category: '',
         text: '',
+        title: '',
       },
       canIUse: wx.canIUse('button.open-type.getUserInfo'),
       isLogin: false,
@@ -288,28 +289,28 @@ export default Vue.extend({
                 .then(() => {
                   console.log('激励视频 广告显示成功');
                 })
-                .catch((err:any) => {
+                .catch((err) => {
                   console.log('激励视频 广告显示失败');
                 });
           })
-          .catch((err:any) => {
+          .catch((err) => {
             console.log('激励视频加载失败');
           });
       // #endif
     },
   },
-  onLoad(query:any) {
+  onLoad(query) {
     this.cid = query.cid;
     this.thumb = query.thumb;
     this.$api
         .getPostBycid({
           cid: query.cid,
         })
-        .then((res:any) => {
-          this.postData = res[0];
+        .then((res) => {
+          this.postData = res;
           this.isLoading = false;
           this.$nextTick(() => {
-            windows.hljs.highlightAll();
+            window.hljs.highlightAll();
           });
         });
   },
@@ -328,7 +329,7 @@ export default Vue.extend({
         .getPostLikeStatus({
           cid: this.cid,
         })
-        .then((res:any) => {
+        .then((res) => {
           console.log('获取点赞状态', res);
           this.isLike = JSON.parse(res);
         });
@@ -336,19 +337,15 @@ export default Vue.extend({
         .getComment({
           cid: this.cid,
         })
-        .then((res:any) => {
+        .then((res) => {
           this.commentList = res;
         });
   },
   onShareAppMessage() {
     let shareData = {
       title: this.postData.title,
-      path:
-          this.$mp.page.route +
-          '?' +
-          this.$qs.stringify(this.$mp.query, {
-            encode: false,
-          }),
+      path: this.$mp.page.route + '?' +
+          this.$qs.stringify(this.$mp.query, {encode: false,}),
       imageUrl: this.thumb,
     };
     console.log('分享Data', shareData);

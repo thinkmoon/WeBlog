@@ -2,12 +2,12 @@
   <block>
     <scroll-view scroll-y class="cu-card case scroll-view" @scrolltolower="loadPost" enhanced enable-back-to-top>
       <scroll-view scroll-x class="tab-list flex bg-white solid-bottom" enable-flex="flex-box">
-        <div class="tab-item padding-sm" :class="mid == '0' ? 'act' : ''" @click="changeCate('0')">全部</div>
+        <div class="tab-item padding-sm" :class="mid === '0' ? 'act' : ''" @click="changeCate('0')">全部</div>
         <div
             class="tab-item padding-sm"
             v-for="(item, index) in categoryList"
             :key="index"
-            :class="mid == item.mid ? 'act' : ''"
+            :class="mid === item.mid ? 'act' : ''"
             @click="changeCate(item.mid)"
         >
           {{ item.name }}
@@ -59,7 +59,6 @@
           <!-- #ifdef MP-WEIXIN -->
           <ad unit-id="adunit-2b1e70c8891057dd" v-if="index % 10 === 0" class="ad"></ad>
           <!-- #endif -->
-
         </view>
       </view>
       <!-- <view @click="goTop" style="bottom:100px;position: fixed;">回到顶部</view> -->
@@ -72,7 +71,7 @@
   </block>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Vue from "vue";
 
 export default Vue.extend({
@@ -102,8 +101,7 @@ export default Vue.extend({
         duration: 300,
       });
     },
-    formatTime(value: string): string {
-      // @ts-ignore：这行傻逼了，禁掉
+    formatTime(value) {
       return this.$moment.unix(value).fromNow();
     },
     loadPost() {
@@ -115,10 +113,10 @@ export default Vue.extend({
             page: this.curPage + 1,
             mid: this.mid,
           })
-          .then((res:any) => {
+          .then((res) => {
             let records = res.records
             if (records != null && records.length > 0) {
-              this.postData = this.postData.concat(records.map((item:any) => {
+              this.postData = this.postData.concat(records.map((item) => {
                 return {
                   ...item,
                   tag: item?.tag?.split(',') || [],
@@ -132,7 +130,7 @@ export default Vue.extend({
     },
   },
   created() {
-    this.$api.getCategories().then((res: any) => {
+    this.$api.getCategories().then((res) => {
       this.categoryList = res;
     });
     this.loadPost();
@@ -150,7 +148,7 @@ export default Vue.extend({
 }
 
 .article-list {
-  padding-top: 16 rpx;
+  padding-top: 16rpx;
 }
 
 .article-list .article-container:first-child {
@@ -158,23 +156,23 @@ export default Vue.extend({
 }
 
 .article-container {
-  width: 710 rpx;
-  margin: 32 rpx auto;
+  width: 710rpx;
+  margin: 32rpx auto;
 }
 
 .shadow {
-  box-shadow: 40 rpx 40 rpx 40 rpx 40 rpx rgba(0, 0, 0, 0.07);
+  box-shadow: 40rpx 40rpx 40rpx 40rpx rgba(0, 0, 0, 0.07);
 }
 
 .image-banner {
-  height: 260 upx;
+  height: 260upx;
 }
 
 .swiper-title {
-  height: 60 rpx;
+  height: 60rpx;
   display: flex;
   align-items: center;
-  padding-left: 10 rpx;
+  padding-left: 10rpx;
   color: #000;
 }
 
@@ -184,13 +182,13 @@ export default Vue.extend({
   view {
     line-height: 1;
     color: #fff;
-    padding: 8 upx;
+    padding: 8upx;
   }
 }
 
 .title {
   font-weight: bold;
-  font-size: 32 rpx;
+  font-size: 32rpx;
   color: #333;
 }
 
@@ -200,8 +198,8 @@ export default Vue.extend({
 
 // 博客内容的统计
 .intro {
-  width: 506 rpx;
-  height: 112 rpx;
+  width: 506rpx;
+  height: 112rpx;
   position: relative;
   color: #888;
   background-color: #656565;
@@ -213,37 +211,35 @@ export default Vue.extend({
 }
 
 .bg-img image {
-  width: 506 rpx;
-  min-height: 200 rpx;
+  width: 506rpx;
+  min-height: 200rpx;
 }
 
 .about {
   margin: auto;
   text-align: center;
-  width: 506 rpx;
+  width: 506rpx;
   background-color: #545454;
   margin-top: 80%;
 }
 
 page {
-  // background-image: var(--gradualBlack);
   width: 100vw;
 }
 
 .image-container {
-  height: 400 upx;
+  height: 400upx;
   overflow: hidden;
 }
 
 .image {
-  // object-fit: cover;
   width: 100%;
   height: 100%;
 }
 
 .overplay {
-  width: 710 rpx;
-  height: 400 upx;
+  width: 710rpx;
+  height: 400upx;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.01) 2%, rgba(0, 0, 0, 0.95) 100%);
   position: absolute;
   opacity: 0.2;

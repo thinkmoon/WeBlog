@@ -8,20 +8,16 @@ fly.config.headers = {
 };
 
 fly.interceptors.response.use(
-  (response: any) => {
+  (response) => {
     return response.data.data;
   },
-  (err: any) => {
+  (err) => {
     console.error(err);
-    uni.showModal({
-      title: err.request.url + "接口状态" + err.status,
-      content: "错误原因:" + err.engine.response.message,
-    });
     return Promise.reject(err);
   }
 );
 
-function GET(url: string, params = {}) {
+function GET(url, params = {}) {
   let options = {
     headers: {
       openid: uni.getStorageSync("openid"),

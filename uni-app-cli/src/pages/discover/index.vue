@@ -15,7 +15,7 @@
   </view>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import tab from "@/components/tm-tab.vue";
 import Vue from "vue";
 
@@ -31,14 +31,14 @@ export default Vue.extend({
   },
   methods: {
     // 点击搜索历史
-    searchTag(mid: number) {
+    searchTag(mid) {
       console.log(`寻找mid为${mid}的文章`);
       uni.navigateTo({
         url: "/pages/search/searchResult?mid=" + mid,
       });
     },
     // 开始搜索
-    onSearch(e: any) {
+    onSearch(e) {
       console.log(e);
       if (e.detail.value == "") {
         return;
@@ -49,7 +49,7 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.$api.getTags().then((res: any) => {
+    this.$api.getTags().then((res) => {
       this.tagList = res;
     });
   },

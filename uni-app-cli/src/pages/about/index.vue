@@ -6,31 +6,36 @@
         <image class="icon shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"></image>
         <view class="text-bold text-shadow text-lg" style="color:#fff">指尖魔法屋</view>
       </view>
-      <view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top">
-        <view class="margin-xs flex align-center flex-direction">
-          <view>文章</view>
-          <view>{{ Overview.posts[0].Num }}</view>
-        </view>
-        <view class="margin-xs flex align-center flex-direction">
-          <view>留言</view>
-          <view>{{ Overview.comments[0].Num }}</view>
-        </view>
-        <view class="margin-xs flex align-center flex-direction">
-          <view>分类</view>
-          <view>{{ Overview.categorys[0].Num }}</view>
-        </view>
-        <view class="margin-xs flex align-center flex-direction">
-          <view>标签</view>
-          <view>{{ Overview.tags[0].Num }}</view>
-        </view>
-      </view>
+<!--      <view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top">-->
+<!--        <view class="margin-xs flex align-center flex-direction">-->
+<!--          <view>文章</view>-->
+<!--          <view>{{ Overview.posts[0].Num }}</view>-->
+<!--        </view>-->
+<!--        <view class="margin-xs flex align-center flex-direction">-->
+<!--          <view>留言</view>-->
+<!--          <view>{{ Overview.comments[0].Num }}</view>-->
+<!--        </view>-->
+<!--        <view class="margin-xs flex align-center flex-direction">-->
+<!--          <view>分类</view>-->
+<!--          <view>{{ Overview.categorys[0].Num }}</view>-->
+<!--        </view>-->
+<!--        <view class="margin-xs flex align-center flex-direction">-->
+<!--          <view>标签</view>-->
+<!--          <view>{{ Overview.tags[0].Num }}</view>-->
+<!--        </view>-->
+<!--      </view>-->
     </view>
     <!-- <image
       src="https://tva3.sinaimg.cn/large/8d406c5egy1gamn31scsdg20f002skhn.gif"
       mode="scaleToFill"
       class="gif-wave"
     ></image> -->
-    <parse :content="postData[0].text" v-if="postData[0].text"></parse>
+    <!-- #ifndef H5 -->
+    <parse :content="postData.text" v-if="!isLoading"></parse>
+    <!-- #endif -->
+    <!-- #ifdef H5 -->
+    <div v-html="content" class="article-content"/>
+    <!-- #endif -->
     <view class="modal bg-white" v-if="isLoading">
       <view class="spinner bg-base"></view>
     </view>
@@ -42,8 +47,9 @@
   </view>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Vue from "vue";
+import {marked} from "@/utils/marked/index";
 
 // @ts-ignore
 import parse from "@/wxcomponents/tm-parse/index";
@@ -59,26 +65,26 @@ export default Vue.extend({
       cid: null,
       isLoading: true,
       Overview: {},
-      postData: {},
+      postData: {
+        text:'',
+      },
     };
+  },
+  computed: {
+    content() {
+      return marked(this.postData.text.replace("<!--markdown-->", ""), {breaks: true});
+    },
   },
   mounted() {
     this.$api
       .getAboutCid()
-      .then((data: any) => {
-        this.$api
-          .getPostBycid({
-            cid: data,
-          })
-          .then((res: any) => {
-            this.postData = res;
-            this.isLoading = false;
-          });
+      .then((data) => {
+        this.postData = data;
+        this.isLoading = false;
+        this.$nextTick(() => {
+          window.hljs.highlightAll();
+        });
       });
-
-    this.$api.getOverview().then((res: any) => {
-      this.Overview = res;
-    });
   },
   onShow() {},
 });

@@ -4,7 +4,7 @@ export default class Api {
    * 登录接口
    * @param params code
    */
-  login(params: object): any {
+  login(params) {
     // #ifdef MP-QQ
     return GET("login?mp=qq", params);
     // #endif
@@ -13,65 +13,65 @@ export default class Api {
     // #endif
   }
   // 获取最近文章
-  getPost(params: object): any {
+  getPost(params) {
     return GET("post/list", params);
   }
   // 通过cid获取文章
-  getPostBycid(params: object): any {
-    return GET("getPostBycid", params);
+  getPostBycid(params) {
+    return GET(`post/${params.cid}`);
   }
-  getSticky(params: object): any {
+  getSticky(params) {
     return GET("getSticky", params);
   }
-  getAboutCid(params = {}): any {
-    return GET("getAboutCid", params);
+  getAboutCid(params = {}) {
+    return GET("post/about");
   }
   /**
    * 获取所有分类
    */
-  getCategories(): any {
+  getCategories() {
     return GET("category/list");
   }
   /**
    * 获取所有标签
    */
-  getTags(): any {
-    return GET("tags");
+  getTags() {
+    return GET("tag/list");
   }
   // 获取总览
-  getOverview(): any {
+  getOverview() {
     return GET("getOverview");
   }
   // 获取用户点赞信息
-  getPostLikeStatus(params: object): any {
+  getPostLikeStatus(params) {
     return GET("getPostLikeStatus", params);
   }
   // 获取文章评论
-  getComment(params: object): any {
+  getComment(params) {
     return GET("getComment", params);
   }
   // 获取作者信息
-  getAuthorInfo(params: object): any {
+  getAuthorInfo(params) {
     return GET("getAuthorInfo", params);
   }
   // 为文章点赞
-  likePost(params: object): any {
+  likePost(params) {
     return GET("likePost", params);
   }
   /**
    * 获取文章点赞用户列表
    */
-  getLikeUsers(params: object): any {
+  getLikeUsers(params) {
     return GET("getLikeUsers", params);
   }
   /**
    * 发表评论
    */
-  addComment(params: object): any {
+  addComment(params) {
     return GET("addComment", params);
   }
   // 搜索内容
-  search(params: object): any {
+  search(params) {
     return GET("search", params);
   }
 }

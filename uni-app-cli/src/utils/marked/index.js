@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Marked from "marked";
 let renderMd = new Marked.Renderer();
 Marked.setOptions({

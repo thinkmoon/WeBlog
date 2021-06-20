@@ -6,7 +6,7 @@ Component({
 	},
 	properties: {
 		nodes: {
-			type: Object,
+			type,
 			value: {}
 		}
 	},
