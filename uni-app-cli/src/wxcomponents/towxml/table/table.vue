@@ -35,7 +35,7 @@ Component({
 	},
 	properties: {
 		data: {
-			type,
+			type: {},
 			value: {}
 		}
 	}

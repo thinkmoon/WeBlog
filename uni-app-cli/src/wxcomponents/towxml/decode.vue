@@ -21,7 +21,7 @@ Component({
 	},
 	properties: {
 		nodes: {
-			type,
+			type:{},
 			value: {}
 		}
 	},
