@@ -48,35 +48,35 @@
         阅读 {{ postData.views | formatNum }}
       </div>
     </view>
-    <view class="comment-area padding-sm bg-white" v-if="!isLoading">
-      <view class="text-lg">
-        <text class="icon-titles color-base"></text>
-        <text class="text-bold">发表看法</text>
-      </view>
-      <!-- #ifndef MP-QQ -->
-      <textarea v-model="commentText" placeholder="(已开启评论审核模式,评论审核通过后方能显示)" class="solid padding margin-top-sm"/>
-      <!-- #endif -->
-      <view class="margin-top-sm flex justify-between">
-        <view v-if="!isLogin">
-          <button v-if="canIUse" open-type="getUserInfo" @getuserinfo="loadUserInfo" class="cu-btn bg-base">
-            <text class="line-white">授权登录</text>
-          </button>
-          <view v-else>请升级微信版本</view>
-        </view>
-        <view class="text-bold" v-else>
-          <!-- #ifndef H5 -->
-          <open-data type="userNickName" class="line-base"></open-data>
-          <!-- #endif -->
-        </view>
-        <view>
-          <!-- #ifndef MP-QQ -->
-          <button style="width: 100%;" class="cu-btn line-base" @click="comment">
-            发表
-          </button>
-          <!-- #endif -->
-        </view>
-      </view>
-    </view>
+<!--    <view class="comment-area padding-sm bg-white" v-if="!isLoading">-->
+<!--      <view class="text-lg">-->
+<!--        <text class="icon-titles color-base"></text>-->
+<!--        <text class="text-bold">发表看法</text>-->
+<!--      </view>-->
+<!--      &lt;!&ndash; #ifndef MP-QQ &ndash;&gt;-->
+<!--      <textarea v-model="commentText" placeholder="(已开启评论审核模式,评论审核通过后方能显示)" class="solid padding margin-top-sm"/>-->
+<!--      &lt;!&ndash; #endif &ndash;&gt;-->
+<!--      <view class="margin-top-sm flex justify-between">-->
+<!--        <view v-if="!isLogin">-->
+<!--          <button v-if="canIUse" open-type="getUserInfo" @getuserinfo="loadUserInfo" class="cu-btn bg-base">-->
+<!--            <text class="line-white">授权登录</text>-->
+<!--          </button>-->
+<!--          <view v-else>请升级微信版本</view>-->
+<!--        </view>-->
+<!--        <view class="text-bold" v-else>-->
+<!--          &lt;!&ndash; #ifndef H5 &ndash;&gt;-->
+<!--          <open-data type="userNickName" class="line-base"></open-data>-->
+<!--          &lt;!&ndash; #endif &ndash;&gt;-->
+<!--        </view>-->
+<!--        <view>-->
+<!--          &lt;!&ndash; #ifndef MP-QQ &ndash;&gt;-->
+<!--          <button style="width: 100%;" class="cu-btn line-base" @click="comment">-->
+<!--            发表-->
+<!--          </button>-->
+<!--          &lt;!&ndash; #endif &ndash;&gt;-->
+<!--        </view>-->
+<!--      </view>-->
+<!--    </view>-->
     <!-- #ifndef MP-QQ -->
     <view class="padding-sm bg-white" v-if="!isLoading">
       <view class="text-lg">
@@ -374,19 +374,19 @@ export default Vue.extend({
   text-align: center;
 
   view {
-    margin: 2 upx;
+    margin: 2upx;
   }
 }
 
 .like-btn {
-  height: 130 upx;
-  width: 130 upx;
+  height: 130upx;
+  width: 130upx;
   border-radius: 50%;
 }
 
 .comment-area textarea {
   width: 100%;
-  height: 250 upx;
+  height: 250upx;
 }
 
 .border {
@@ -395,6 +395,6 @@ export default Vue.extend({
 
 .ad {
   background-color: #fff;
-  margin-top: 10 upx;
+  margin-top: 10upx;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <view class="bg-white content">
-    <view class="cu-bar tm-search bg-white">
-      <view class="tm-search-input search-form">
-        <text class="icon-search"></text>
-        <input @confirm="onSearch" :adjust-position="false" type="text" placeholder="请输入你想知道的内容" confirm-type="search" />
-      </view>
-    </view>
+<!--    <view class="cu-bar tm-search bg-white">-->
+<!--      <view class="tm-search-input search-form">-->
+<!--        <text class="icon-search"></text>-->
+<!--        <input @confirm="onSearch" :adjust-position="false" type="text" placeholder="请输入你想知道的内容" confirm-type="search" />-->
+<!--      </view>-->
+<!--    </view>-->
     <view class="padding-sm bottom-holder bg-white">
       <view v-for="(item, index) in tagList" :key="index" class="cu-btn text-black margin-xs" @click="searchTag(item.mid)">
         {{ item.name }} ({{ item.count }})

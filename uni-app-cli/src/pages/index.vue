@@ -20,7 +20,7 @@
               :url="`/pages/post/index?cid=${item.cid}&thumb=${item.thumb}`"
               class="list__item bg-white"
           >
-            <view class="image-container">
+            <view class="image-container" v-if="item.thumb">
               <view class="overplay"></view>
               <image :src="item.thumb" mode="aspectFill" :lazy-load="true" class="image"></image>
               <!-- <view class="cu-tag bg-blue">置顶</view> -->
