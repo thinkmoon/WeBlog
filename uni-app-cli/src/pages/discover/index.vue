@@ -7,7 +7,7 @@
      </view>
    </view>
     <view class="padding-sm bottom-holder bg-white">
-      <view v-for="(item, index) in tagList" :key="index" class="cu-btn text-black margin-xs" @click="searchTag(item.mid)">
+      <view v-for="(item, index) in tagList" :key="index" class="cu-btn text-black margin-xs" @click="searchTag(item.tid)">
         {{ item.name }} ({{ item.count }})
       </view>
     </view>
@@ -31,10 +31,9 @@ export default Vue.extend({
   },
   methods: {
     // 点击搜索历史
-    searchTag(mid) {
-      console.log(`寻找mid为${mid}的文章`);
+    searchTag(tid) {
       uni.navigateTo({
-        url: "/pages/search/searchResult?mid=" + mid,
+        url: "/pages/search/searchResult?tid=" + tid,
       });
     },
     // 开始搜索
