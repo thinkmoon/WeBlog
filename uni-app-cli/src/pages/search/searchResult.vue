@@ -2,17 +2,15 @@
   <view class="bg-gray content">
     <view>
       <navigator :url='"/pages/post/index?cid=" + item.cid' v-for="(item,index) in articleList" :key="index" class="margin padding bg-white">
-        <view class="image-container" v-if="item.thumb.length">
+        <view class="image-container">
           <view class="overplay"></view>
-          <image :src="item.thumb[0].str_value" mode="aspectFill" :lazy-load="true" class="image"></image>
-          <!-- <view class="cu-tag bg-blue">置顶</view> -->
-          <!-- <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view> -->
+          <image :src="item.thumb" mode="aspectFill" :lazy-load="true" class="image"></image>
         </view>
         <view class="flex align-center padding-xs post-entry-categories text-xs">
           <view class="margin-right-xs" v-for="(tagItem,index) in item.tag" :key="index">{{ tagItem.name }}</view>
         </view>
         <view class="padding-bottom-sm title text-bold text-lg "> {{ item.title }} </view>
-        <view v-if="item.desc.length"> {{ item.desc[0].str_value }} </view>
+        <view> {{ item.desc }} </view>
       </navigator>
     </view>
   </view>
@@ -27,8 +25,9 @@
       };
     },
     async onLoad(options) {
-      console.log(options)
-      this.articleList = await this.$api.search(options)
+      this.$api.search(options).then(res => {
+        this.articleList = res.records;
+      })
     }
   }
 </script>

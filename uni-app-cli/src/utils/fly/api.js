@@ -72,6 +72,6 @@ export default class Api {
   }
   // 搜索内容
   search(params) {
-    return GET("search", params);
+    return GET("post/search", params);
   }
 }
