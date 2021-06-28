@@ -10,7 +10,7 @@
           <view class="margin-right-xs" v-for="(tagItem,index) in item.tag" :key="index">{{ tagItem.name }}</view>
         </view>
         <view class="padding-bottom-sm title text-bold text-lg "> {{ item.title }} </view>
-        <view> {{ item.desc }} </view>
+        <view v-if="item.desc"> {{ item.desc }} </view>
       </navigator>
     </view>
   </view>
