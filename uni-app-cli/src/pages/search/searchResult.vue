@@ -7,10 +7,11 @@
         :key="index"
         class="margin padding bg-white"
       >
-        <view class="image-container">
+        <view class="image-container" v-if="item.thumb">
           <view class="overplay"></view>
           <image
             :src="item.thumb"
+            
             mode="aspectFill"
             :lazy-load="true"
             class="image"
@@ -23,7 +24,7 @@
             class="margin-right-xs"
             v-for="(tagItem, index) in item.tag"
             :key="index"
-            >{{ tagItem.name }}</view
+            >{{ tagItem }}</view
           >
         </view>
         <view class="padding-bottom-sm title text-bold text-lg">
@@ -45,7 +46,12 @@ export default {
   },
   async onLoad(options) {
     this.$api.search(options).then((res) => {
-      this.articleList = res.records;
+      this.articleList = res.records.map(item => {
+        return {
+          ...item,
+          tag: item?.tag?.split(',') || [],
+        }
+      });
     });
   },
 };

@@ -2,9 +2,16 @@
   <view>
     <!-- <cu-custom bgColor="bg-gradual" title="关于"></cu-custom> -->
     <view class="overView flex justify-between flex-direction weather rain">
-      <view class="flex justify-center align-center flex-direction margin-top-lg">
-        <image class="icon shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"></image>
-        <view class="text-bold text-shadow text-lg" style="color:#fff">指尖魔法屋</view>
+      <view
+        class="flex justify-center align-center flex-direction margin-top-lg"
+      >
+        <image
+          class="icon shadow"
+          src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"
+        ></image>
+        <view class="text-bold text-shadow text-lg" style="color: #fff"
+          >指尖魔法屋</view
+        >
       </view>
      <view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top">
        <view class="margin-xs flex align-center flex-direction">
@@ -29,13 +36,17 @@
     <parse :content="postData.text" v-if="!isLoading"></parse>
     <!-- #endif -->
     <!-- #ifdef H5 -->
-    <div v-html="content" class="article-content"/>
+    <div v-html="content" class="article-content" />
     <!-- #endif -->
     <view class="modal bg-white" v-if="isLoading">
       <view class="spinner bg-base"></view>
     </view>
     <!-- #ifdef MP-QQ -->
-    <ad unit-id="01a084f529176b8df06deaa2274f6721" type="card" style="margin-bottom:10px"></ad>
+    <ad
+      unit-id="01a084f529176b8df06deaa2274f6721"
+      type="card"
+      style="margin-bottom: 10px"
+    ></ad>
     <!-- #endif -->
     <tm-footer></tm-footer>
     <!-- <tab @onTabChange="tabChange" active="2"></tab> -->
@@ -73,25 +84,27 @@ export default Vue.extend({
       return marked(this.postData.text, {breaks: true});
     },
   },
+  // #endif
   mounted() {
     this.$api
       .getAboutCid()
       .then((data) => {
         this.postData = data;
         this.isLoading = false;
+        // #ifdef MP-H5
         this.$nextTick(() => {
           window.hljs.highlightAll();
         });
+        // #endif
       });
   },
-  // #endif
   onShow() {},
 });
 </script>
 
 <style>
 page {
-  background: #fff
+  background: #fff;
 }
 /* // 头像 */
 .icon {
