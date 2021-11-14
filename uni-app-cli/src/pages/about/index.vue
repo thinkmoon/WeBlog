@@ -44,7 +44,9 @@
 
 <script lang="js">
 import Vue from "vue";
+// #ifdef MP-H5
 import {marked} from "@/utils/marked/index";
+// #endif
 
 // @ts-ignore
 import parse from "@/wxcomponents/tm-parse/index";
@@ -65,6 +67,7 @@ export default Vue.extend({
       },
     };
   },
+  // #ifdef MP-H5
   computed: {
     content() {
       return marked(this.postData.text.replace("<!--markdown-->", ""), {breaks: true});
@@ -81,6 +84,7 @@ export default Vue.extend({
         });
       });
   },
+  // #endif
   onShow() {},
 });
 </script>

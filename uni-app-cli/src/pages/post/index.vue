@@ -126,7 +126,10 @@
 
 <script lang="js">
 import Vue from 'vue';
+// #ifdef MP-H5
 import {marked} from "@/utils/marked/index";
+// #endif
+
 // #ifdef MP-QQ
 let videoAd = qq.createRewardedVideoAd({
   adUnitId: '2623e52894edca46483527a4e2355e2e',
@@ -162,11 +165,13 @@ export default Vue.extend({
       commentList: [],
     };
   },
+  // #ifdef MP-H5
   computed: {
     content() {
       return marked(this.postData.text.replace("<!--markdown-->", ""), {breaks: true});
     },
   },
+  // #endif
   filters: {
     formatNum(value) {
       if (value > 1000000) {
