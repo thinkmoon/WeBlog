@@ -6,30 +6,25 @@
         <image class="icon shadow" src="https://www.thinkmoon.cn/usr/uploads/2018/12/55979974.jpg"></image>
         <view class="text-bold text-shadow text-lg" style="color:#fff">指尖魔法屋</view>
       </view>
-<!--      <view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top">-->
-<!--        <view class="margin-xs flex align-center flex-direction">-->
-<!--          <view>文章</view>-->
-<!--          <view>{{ Overview.posts[0].Num }}</view>-->
-<!--        </view>-->
-<!--        <view class="margin-xs flex align-center flex-direction">-->
-<!--          <view>留言</view>-->
-<!--          <view>{{ Overview.comments[0].Num }}</view>-->
-<!--        </view>-->
-<!--        <view class="margin-xs flex align-center flex-direction">-->
-<!--          <view>分类</view>-->
-<!--          <view>{{ Overview.categorys[0].Num }}</view>-->
-<!--        </view>-->
-<!--        <view class="margin-xs flex align-center flex-direction">-->
-<!--          <view>标签</view>-->
-<!--          <view>{{ Overview.tags[0].Num }}</view>-->
-<!--        </view>-->
-<!--      </view>-->
+     <view class="flex align-end padding-xs justify-around text-white text-shadow text-bold solid-top">
+       <view class="margin-xs flex align-center flex-direction">
+         <view>文章</view>
+         <view>{{ Overview.posts[0].Num }}</view>
+       </view>
+       <view class="margin-xs flex align-center flex-direction">
+         <view>留言</view>
+         <view>{{ Overview.comments[0].Num }}</view>
+       </view>
+       <view class="margin-xs flex align-center flex-direction">
+         <view>分类</view>
+         <view>{{ Overview.categorys[0].Num }}</view>
+       </view>
+       <view class="margin-xs flex align-center flex-direction">
+         <view>标签</view>
+         <view>{{ Overview.tags[0].Num }}</view>
+       </view>
+     </view>
     </view>
-    <!-- <image
-      src="https://tva3.sinaimg.cn/large/8d406c5egy1gamn31scsdg20f002skhn.gif"
-      mode="scaleToFill"
-      class="gif-wave"
-    ></image> -->
     <!-- #ifndef H5 -->
     <parse :content="postData.text" v-if="!isLoading"></parse>
     <!-- #endif -->

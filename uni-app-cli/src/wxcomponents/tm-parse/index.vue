@@ -52,7 +52,7 @@ Component({
         /\[Meting\].*?\[Music.*?title="(.*?)".*?author="(.*?)".*?url="(.*?)".*?pic="(.*?)".*?\/\].*?\[\/Meting\]/s,
         "<audio autoplay='false' loop='true' name='$1' author='$2' poster='$4' src='$3'></audio>"
       );
-      let result = toWxml(text.substring(15), "markdown", {
+      let result = toWxml(text, "markdown", {
         base: "https://www.thinkmoon.cn", // 相对资源的base路径
         events: {
           // 为元素绑定的事件方法
