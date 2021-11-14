@@ -168,7 +168,7 @@ export default Vue.extend({
   // #ifdef MP-H5
   computed: {
     content() {
-      return marked(this.postData.text.replace("<!--markdown-->", ""), {breaks: true});
+      return marked(this.postData.text, {breaks: true});
     },
   },
   // #endif
@@ -314,9 +314,11 @@ export default Vue.extend({
         .then((res) => {
           this.postData = res;
           this.isLoading = false;
+          // #ifdef MP-H5
           this.$nextTick(() => {
             window.hljs.highlightAll();
           });
+          // #endif
         });
   },
   created() {

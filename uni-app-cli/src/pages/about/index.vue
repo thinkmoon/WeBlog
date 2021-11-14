@@ -70,7 +70,7 @@ export default Vue.extend({
   // #ifdef MP-H5
   computed: {
     content() {
-      return marked(this.postData.text.replace("<!--markdown-->", ""), {breaks: true});
+      return marked(this.postData.text, {breaks: true});
     },
   },
   mounted() {
