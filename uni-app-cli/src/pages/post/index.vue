@@ -20,7 +20,7 @@
       </view>
       <view class="flex align-center">
         <text class="icon-comment padding-right-xs"></text>
-        评论({{ postData.commentsNum }})
+        评论({{ postData.comments }})
       </view>
     </view>
     <!-- #ifdef MP-QQ -->

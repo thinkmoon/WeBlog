@@ -17,20 +17,20 @@
         <view v-for="(item, index) in postData" :key="index" class="article-container list radius shadow">
           <navigator
               hover-class="none"
-              :url="`/pages/post/index?cid=${item.cid}&thumb=${item.thumb}`"
+              :url="`/pages/post/index?cid=${item.cid}&thumb=${item.fields.thumb}`"
               class="list__item bg-white"
           >
-            <view class="image-container" v-if="item.thumb">
+            <view class="image-container" v-if="item.fields.thumb">
               <view class="overplay"></view>
-              <image :src="item.thumb" mode="aspectFill" :lazy-load="true" class="image"></image>
+              <image :src="item.fields.thumb" mode="aspectFill" :lazy-load="true" class="image"></image>
               <!-- <view class="cu-tag bg-blue">置顶</view> -->
               <!-- <view class="cu-bar text-shadow bg-shadeBottom">{{ item.title }}</view> -->
             </view>
             <view class="flex align-center padding-xs post-entry-categories text-xs">
-              <view class="margin-left-xs" v-for="(tagItem, index) in item.tag" :key="index">{{ tagItem }}</view>
+              <view class="margin-left-xs" v-for="(tagItem, index) in item.tag" :key="index">{{ tagItem.name }}</view>
             </view>
             <view class="bg-white padding-left-sm title">{{ item.title }}</view>
-            <view class="desc padding-sm">{{ item.desc }}</view>
+            <view class="desc padding-sm">{{ item.fields.desc }}</view>
             <view class="cu-list padding-lr-sm padding-bottom-xs">
               <view class="cu-item">
                 <view class="text-gray text-sm flex justify-between align-center">
@@ -47,7 +47,7 @@
                     <text class="icon-appreciatefill margin-xs"></text>
                     {{ item.likes }}
                     <text class="icon-messagefill margin-xs"></text>
-                    {{ item.commentsNum }}
+                    {{ item.comments }}
                   </view>
                 </view>
               </view>
@@ -110,18 +110,22 @@ export default Vue.extend({
       this.requesting = true;
       this.$api
           .getPost({
-            page: this.curPage + 1,
+            current: this.curPage + 1,
             mid: this.mid,
           })
           .then((res) => {
             let records = res.records
+            records.forEach(item => {
+              if (item.fields instanceof Array) {
+                let fields = {}
+                item.fields.forEach(i => {
+                  fields[i.name] = i.value
+                })
+                item.fields = fields;
+              }
+            })
             if (records != null && records.length > 0) {
-              this.postData = this.postData.concat(records.map((item) => {
-                return {
-                  ...item,
-                  tag: item?.tag?.split(',') || [],
-                }
-              }));
+              this.postData = [...this.postData,...records];
               this.curPage++;
             }
             this.requesting = false;
