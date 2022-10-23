@@ -1,3 +1,5 @@
+> 本项目不兼容最新版typecho，已停止维护，感谢关注
+
 # WeBlog
 
 <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
